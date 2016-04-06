@@ -13,9 +13,19 @@ demo基本涵盖了常用的功能 需要的看demo就行
 * 更简单的api
 * 支持ios、osx系统
 
+## 简单使用
+初始化一个滚动弹幕：
+```
+ScrollDanmaku *sc = [[ScrollDanmaku alloc] initWithFontSize:20 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"text" shadowStyle:danmakuShadowStyleGlow font:nil speed:arc4random_uniform(100) + 50 direction:scrollDanmakuDirectionR2L]
+```
+发射弹幕
+```
+[self.aEngine addDanmaku: sc]
+```
+
 ## 截图
-![osx](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/osx.jpg)
-![ios](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/ios.jpg)
+![osx](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/osx.gif)
+![ios](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/ios.gif)
 
 ## 许可证
 软件遵循MIT协议 详情请见LICENSE文件

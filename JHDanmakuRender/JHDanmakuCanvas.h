@@ -15,5 +15,4 @@
 #endif
 
 @interface JHDanmakuCanvas : JHView
-
 @end
