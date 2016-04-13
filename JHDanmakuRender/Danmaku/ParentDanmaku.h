@@ -12,10 +12,16 @@
 #import <UIKit/UIKit.h>
 #define JHColor UIColor
 #define JHFont UIFont
+#define JHColorBrightness(color) ({ \
+CGFloat b;\
+[color getHue:nil saturation:nil brightness:&b alpha:nil];\
+b;\
+})
 #else
 #import <Cocoa/Cocoa.h>
 #define JHColor NSColor
 #define JHFont NSFont
+#define JHColorBrightness(color) color.brightnessComponent
 #endif
 
 @class DanmakuContainer;
@@ -33,6 +39,8 @@ typedef NS_ENUM(NSUInteger, danmakuShadowStyle) {
 @interface ParentDanmaku : NSObject
 @property (assign, nonatomic) NSTimeInterval appearTime;
 @property (assign, nonatomic) NSTimeInterval disappearTime;
+//额外的速度 用于调节全局速度时更改个体速度 目前只影响滚动弹幕
+@property (assign, nonatomic) float extraSpeed;
 @property (strong, nonatomic) NSAttributedString *attributedString;
 //弹幕是否被过滤
 @property (assign, nonatomic, getter=isFilter) BOOL filter;

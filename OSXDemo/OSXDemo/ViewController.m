@@ -14,10 +14,10 @@
 @property (weak) IBOutlet NSView *danmakuHoldView;
 @property (weak) IBOutlet NSPopUpButton *danmakuTypePopUpButton;
 @property (weak) IBOutlet NSPopUpButton *danmakuDirectionPopUpButton;
-@property (strong, nonatomic) NSArray *floatDanmakuDirectionArr;
-@property (strong, nonatomic) NSArray *scrollDanmakuDirectionArr;
 @property (weak) IBOutlet NSSlider *fontSizeSlider;
 @property (weak) IBOutlet NSTextField *timeOffsetLabel;
+@property (strong, nonatomic) NSArray *floatDanmakuDirectionArr;
+@property (strong, nonatomic) NSArray *scrollDanmakuDirectionArr;
 @property (strong, nonatomic) NSDictionary *DanmakuDic;
 @end
 
@@ -80,6 +80,7 @@
     //开启回退功能必须设置为yes
     self.aEngine.turnonBackFunction = YES;
     [self.aEngine start];
+    
 }
 
 
