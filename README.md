@@ -8,10 +8,11 @@
 
 demo基本涵盖了常用的功能 需要的看demo就行
 
-* 支持全局的字体样式更改
+* 支持全局的字体样式、单个字体样式的更改
 * 支持实时回退功能
+* 支持弹幕行间距调整
 * 更简单的api
-* 支持ios、osx系统
+* 支持iOS、OSX系统
 
 ## 简单使用
 ```
@@ -23,12 +24,15 @@ ScrollDanmaku *sc = [[ScrollDanmaku alloc] initWithFontSize:20 textColor:[UIColo
 ```
 发射弹幕
 ```
-[self.aEngine addDanmaku: sc]
+[[[JHDanmakuEngine alloc] init] addDanmaku: sc]
 ```
 
 ## 截图
-![osx](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/osx.gif)
-![ios](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/ios.gif)
+### OSX:
+![osx](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/osx.jpg)
+
+### iOS:
+![ios](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/ios.jpg)
 
 ## 许可证
 软件遵循MIT协议 详情请见LICENSE文件
