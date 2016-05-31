@@ -29,10 +29,10 @@ ScrollDanmaku *sc = [[ScrollDanmaku alloc] initWithFontSize:20 textColor:[UIColo
 
 ## 截图
 ### OSX:
-![osx](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/osx.jpg)
+![osx](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/osx.gif)
 
 ### iOS:
-![ios](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/ios.jpg)
+![ios](https://github.com/sunsx9316/JHDanmakuRender/blob/master/snapshot/ios.gif)
 
 ## 许可证
 软件遵循MIT协议 详情请见LICENSE文件
