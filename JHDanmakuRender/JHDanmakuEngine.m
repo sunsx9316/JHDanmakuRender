@@ -11,7 +11,7 @@
 #import "DanmakuContainer.h"
 #import "ScrollDanmaku.h"
 #import "FloatDanmaku.h"
-@interface JHDanmakuEngine()
+@interface JHDanmakuEngine()<JHDanmakuClockDelegate>
 @property (strong, nonatomic) JHDanmakuClock *clock;
 /**
  *  当前未激活的弹幕
@@ -25,15 +25,17 @@
  *  弹幕缓存 开启回退功能时启用
  */
 @property (strong, nonatomic) NSDictionary *danmakusCache;
+
+@property (assign, nonatomic) NSInteger intTime;
+//用于记录当前时间的整数值
 @end
 
 @implementation JHDanmakuEngine
 {
-    //用于记录当前时间的整数值
     NSInteger _intTime;
     float _extraSpeed;
 }
-- (instancetype)init{
+- (instancetype)init {
     if (self = [super init]) {
         _intTime = -1;
         [self setSpeed: 1.0];
@@ -41,11 +43,11 @@
     return self;
 }
 
-- (void)start{
+- (void)start {
     [self.clock start];
 }
 
-- (void)stop{
+- (void)stop {
     [self.clock stop];
     [self.activeContainer enumerateObjectsUsingBlock:^(DanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj removeFromSuperview];
@@ -53,11 +55,11 @@
     [self.activeContainer removeAllObjects];
 }
 
-- (void)pause{
+- (void)pause {
     [self.clock pause];
 }
 
-- (void)addDanmaku:(ParentDanmaku *)danmaku{
+- (void)addDanmaku:(ParentDanmaku *)danmaku {
     //被过滤不显示
     if (danmaku.isFilter || ([self.globalFilterDanmaku containsObject:@([(ScrollDanmaku *)danmaku direction])]) || ([self.globalFilterDanmaku containsObject:@([(FloatDanmaku *)danmaku direction])])) return;
     
@@ -82,7 +84,7 @@
     [self.activeContainer addObject:con];
 }
 
-- (void)addAllDanmakus:(NSArray <ParentDanmaku *>*)danmakus{
+- (void)addAllDanmakus:(NSArray <ParentDanmaku *>*)danmakus {
     NSMutableDictionary <NSNumber *,NSMutableArray <ParentDanmaku *>*>*dic = [NSMutableDictionary dictionary];
     for (ParentDanmaku *danmaku in danmakus) {
         NSInteger time = danmaku.appearTime;
@@ -94,38 +96,38 @@
     self.danmakusCache = dic;
 }
 
-- (void)addAllDanmakusDic:(NSDictionary <NSNumber *,NSArray <ParentDanmaku *>*>*)danmakus{
+- (void)addAllDanmakusDic:(NSDictionary <NSNumber *,NSArray <ParentDanmaku *>*>*)danmakus {
     self.danmakusCache = danmakus;
 }
 
-- (void)setOffsetTime:(NSTimeInterval)offsetTime{
+- (void)setOffsetTime:(NSTimeInterval)offsetTime {
     _offsetTime = offsetTime;
     [self.clock setOffsetTime:offsetTime];
     [self reloadPreDanmaku];
 }
 
-- (void)setCurrentTime:(NSTimeInterval)currentTime{
+- (void)setCurrentTime:(NSTimeInterval)currentTime {
     if (currentTime < 0) return;
     _currentTime = currentTime;
     [self.clock setCurrentTime:currentTime];
     [self reloadPreDanmaku];
 }
 
-- (void)setChannelCount:(NSInteger)channelCount{
+- (void)setChannelCount:(NSInteger)channelCount {
     if (channelCount >= 0) {
         _channelCount = channelCount;
         [self setCurrentTime:_currentTime];
     }
 }
 
-- (void)setSpeed:(float)speed{
+- (void)setSpeed:(float)speed {
     _extraSpeed = speed > 0 ? speed : 0.1;
     [self.activeContainer enumerateObjectsUsingBlock:^(DanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.danmaku.extraSpeed = _extraSpeed;
     }];
 }
 
-- (void)setGlobalAttributedDic:(NSDictionary *)globalAttributedDic{
+- (void)setGlobalAttributedDic:(NSDictionary *)globalAttributedDic {
     if (![_globalAttributedDic isEqualToDictionary:globalAttributedDic]) {
         _globalAttributedDic = globalAttributedDic;
         NSArray *activeContainer = self.activeContainer;
@@ -135,7 +137,7 @@
     }
 }
 
-- (void)setGlobalFont:(JHFont *)globalFont{
+- (void)setGlobalFont:(JHFont *)globalFont {
     if (![_globalFont isEqual: globalFont]){
         _globalFont = globalFont;
         NSArray *activeContainer = self.activeContainer;
@@ -145,7 +147,7 @@
     }
 }
 
-- (void)setGlobalShadowStyle:(NSNumber *)globalShadowStyle{
+- (void)setGlobalShadowStyle:(NSNumber *)globalShadowStyle {
     if (![globalShadowStyle isEqual: _globalShadowStyle]) {
         _globalShadowStyle = globalShadowStyle;
         NSArray *activeContainer = self.activeContainer;
@@ -155,9 +157,35 @@
     }
 }
 
+#pragma mark - JHDanmakuClockDelegate
+
+- (void)danmakuClock:(JHDanmakuClock *)clock time:(NSTimeInterval)time {
+    _currentTime = time;
+    
+    //每秒获取一次弹幕 开启回退功能时启用
+    if (self.turnonBackFunction && (NSInteger)_currentTime - _intTime) {
+        _intTime = _currentTime;
+        NSArray *danmakus = [self.danmakusCache objectForKey:@((NSInteger)_currentTime)];
+        for (ParentDanmaku *danmaku in danmakus) {
+            [self addDanmaku:danmaku];
+        }
+    }
+    
+    NSArray <DanmakuContainer *>*danmakus = self.activeContainer;
+    for (NSInteger i = danmakus.count - 1; i >= 0; --i) {
+        DanmakuContainer *container = danmakus[i];
+        if (![container updatePositionWithTime:_currentTime]) {
+            [self.activeContainer removeObjectAtIndex:i];
+            [self.inactiveContainer addObject:container];
+            [container removeFromSuperview];
+            container.danmaku.disappearTime = _currentTime;
+        }
+    }
+}
+
 #pragma mark - 私有方法
 //预加载前5秒的弹幕
-- (void)reloadPreDanmaku{
+- (void)reloadPreDanmaku {
     if (self.turnonBackFunction) {
         [self.activeContainer enumerateObjectsUsingBlock:^(DanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [obj removeFromSuperview];
@@ -185,30 +213,8 @@
 #pragma mark - 懒加载
 - (JHDanmakuClock *)clock {
     if(_clock == nil) {
-        __weak typeof(self)weakSelf = self;
-        _clock = [JHDanmakuClock clockWithHandler:^(NSTimeInterval time) {
-            _currentTime = time;
-            
-            //每秒获取一次弹幕 开启回退功能时启用
-            if (self.turnonBackFunction && (NSInteger)_currentTime - _intTime) {
-                _intTime = _currentTime;
-                NSArray *danmakus = [weakSelf.danmakusCache objectForKey:@((NSInteger)_currentTime)];
-                for (ParentDanmaku *danmaku in danmakus) {
-                    [weakSelf addDanmaku:danmaku];
-                }
-            }
-            
-            NSArray <DanmakuContainer *>*danmakus = weakSelf.activeContainer;
-            for (NSInteger i = danmakus.count - 1; i >= 0; --i) {
-                DanmakuContainer *container = danmakus[i];
-                if (![container updatePositionWithTime:_currentTime]) {
-                    [weakSelf.activeContainer removeObjectAtIndex:i];
-                    [weakSelf.inactiveContainer addObject:container];
-                    [container removeFromSuperview];
-                    container.danmaku.disappearTime = _currentTime;
-                }
-            }
-        }];
+        _clock = [[JHDanmakuClock alloc] init];
+        _clock.delegate = self;
     }
     return _clock;
 }

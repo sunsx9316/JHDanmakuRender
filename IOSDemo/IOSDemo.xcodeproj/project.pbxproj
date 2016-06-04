@@ -70,6 +70,7 @@
 		89470BBD1C8DF24E00ECBE1B /* JHDanmakuEngine+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JHDanmakuEngine+Tools.m"; sourceTree = "<group>"; };
 		89470BBE1C8DF24E00ECBE1B /* UIColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tools.h"; sourceTree = "<group>"; };
 		89470BBF1C8DF24E00ECBE1B /* UIColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tools.m"; sourceTree = "<group>"; };
+		896F228D1D031932000384BA /* JHDanmakuHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHDanmakuHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				89470B4B1C8DA65500ECBE1B /* Danmaku */,
+				896F228D1D031932000384BA /* JHDanmakuHeader.h */,
 				89470B521C8DA65500ECBE1B /* DanmakuContainer.h */,
 				89470B531C8DA65500ECBE1B /* DanmakuContainer.m */,
 				89470B541C8DA65500ECBE1B /* JHDanmakuCanvas.h */,

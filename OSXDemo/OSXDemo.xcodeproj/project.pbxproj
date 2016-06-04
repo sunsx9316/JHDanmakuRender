@@ -68,6 +68,7 @@
 		89470B1C1C8DA5C000ECBE1B /* JHDanmakuRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuRender.h; sourceTree = "<group>"; };
 		89470B1D1C8DA5C000ECBE1B /* JHDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDisplayLink.h; sourceTree = "<group>"; };
 		89470B1E1C8DA5C000ECBE1B /* JHDisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDisplayLink.m; sourceTree = "<group>"; };
+		896F228C1D031740000384BA /* JHDanmakuHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHDanmakuHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				89470B0D1C8DA5C000ECBE1B /* Danmaku */,
+				896F228C1D031740000384BA /* JHDanmakuHeader.h */,
 				89470B141C8DA5C000ECBE1B /* DanmakuContainer.h */,
 				89470B151C8DA5C000ECBE1B /* DanmakuContainer.m */,
 				89470B161C8DA5C000ECBE1B /* JHDanmakuCanvas.h */,

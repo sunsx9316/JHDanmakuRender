@@ -11,7 +11,6 @@
 @interface JHDanmakuClock()<JHDisplayLinkDelegate>
 @property (strong, nonatomic) JHDisplayLink *displayLink;
 @property (strong, nonatomic) NSDate *previousDate;
-@property (strong, nonatomic) timeBlock block;
 @end
 
 @implementation JHDanmakuClock
@@ -19,10 +18,6 @@
     BOOL _isStart;
     NSTimeInterval _currentTime;
     NSTimeInterval _offsetTime;
-}
-
-+ (instancetype)clockWithHandler:(timeBlock)block{
-    return [[JHDanmakuClock alloc] initWithHandler:block];
 }
 
 - (void)start{
@@ -55,21 +50,13 @@
     _currentTime += [date timeIntervalSinceDate:self.previousDate] * _isStart;
     self.previousDate = date;
     
-    if (self.block) {
-        self.block(_currentTime + _offsetTime);
+    if ([self.delegate respondsToSelector:@selector(danmakuClock:time:)]) {
+        [self.delegate danmakuClock:self time:_currentTime];
     }
 }
 
 - (void)displayLink:(JHDisplayLink *)displayLink didRequestFrameForTime:(const CVTimeStamp *)outputTimeStamp{
     [self updateTime];
-}
-
-#pragma mark - 私有方法
-- (instancetype)initWithHandler:(timeBlock)block{
-    if (self = [super init]) {
-        self.block = block;
-    }
-    return self;
 }
 
 #pragma mark - 懒加载

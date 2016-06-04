@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#endif
-
-typedef void(^timeBlock)(NSTimeInterval time);
+#import "JHDanmakuHeader.h"
+@class JHDanmakuClock;
+@protocol JHDanmakuClockDelegate <NSObject>
+- (void)danmakuClock:(JHDanmakuClock *)clock time:(NSTimeInterval)time;
+@end
 
 @interface JHDanmakuClock : NSObject
-+ (instancetype)clockWithHandler:(timeBlock)block;
+@property (weak, nonatomic) id<JHDanmakuClockDelegate> delegate;
 - (void)setCurrentTime:(NSTimeInterval)currentTime;
 - (void)setOffsetTime:(NSTimeInterval)offsetTime;
 - (void)start;

@@ -9,16 +9,8 @@
 
 #import "ScrollDanmaku.h"
 #import "FloatDanmaku.h"
+#import "JHDanmakuHeader.h"
 
-#if TARGET_OS_IPHONE
-#define JHLabel UILabel
-#define JHAttributedText attributedText
-#define JHText text
-#else
-#define JHLabel NSTextField
-#define JHAttributedText attributedStringValue
-#define JHText stringValue
-#endif
 /**
  *  弹幕的容器 用来绘制弹幕
  */
