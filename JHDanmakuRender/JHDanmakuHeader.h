@@ -8,6 +8,9 @@
 
 #ifndef JHDanmakuHeader_h
 #define JHDanmakuHeader_h
+
+#import <Foundation/Foundation.h>
+
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
 #define JHLabel UILabel
@@ -21,7 +24,9 @@ CGFloat b;\
 b;\
 })
 #define JHView UIView
+
 #else
+
 #import <Cocoa/Cocoa.h>
 #define JHLabel NSTextField
 #define JHAttributedText attributedStringValue
