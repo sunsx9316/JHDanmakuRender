@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>IOSDemo.xcscheme</key>
+		<key>iOSDemo.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>89470B2F1C8DA64800ECBE1B</key>
+		<key>892FA5F21D644212007D1F05</key>
 		<dict>
 			<key>primary</key>
 			<true/>

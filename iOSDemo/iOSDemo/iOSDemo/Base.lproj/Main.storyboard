@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7HR-XP-9fJ">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="CTy-2a-wyt">
+            <objects>
+                <viewController id="7HR-XP-9fJ" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Twb-bU-H2U"/>
+                        <viewControllerLayoutGuide type="bottom" id="c5R-9v-ZU6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YTn-IW-IjF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ysb-PJ-cDd">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WfK-R6-N5O">
+                                        <rect key="frame" x="0.0" y="271" width="600" height="309"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C6e-h5-fXv">
+                                                <rect key="frame" x="20" y="259" width="50" height="30"/>
+                                                <state key="normal" title="停止"/>
+                                                <connections>
+                                                    <action selector="touchStopButton:" destination="7HR-XP-9fJ" eventType="touchUpInside" id="ukD-hH-qyu"/>
+                                                </connections>
+                                            </button>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.10000000149011612" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="hQE-CV-OSv">
+                                                <rect key="frame" x="86" y="46" width="506" height="31"/>
+                                                <connections>
+                                                    <action selector="touchSpeedButton:" destination="7HR-XP-9fJ" eventType="valueChanged" id="Cwg-jY-7oo"/>
+                                                </connections>
+                                            </slider>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="25" minValue="1" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="aKk-xq-z9h">
+                                                <rect key="frame" x="86" y="82" width="506" height="31"/>
+                                                <connections>
+                                                    <action selector="touchFontSizeButton:" destination="7HR-XP-9fJ" eventType="valueChanged" id="gJN-sN-97W"/>
+                                                </connections>
+                                            </slider>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="dvJ-Lj-nmh">
+                                                <rect key="frame" x="86" y="118" width="506" height="31"/>
+                                                <connections>
+                                                    <action selector="touchDanmakuEdgeButton:" destination="7HR-XP-9fJ" eventType="valueChanged" id="540-Fb-b74"/>
+                                                </connections>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="偏移: 0秒" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XN-0b-wgB">
+                                                <rect key="frame" x="10" y="218" width="71" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcq-xY-ydH">
+                                                <rect key="frame" x="10" y="168" width="60" height="30"/>
+                                                <state key="normal" title="弹幕类型"/>
+                                                <connections>
+                                                    <action selector="touchDanmakuTypeButton:" destination="7HR-XP-9fJ" eventType="touchUpInside" id="dyE-6i-V0D"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DaR-5c-jyB">
+                                                <rect key="frame" x="467" y="168" width="60" height="30"/>
+                                                <state key="normal" title="弹幕方向"/>
+                                                <connections>
+                                                    <action selector="touchDanmakuDirectionButton:" destination="7HR-XP-9fJ" eventType="touchUpInside" id="KV7-ph-GQQ"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="速度" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEG-zi-r7z">
+                                                <rect key="frame" x="10" y="50" width="68" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="字体大小" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9o-Eo-Ivu">
+                                                <rect key="frame" x="10" y="86" width="68" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="弹幕间距" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKD-zx-RbF">
+                                                <rect key="frame" x="10" y="122" width="68" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2x-FJ-KiD">
+                                                <rect key="frame" x="530" y="259" width="50" height="30"/>
+                                                <state key="normal" title="暂停"/>
+                                                <connections>
+                                                    <action selector="touchSuspandButton:" destination="7HR-XP-9fJ" eventType="touchUpInside" id="T3L-rM-1GN"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="滚动弹幕" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDo-kF-6Ba">
+                                                <rect key="frame" x="80" y="172" width="68" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="右-&gt;左" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVh-kD-IJ8">
+                                                <rect key="frame" x="537" y="173" width="53" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" minimumValue="-100" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="BIW-CK-0DD">
+                                                <rect key="frame" x="101" y="214" width="94" height="29"/>
+                                                <connections>
+                                                    <action selector="touchTimeOffsetStepper:" destination="7HR-XP-9fJ" eventType="valueChanged" id="i2n-3X-wuF"/>
+                                                </connections>
+                                            </stepper>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ms0-qW-iOt">
+                                                <rect key="frame" x="275" y="259" width="50" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="jVH-oE-7rf"/>
+                                                </constraints>
+                                                <state key="normal" title="开始"/>
+                                                <connections>
+                                                    <action selector="touchStartButton:" destination="7HR-XP-9fJ" eventType="touchUpInside" id="BTK-Zi-EeY"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GOA-Bk-cdS">
+                                                <rect key="frame" x="20" y="0.0" width="560" height="30"/>
+                                                <state key="normal" title="展            开"/>
+                                                <connections>
+                                                    <action selector="touchShowMenuButton:" destination="7HR-XP-9fJ" eventType="touchUpInside" id="BuA-9w-MHW"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oeo-Xq-awr">
+                                                <rect key="frame" x="530" y="214" width="60" height="30"/>
+                                                <state key="normal" title="测试弹幕"/>
+                                                <connections>
+                                                    <action selector="touchTestDanmakuButton:" destination="7HR-XP-9fJ" eventType="touchUpInside" id="5kk-Ug-oA8"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="Oeo-Xq-awr" firstAttribute="centerY" secondItem="BIW-CK-0DD" secondAttribute="centerY" id="1Yf-bX-KEX"/>
+                                            <constraint firstItem="aKk-xq-z9h" firstAttribute="centerY" secondItem="i9o-Eo-Ivu" secondAttribute="centerY" id="1bM-3f-kQe"/>
+                                            <constraint firstItem="ms0-qW-iOt" firstAttribute="centerX" secondItem="WfK-R6-N5O" secondAttribute="centerX" id="2Ao-Wu-Foa"/>
+                                            <constraint firstItem="ms0-qW-iOt" firstAttribute="centerY" secondItem="C6e-h5-fXv" secondAttribute="centerY" id="2lj-Rp-ahP"/>
+                                            <constraint firstAttribute="trailing" secondItem="o2x-FJ-KiD" secondAttribute="trailing" constant="20" id="5vc-ns-bps"/>
+                                            <constraint firstItem="BIW-CK-0DD" firstAttribute="centerY" secondItem="0XN-0b-wgB" secondAttribute="centerY" id="9Wf-Ki-xOb"/>
+                                            <constraint firstItem="i9o-Eo-Ivu" firstAttribute="top" secondItem="AEG-zi-r7z" secondAttribute="bottom" constant="15" id="A6n-uH-Ge0"/>
+                                            <constraint firstItem="dvJ-Lj-nmh" firstAttribute="centerY" secondItem="MKD-zx-RbF" secondAttribute="centerY" id="AmK-hG-95h"/>
+                                            <constraint firstItem="MKD-zx-RbF" firstAttribute="centerX" secondItem="AEG-zi-r7z" secondAttribute="centerX" id="Aqf-4J-ZIX"/>
+                                            <constraint firstItem="BIW-CK-0DD" firstAttribute="leading" secondItem="0XN-0b-wgB" secondAttribute="trailing" constant="20" id="E4r-8f-mv8"/>
+                                            <constraint firstItem="0XN-0b-wgB" firstAttribute="leading" secondItem="hcq-xY-ydH" secondAttribute="leading" id="EPZ-lU-a3H"/>
+                                            <constraint firstItem="qDo-kF-6Ba" firstAttribute="leading" secondItem="hcq-xY-ydH" secondAttribute="trailing" constant="10" id="G1t-6m-p7a"/>
+                                            <constraint firstItem="i9o-Eo-Ivu" firstAttribute="leading" secondItem="AEG-zi-r7z" secondAttribute="leading" id="HA1-89-sof"/>
+                                            <constraint firstItem="i9o-Eo-Ivu" firstAttribute="centerX" secondItem="AEG-zi-r7z" secondAttribute="centerX" id="Inr-ul-4iM"/>
+                                            <constraint firstItem="ms0-qW-iOt" firstAttribute="top" secondItem="0XN-0b-wgB" secondAttribute="bottom" constant="20" id="KE5-HT-00Y"/>
+                                            <constraint firstItem="OVh-kD-IJ8" firstAttribute="leading" secondItem="DaR-5c-jyB" secondAttribute="trailing" constant="10" id="L87-Jc-Wap"/>
+                                            <constraint firstItem="dvJ-Lj-nmh" firstAttribute="centerX" secondItem="hQE-CV-OSv" secondAttribute="centerX" id="LKR-4m-nxJ"/>
+                                            <constraint firstItem="dvJ-Lj-nmh" firstAttribute="width" secondItem="hQE-CV-OSv" secondAttribute="width" id="LOt-CU-IpW"/>
+                                            <constraint firstItem="ms0-qW-iOt" firstAttribute="width" secondItem="C6e-h5-fXv" secondAttribute="width" id="MQz-4v-ht0"/>
+                                            <constraint firstItem="o2x-FJ-KiD" firstAttribute="centerY" secondItem="C6e-h5-fXv" secondAttribute="centerY" id="NDt-zB-VoL"/>
+                                            <constraint firstAttribute="trailing" secondItem="GOA-Bk-cdS" secondAttribute="trailing" constant="20" id="O33-VV-SGZ"/>
+                                            <constraint firstItem="GOA-Bk-cdS" firstAttribute="leading" secondItem="WfK-R6-N5O" secondAttribute="leading" constant="20" id="OWJ-43-NGm"/>
+                                            <constraint firstItem="C6e-h5-fXv" firstAttribute="leading" secondItem="WfK-R6-N5O" secondAttribute="leading" constant="20" id="PlT-P5-Riw"/>
+                                            <constraint firstItem="hcq-xY-ydH" firstAttribute="leading" secondItem="WfK-R6-N5O" secondAttribute="leading" constant="10" id="Snh-EL-xOG"/>
+                                            <constraint firstAttribute="trailing" secondItem="OVh-kD-IJ8" secondAttribute="trailing" constant="10" id="TbA-CR-oP7"/>
+                                            <constraint firstItem="MKD-zx-RbF" firstAttribute="top" secondItem="i9o-Eo-Ivu" secondAttribute="bottom" constant="15" id="TmS-Ws-zlx"/>
+                                            <constraint firstItem="OVh-kD-IJ8" firstAttribute="centerY" secondItem="hcq-xY-ydH" secondAttribute="centerY" id="UxH-ei-62A"/>
+                                            <constraint firstItem="o2x-FJ-KiD" firstAttribute="width" secondItem="C6e-h5-fXv" secondAttribute="width" id="WP1-wd-7Hb"/>
+                                            <constraint firstItem="hcq-xY-ydH" firstAttribute="top" secondItem="dvJ-Lj-nmh" secondAttribute="bottom" constant="20" id="YUi-ay-Bce"/>
+                                            <constraint firstItem="0XN-0b-wgB" firstAttribute="top" secondItem="hcq-xY-ydH" secondAttribute="bottom" constant="20" id="Yjr-h4-JJs"/>
+                                            <constraint firstItem="GOA-Bk-cdS" firstAttribute="top" secondItem="WfK-R6-N5O" secondAttribute="top" id="ZB8-z8-hWB"/>
+                                            <constraint firstItem="hQE-CV-OSv" firstAttribute="centerY" secondItem="AEG-zi-r7z" secondAttribute="centerY" id="ZUC-ZK-IBo"/>
+                                            <constraint firstItem="Oeo-Xq-awr" firstAttribute="trailing" secondItem="OVh-kD-IJ8" secondAttribute="trailing" id="aSa-Bg-IhI"/>
+                                            <constraint firstItem="AEG-zi-r7z" firstAttribute="leading" secondItem="WfK-R6-N5O" secondAttribute="leading" constant="10" id="buB-HZ-iwf"/>
+                                            <constraint firstAttribute="bottom" secondItem="ms0-qW-iOt" secondAttribute="bottom" constant="20" id="cXV-Ba-zzb"/>
+                                            <constraint firstAttribute="trailing" secondItem="hQE-CV-OSv" secondAttribute="trailing" constant="10" id="dIa-Qx-b3O"/>
+                                            <constraint firstItem="MKD-zx-RbF" firstAttribute="leading" secondItem="AEG-zi-r7z" secondAttribute="leading" id="guy-Rx-QK0"/>
+                                            <constraint firstItem="aKk-xq-z9h" firstAttribute="centerX" secondItem="hQE-CV-OSv" secondAttribute="centerX" id="hwg-Kp-Ugq"/>
+                                            <constraint firstItem="qDo-kF-6Ba" firstAttribute="centerY" secondItem="hcq-xY-ydH" secondAttribute="centerY" id="joP-zW-Guc"/>
+                                            <constraint firstItem="AEG-zi-r7z" firstAttribute="top" secondItem="GOA-Bk-cdS" secondAttribute="bottom" constant="20" id="lAw-xU-K5N"/>
+                                            <constraint firstItem="DaR-5c-jyB" firstAttribute="centerY" secondItem="hcq-xY-ydH" secondAttribute="centerY" id="lxT-2X-uJp"/>
+                                            <constraint firstItem="hQE-CV-OSv" firstAttribute="leading" secondItem="AEG-zi-r7z" secondAttribute="trailing" constant="10" id="sqb-iA-0qY"/>
+                                            <constraint firstItem="aKk-xq-z9h" firstAttribute="width" secondItem="hQE-CV-OSv" secondAttribute="width" id="v31-3z-jX1"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRU-zf-rQE">
+                                        <rect key="frame" x="0.0" y="241" width="600" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="hEB-hc-7th"/>
+                                        </constraints>
+                                        <state key="normal" title="发射弹幕"/>
+                                        <connections>
+                                            <action selector="touchLaunchDanmakuButton:" destination="7HR-XP-9fJ" eventType="touchUpInside" id="J26-qj-rYC"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="WfK-R6-N5O" firstAttribute="leading" secondItem="ysb-PJ-cDd" secondAttribute="leading" id="8CW-HS-GpX"/>
+                                    <constraint firstAttribute="bottom" secondItem="WfK-R6-N5O" secondAttribute="bottom" id="OVv-QF-YTD"/>
+                                    <constraint firstItem="WfK-R6-N5O" firstAttribute="top" secondItem="nRU-zf-rQE" secondAttribute="bottom" id="ezf-V0-4bc"/>
+                                    <constraint firstAttribute="trailing" secondItem="nRU-zf-rQE" secondAttribute="trailing" id="glj-mr-YB5"/>
+                                    <constraint firstItem="nRU-zf-rQE" firstAttribute="leading" secondItem="ysb-PJ-cDd" secondAttribute="leading" id="lfz-Ib-qzs"/>
+                                    <constraint firstAttribute="trailing" secondItem="WfK-R6-N5O" secondAttribute="trailing" id="pV3-Ay-m8d"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="c5R-9v-ZU6" firstAttribute="top" secondItem="ysb-PJ-cDd" secondAttribute="bottom" id="6sJ-4K-rQZ"/>
+                            <constraint firstItem="ysb-PJ-cDd" firstAttribute="leading" secondItem="YTn-IW-IjF" secondAttribute="leading" id="Kag-Gz-ga2"/>
+                            <constraint firstItem="ysb-PJ-cDd" firstAttribute="top" secondItem="Twb-bU-H2U" secondAttribute="bottom" id="XHt-Tf-jfe"/>
+                            <constraint firstAttribute="trailing" secondItem="ysb-PJ-cDd" secondAttribute="trailing" id="tdg-MH-WYq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="danmakuDirectionLabel" destination="OVh-kD-IJ8" id="xFN-LY-fug"/>
+                        <outlet property="danmakuHoldView" destination="ysb-PJ-cDd" id="xyf-4Y-W12"/>
+                        <outlet property="danmakuTypeLabel" destination="qDo-kF-6Ba" id="wB3-cY-McK"/>
+                        <outlet property="menuBottomConstraint" destination="OVv-QF-YTD" id="RMO-Ge-7bP"/>
+                        <outlet property="menuView" destination="WfK-R6-N5O" id="Jjf-U7-PMs"/>
+                        <outlet property="showMenuButton" destination="GOA-Bk-cdS" id="Ral-ob-NKq"/>
+                        <outlet property="timeOffsetLabel" destination="0XN-0b-wgB" id="ycI-E7-EB1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FhZ-0m-YVf" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="211" y="305"/>
+        </scene>
+    </scenes>
+</document>

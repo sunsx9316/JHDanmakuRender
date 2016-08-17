@@ -41,7 +41,7 @@
     }
 }
 
-- (void)setOffsetTime:(NSTimeInterval)offsetTime{
+- (void)setOffsetTime:(NSTimeInterval)offsetTime {
     _offsetTime = offsetTime;
 }
 
@@ -51,7 +51,7 @@
     self.previousDate = date;
     
     if ([self.delegate respondsToSelector:@selector(danmakuClock:time:)]) {
-        [self.delegate danmakuClock:self time:_currentTime];
+        [self.delegate danmakuClock:self time:_currentTime + _offsetTime];
     }
 }
 

@@ -70,7 +70,8 @@
     DanmakuContainer *con = self.inactiveContainer.firstObject;
     if (!con) {
         con = [[DanmakuContainer alloc] initWithDanmaku:danmaku];
-    }else{
+    }
+    else {
         [self.inactiveContainer removeObject:con];
         [con setWithDanmaku:danmaku];
     }
@@ -79,7 +80,7 @@
     if (_globalFont) con.globalFont = _globalFont;
     if (_globalShadowStyle) con.globalShadowStyle = _globalShadowStyle;
     
-    con.originalPosition = [danmaku originalPositonWithContainerArr:self.activeContainer channelCount:self.channelCount contentRect:self.canvas.bounds danmakuSize:con.bounds.size timeDifference:_currentTime - danmaku.appearTime];
+    con.originalPosition = [danmaku originalPositonWithContainerArr:self.activeContainer channelCount:self.channelCount contentRect:self.canvas.bounds danmakuSize:con.bounds.size timeDifference:danmaku.appearTime - _currentTime];
     [self.canvas addSubview: con];
     [self.activeContainer addObject:con];
 }
@@ -97,13 +98,17 @@
 }
 
 - (void)addAllDanmakusDic:(NSDictionary <NSNumber *,NSArray <ParentDanmaku *>*>*)danmakus {
+    self.currentTime = 0;
     self.danmakusCache = danmakus;
 }
 
 - (void)setOffsetTime:(NSTimeInterval)offsetTime {
-    _offsetTime = offsetTime;
     [self.clock setOffsetTime:offsetTime];
     [self reloadPreDanmaku];
+}
+
+- (NSTimeInterval)offsetTime {
+    return self.clock.offsetTime;
 }
 
 - (void)setCurrentTime:(NSTimeInterval)currentTime {
@@ -161,7 +166,6 @@
 
 - (void)danmakuClock:(JHDanmakuClock *)clock time:(NSTimeInterval)time {
     _currentTime = time;
-    
     //每秒获取一次弹幕 开启回退功能时启用
     if (self.turnonBackFunction && (NSInteger)_currentTime - _intTime) {
         _intTime = _currentTime;
@@ -201,14 +205,12 @@
     }
 }
 
-#if !TARGET_OS_IPHONE
 //重设当前弹幕初始位置
 - (void)resetOriginalPosition:(CGRect)bounds {
     [self.activeContainer enumerateObjectsUsingBlock:^(DanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.originalPosition = [obj.danmaku originalPositonWithContainerArr:self.activeContainer channelCount:self.channelCount contentRect:bounds danmakuSize:obj.bounds.size timeDifference:_currentTime - obj.danmaku.appearTime];
     }];
 }
-#endif
 
 #pragma mark - 懒加载
 - (JHDanmakuClock *)clock {
@@ -244,14 +246,10 @@
 - (JHDanmakuCanvas *)canvas {
     if(_canvas == nil) {
         _canvas = [[JHDanmakuCanvas alloc] init];
-#if !TARGET_OS_IPHONE
         __weak typeof(self)weakSelf = self;
         [_canvas setResizeCallBackBlock:^(CGRect bounds) {
-            if (weakSelf.resetDanmakuPositionWhenCanvasSizeChange) {
-                [weakSelf resetOriginalPosition:bounds];
-            }
+            [weakSelf resetOriginalPosition:bounds];
         }];
-#endif
     }
     return _canvas;
 }

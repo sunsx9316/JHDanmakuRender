@@ -34,6 +34,7 @@
     self.aEngine.canvas.frame = self.danmakuHoldView.bounds;
     [self hideMenu];
 }
+
 - (IBAction)touchShowMenuButton:(UIButton *)sender {
     if (self.isMenuShow) {
         [self hideMenu];
@@ -42,6 +43,7 @@
     }
     
 }
+
 - (IBAction)touchSpeedButton:(UISlider *)sender {
     [self.aEngine setSpeed:sender.value];
 }
@@ -49,12 +51,15 @@
 - (IBAction)touchFontSizeButton:(UISlider *)sender {
     [self.aEngine setGlobalFont:[UIFont systemFontOfSize:sender.value]];
 }
+
 - (IBAction)touchDanmakuEdgeButton:(UISlider *)sender {
     self.aEngine.channelCount = sender.value;
 }
+
 - (IBAction)touchDanmakuTypeButton:(UIButton *)sender {
     [[[UIAlertView alloc] initWithTitle:@"弹幕类型" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"滚动弹幕",@"浮动弹幕", nil] show];
 }
+
 - (IBAction)touchDanmakuDirectionButton:(UIButton *)sender {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"弹幕方向" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil];
     
@@ -69,22 +74,27 @@
     }
     [alertView show];
 }
+
 - (IBAction)touchTimeOffsetStepper:(UIStepper *)sender {
     self.aEngine.offsetTime = sender.value;
     self.timeOffsetLabel.text = [NSString stringWithFormat:@"偏移: %d秒", (int)sender.value];
 }
+
 - (IBAction)touchTestDanmakuButton:(UIButton *)sender {
     [self.aEngine addAllDanmakusDic:self.DanmakuDic];
     //开启回退功能必须设置为yes
     self.aEngine.turnonBackFunction = YES;
     [self.aEngine start];
 }
+
 - (IBAction)touchStopButton:(UIButton *)sender {
     [self.aEngine stop];
 }
+
 - (IBAction)touchStartButton:(UIButton *)sender {
     [self.aEngine start];
 }
+
 - (IBAction)touchSuspandButton:(UIButton *)sender {
     [self.aEngine pause];
 }
@@ -102,7 +112,8 @@
         }
         
         [self.aEngine addDanmaku:[self scrollDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:dir speed:arc4random_uniform(100) + 50]];
-    }else{
+    }
+    else {
         NSString *str = self.danmakuDirectionLabel.text;
         floatDanmakuDirection dir = floatDanmakuDirectionB2T;
         if ([str isEqualToString:@"顶部弹幕"]) {
@@ -112,12 +123,12 @@
     }
 }
 
-
 #pragma mark - 私有方法
 //初始化一个浮动弹幕
 - (FloatDanmaku *)floatDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(floatDanmakuDirection)direction{
     return [[FloatDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:danmakuShadowStyleShadow font:nil during:3 direction:direction];
 }
+
 //初始化一个滚动弹幕
 - (ScrollDanmaku *)scrollDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(scrollDanmakuDirection)direction speed:(CGFloat)speed{
     return [[ScrollDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:danmakuShadowStyleShadow font:nil speed:speed direction:direction];
@@ -143,34 +154,36 @@
         self.danmakuTypeLabel.text = [alertView buttonTitleAtIndex:buttonIndex];
         if (buttonIndex == 1) {
             self.danmakuDirectionLabel.text = self.scrollDanmakuDirection.firstObject;
-        }else{
+        }
+        else {
             self.danmakuDirectionLabel.text = self.floatDanmakuDirection.firstObject;
         }
-    }else{
+    }
+    else {
         self.danmakuDirectionLabel.text = [alertView buttonTitleAtIndex:buttonIndex];
     }
 }
 
 #pragma mark - 懒加载
 - (JHDanmakuEngine *)aEngine {
-	if(_aEngine == nil) {
-		_aEngine = [[JHDanmakuEngine alloc] init];
-	}
-	return _aEngine;
+    if(_aEngine == nil) {
+        _aEngine = [[JHDanmakuEngine alloc] init];
+    }
+    return _aEngine;
 }
 
 - (NSArray *)scrollDanmakuDirection {
-	if(_scrollDanmakuDirection == nil) {
-		_scrollDanmakuDirection = @[@"右->左",@"左->右",@"上->下",@"下->上"];
-	}
-	return _scrollDanmakuDirection;
+    if(_scrollDanmakuDirection == nil) {
+        _scrollDanmakuDirection = @[@"右->左",@"左->右",@"上->下",@"下->上"];
+    }
+    return _scrollDanmakuDirection;
 }
 
 - (NSArray *)floatDanmakuDirection {
-	if(_floatDanmakuDirection == nil) {
-		_floatDanmakuDirection = @[@"底部弹幕",@"顶部弹幕"];
-	}
-	return _floatDanmakuDirection;
+    if(_floatDanmakuDirection == nil) {
+        _floatDanmakuDirection = @[@"底部弹幕",@"顶部弹幕"];
+    }
+    return _floatDanmakuDirection;
 }
 
 - (NSDictionary *)DanmakuDic {

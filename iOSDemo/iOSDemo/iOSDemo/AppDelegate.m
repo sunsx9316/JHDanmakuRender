@@ -1,9 +1,9 @@
 //
 //  AppDelegate.m
-//  IOSDemo
+//  iOSDemo
 //
-//  Created by JimHuang on 16/3/7.
-//  Copyright © 2016年 JimHuang. All rights reserved.
+//  Created by JimHuang on 16/8/17.
+//  Copyright © 2016年 jim. All rights reserved.
 //
 
 #import "AppDelegate.h"

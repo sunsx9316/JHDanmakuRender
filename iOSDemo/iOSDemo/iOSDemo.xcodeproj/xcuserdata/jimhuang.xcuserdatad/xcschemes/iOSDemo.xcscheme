@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0730"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "89470B2F1C8DA64800ECBE1B"
-               BuildableName = "IOSDemo.app"
-               BlueprintName = "IOSDemo"
-               ReferencedContainer = "container:IOSDemo.xcodeproj">
+               BlueprintIdentifier = "892FA5F21D644212007D1F05"
+               BuildableName = "iOSDemo.app"
+               BlueprintName = "iOSDemo"
+               ReferencedContainer = "container:iOSDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "89470B2F1C8DA64800ECBE1B"
-            BuildableName = "IOSDemo.app"
-            BlueprintName = "IOSDemo"
-            ReferencedContainer = "container:IOSDemo.xcodeproj">
+            BlueprintIdentifier = "892FA5F21D644212007D1F05"
+            BuildableName = "iOSDemo.app"
+            BlueprintName = "iOSDemo"
+            ReferencedContainer = "container:iOSDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "89470B2F1C8DA64800ECBE1B"
-            BuildableName = "IOSDemo.app"
-            BlueprintName = "IOSDemo"
-            ReferencedContainer = "container:IOSDemo.xcodeproj">
+            BlueprintIdentifier = "892FA5F21D644212007D1F05"
+            BuildableName = "iOSDemo.app"
+            BlueprintName = "iOSDemo"
+            ReferencedContainer = "container:iOSDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "89470B2F1C8DA64800ECBE1B"
-            BuildableName = "IOSDemo.app"
-            BlueprintName = "IOSDemo"
-            ReferencedContainer = "container:IOSDemo.xcodeproj">
+            BlueprintIdentifier = "892FA5F21D644212007D1F05"
+            BuildableName = "iOSDemo.app"
+            BlueprintName = "iOSDemo"
+            ReferencedContainer = "container:iOSDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

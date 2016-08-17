@@ -33,6 +33,7 @@
     self.aEngine.canvas.frame = self.danmakuHoldView.bounds;
 
 }
+
 - (IBAction)clickDanmakuTypeButton:(NSPopUpButton *)sender {
     [self.danmakuDirectionPopUpButton removeAllItems];
     if (sender.indexOfSelectedItem == 1) {
@@ -45,6 +46,7 @@
 - (IBAction)clickSpeedSlider:(NSSlider *)sender {
     [self.aEngine setSpeed:sender.floatValue];
 }
+
 - (IBAction)clickFontSizeSlider:(NSSlider *)sender {
     NSFont *font = [NSFont systemFontOfSize:sender.floatValue];
     [self.aEngine setGlobalFont:font];
@@ -61,20 +63,25 @@
         [self.aEngine addDanmaku:[self floatDanmakuWithFontSize:self.fontSizeSlider.floatValue textColor:[NSColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"浮动弹幕" direction:[self.danmakuDirectionPopUpButton indexOfSelectedItem] + 100]];
     }
 }
+
 - (IBAction)clickStopButton:(NSButton *)sender {
     [self.aEngine stop];
 }
+
 - (IBAction)clickStartButton:(NSButton *)sender {
     [self.aEngine start];
 }
+
 - (IBAction)clickSuspandButton:(NSButton *)sender {
     [self.aEngine pause];
 }
+
 - (IBAction)clickTimeStepper:(NSStepper *)sender {
     self.timeOffsetLabel.stringValue = [NSString stringWithFormat:@"偏移: %d秒", sender.intValue];
     
     self.aEngine.offsetTime = sender.floatValue;
 }
+
 - (IBAction)clickLoadTestDanmakuButton:(NSButton *)sender {
     [self.aEngine addAllDanmakusDic:self.DanmakuDic];
     //开启回退功能必须设置为yes
@@ -82,8 +89,6 @@
     [self.aEngine start];
     
 }
-
-
 
 #pragma mark - 私有方法
 //初始化一个浮动弹幕
@@ -99,6 +104,7 @@
 - (JHDanmakuEngine *)aEngine {
 	if(_aEngine == nil) {
 		_aEngine = [[JHDanmakuEngine alloc] init];
+        _aEngine.canvas.layoutStyle = JHDanmakuCanvasLayoutStyleWhenSizeChanged;
 	}
 	return _aEngine;
 }
