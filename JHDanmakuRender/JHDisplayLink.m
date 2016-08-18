@@ -11,23 +11,7 @@
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
 #else
-
 #import <QuartzCore/CVDisplayLink.h>
-#if OS_OBJECT_USE_OBJC_RETAIN_RELEASE
-
-static void
-JHDispatchRelease(__strong dispatch_object_t *var) {
-    *var = nil;
-}
-#else
-
-static void
-JHDispatchRelease(dispatch_object_t *var) {
-    dispatch_release(*var);
-    *var = NULL;
-}
-
-#endif
 #endif
 
 
@@ -48,8 +32,8 @@ typedef enum : unsigned {
     bool _isRunning;
     
     dispatch_queue_t _internalDispatchQueue;
-    
     dispatch_queue_t _stateChangeQueue;
+    dispatch_queue_t _clientDispatchQueue;
 #endif
     
 }
@@ -58,8 +42,6 @@ typedef enum : unsigned {
 
 @implementation JHDisplayLink
 
-@synthesize dispatchQueue = _clientDispatchQueue;
-
 - (instancetype)init{
     if (self = [super init]) {
 #if !TARGET_OS_IPHONE
@@ -67,14 +49,12 @@ typedef enum : unsigned {
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         assert(status == kCVReturnSuccess);
         
-        _stateChangeQueue = dispatch_queue_create("JHDisplayLink.stateChange",
-                                                  NULL);
+        _stateChangeQueue = dispatch_queue_create("JHDisplayLink.stateChange", NULL);
         _clientDispatchQueue = dispatch_get_main_queue();
         _internalDispatchQueue = dispatch_queue_create("JHDisplayLink", NULL);
         dispatch_set_target_queue(_internalDispatchQueue, _clientDispatchQueue);
         
-        CVDisplayLinkSetOutputCallback(_displayLink, JHDisplayLinkCallback,
-                                       (__bridge void*)self);
+        CVDisplayLinkSetOutputCallback(_displayLink, JHDisplayLinkCallback, (__bridge void * _Nullable)(self));
 #endif
     }
     
@@ -86,8 +66,8 @@ typedef enum : unsigned {
     [self stop];
 #else
     CVDisplayLinkRelease(_displayLink);
-    JHDispatchRelease(&_internalDispatchQueue);
-    JHDispatchRelease(&_stateChangeQueue);
+    _internalDispatchQueue = nil;
+    _stateChangeQueue = nil;
 #endif
 }
 
@@ -149,7 +129,7 @@ static CVReturn JHDisplayLinkCallback(CVDisplayLinkRef displayLink,
                                     kJHDisplayLinkIsRendering)) {
         self->_timeStamp = *inOutputTime;
         dispatch_async_f(self->_internalDispatchQueue,
-                         (void*)CFBridgingRetain(self),
+                         (void *)CFBridgingRetain(self),
                          JHDisplayLinkRender);
     }
     

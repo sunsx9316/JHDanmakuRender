@@ -58,9 +58,9 @@
 //发射弹幕
 - (IBAction)clickLaunchDanmakuButton:(NSButton *)sender {
     if ([self.danmakuTypePopUpButton indexOfSelectedItem] == 0) {
-        [self.aEngine addDanmaku:[self scrollDanmakuWithFontSize:self.fontSizeSlider.floatValue textColor:[NSColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:[self.danmakuDirectionPopUpButton indexOfSelectedItem] + 10 speed:arc4random_uniform(100) + 50]];
+        [self.aEngine sendDanmaku:[self scrollDanmakuWithFontSize:self.fontSizeSlider.floatValue textColor:[NSColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:[self.danmakuDirectionPopUpButton indexOfSelectedItem] + 10 speed:arc4random_uniform(100) + 50]];
     }else{
-        [self.aEngine addDanmaku:[self floatDanmakuWithFontSize:self.fontSizeSlider.floatValue textColor:[NSColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"浮动弹幕" direction:[self.danmakuDirectionPopUpButton indexOfSelectedItem] + 100]];
+        [self.aEngine sendDanmaku:[self floatDanmakuWithFontSize:self.fontSizeSlider.floatValue textColor:[NSColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"浮动弹幕" direction:[self.danmakuDirectionPopUpButton indexOfSelectedItem] + 100]];
     }
 }
 
@@ -83,7 +83,7 @@
 }
 
 - (IBAction)clickLoadTestDanmakuButton:(NSButton *)sender {
-    [self.aEngine addAllDanmakusDic:self.DanmakuDic];
+    [self.aEngine sendAllDanmakusDic:self.DanmakuDic];
     //开启回退功能必须设置为yes
     self.aEngine.turnonBackFunction = YES;
     [self.aEngine start];

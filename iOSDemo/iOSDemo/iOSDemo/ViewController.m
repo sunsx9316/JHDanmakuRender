@@ -81,7 +81,7 @@
 }
 
 - (IBAction)touchTestDanmakuButton:(UIButton *)sender {
-    [self.aEngine addAllDanmakusDic:self.DanmakuDic];
+    [self.aEngine sendAllDanmakusDic:self.DanmakuDic];
     //开启回退功能必须设置为yes
     self.aEngine.turnonBackFunction = YES;
     [self.aEngine start];
@@ -111,7 +111,7 @@
             dir = scrollDanmakuDirectionT2B;
         }
         
-        [self.aEngine addDanmaku:[self scrollDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:dir speed:arc4random_uniform(100) + 50]];
+        [self.aEngine sendDanmaku:[self scrollDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:dir speed:arc4random_uniform(100) + 50]];
     }
     else {
         NSString *str = self.danmakuDirectionLabel.text;
@@ -119,7 +119,7 @@
         if ([str isEqualToString:@"顶部弹幕"]) {
             dir = floatDanmakuDirectionT2B;
         }
-        [self.aEngine addDanmaku:[self floatDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"浮动弹幕" direction:dir]];
+        [self.aEngine sendDanmaku:[self floatDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"浮动弹幕" direction:dir]];
     }
 }
 
