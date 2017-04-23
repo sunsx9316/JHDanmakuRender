@@ -1,16 +1,18 @@
 //
-//  FloatDanmaku.h
+//  JHFloatDanmaku.h
 //  JHDanmakuRenderDemo
 //
 //  Created by JimHuang on 16/2/22.
 //  Copyright © 2016年 JimHuang. All rights reserved.
 //
-#import "ParentDanmaku.h"
-typedef NS_ENUM(NSUInteger, floatDanmakuDirection) {
-    floatDanmakuDirectionB2T = 100,
-    floatDanmakuDirectionT2B
+#import "JHBaseDanmaku.h"
+
+typedef NS_ENUM(NSUInteger, JHFloatDanmakuDirection) {
+    JHFloatDanmakuDirectionB2T = 100,
+    JHFloatDanmakuDirectionT2B
 };
-@interface FloatDanmaku : ParentDanmaku
+
+@interface JHFloatDanmaku : JHBaseDanmaku
 /**
  *  初始化 阴影 字体
  *
@@ -24,7 +26,7 @@ typedef NS_ENUM(NSUInteger, floatDanmakuDirection) {
  *
  *  @return self
  */
-- (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(danmakuShadowStyle)shadowStyle font:(JHFont *)font during:(CGFloat)during direction:(floatDanmakuDirection)direction;
+- (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font during:(CGFloat)during direction:(JHFloatDanmakuDirection)direction;
 - (CGFloat)during;
-- (floatDanmakuDirection)direction;
+- (JHFloatDanmakuDirection)direction;
 @end

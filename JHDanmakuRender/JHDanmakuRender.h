@@ -10,7 +10,7 @@
 #define JHDanmakuRender_h
 
 #import "JHDanmakuEngine.h"
-#import "FloatDanmaku.h"
-#import "ScrollDanmaku.h"
+#import "JHFloatDanmaku.h"
+#import "JHScrollDanmaku.h"
 
 #endif /* JHDanmakuRender_h */

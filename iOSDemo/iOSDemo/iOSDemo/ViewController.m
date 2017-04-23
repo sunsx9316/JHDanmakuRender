@@ -10,7 +10,7 @@
 #import "JHDanmakuRender.h"
 #import "DanMuDataFormatter.h"
 
-@interface ViewController ()<UIAlertViewDelegate>
+@interface ViewController ()<UIAlertViewDelegate, JHDanmakuEngineDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *danmakuTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *danmakuDirectionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeOffsetLabel;
@@ -22,10 +22,13 @@
 @property (assign, nonatomic, getter=isMenuShow) BOOL menuShow;
 @property (strong, nonatomic) NSArray *scrollDanmakuDirection;
 @property (strong, nonatomic) NSArray *floatDanmakuDirection;
-@property (strong, nonatomic) NSDictionary *DanmakuDic;
+@property (strong, nonatomic) NSDictionary *danmakuDic;
 @end
 
 @implementation ViewController
+{
+    BOOL _loadTestDanmakus;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -81,9 +84,7 @@
 }
 
 - (IBAction)touchTestDanmakuButton:(UIButton *)sender {
-    [self.aEngine sendAllDanmakusDic:self.DanmakuDic];
-    //开启回退功能必须设置为yes
-    self.aEngine.turnonBackFunction = YES;
+    _loadTestDanmakus = YES;
     [self.aEngine start];
 }
 
@@ -102,22 +103,22 @@
 - (IBAction)touchLaunchDanmakuButton:(UIButton *)sender {
     if ([self.danmakuTypeLabel.text isEqualToString:@"滚动弹幕"]) {
         NSString *str = self.danmakuDirectionLabel.text;
-        scrollDanmakuDirection dir = scrollDanmakuDirectionB2T;
+        JHScrollDanmakuDirection dir = JHScrollDanmakuDirectionB2T;
         if ([str isEqualToString:@"右->左"]) {
-            dir = scrollDanmakuDirectionR2L;
+            dir = JHScrollDanmakuDirectionR2L;
         }else if ([str isEqualToString:@"左->右"]){
-            dir = scrollDanmakuDirectionL2R;
+            dir = JHScrollDanmakuDirectionL2R;
         }else if ([str isEqualToString:@"上->下"]){
-            dir = scrollDanmakuDirectionT2B;
+            dir = JHScrollDanmakuDirectionT2B;
         }
         
         [self.aEngine sendDanmaku:[self scrollDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:dir speed:arc4random_uniform(100) + 50]];
     }
     else {
         NSString *str = self.danmakuDirectionLabel.text;
-        floatDanmakuDirection dir = floatDanmakuDirectionB2T;
+        JHFloatDanmakuDirection dir = JHFloatDanmakuDirectionB2T;
         if ([str isEqualToString:@"顶部弹幕"]) {
-            dir = floatDanmakuDirectionT2B;
+            dir = JHFloatDanmakuDirectionT2B;
         }
         [self.aEngine sendDanmaku:[self floatDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"浮动弹幕" direction:dir]];
     }
@@ -125,13 +126,13 @@
 
 #pragma mark - 私有方法
 //初始化一个浮动弹幕
-- (FloatDanmaku *)floatDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(floatDanmakuDirection)direction{
-    return [[FloatDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:danmakuShadowStyleShadow font:nil during:3 direction:direction];
+- (JHFloatDanmaku *)floatDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(JHFloatDanmakuDirection)direction{
+    return [[JHFloatDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:JHDanmakuShadowStyleShadow font:nil during:3 direction:direction];
 }
 
 //初始化一个滚动弹幕
-- (ScrollDanmaku *)scrollDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(scrollDanmakuDirection)direction speed:(CGFloat)speed{
-    return [[ScrollDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:danmakuShadowStyleShadow font:nil speed:speed direction:direction];
+- (JHScrollDanmaku *)scrollDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(JHScrollDanmakuDirection)direction speed:(CGFloat)speed{
+    return [[JHScrollDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:JHDanmakuShadowStyleShadow font:nil speed:speed direction:direction];
 }
 
 - (void)hideMenu{
@@ -164,10 +165,19 @@
     }
 }
 
+#pragma mark - JHDanmakuEngineDelegate
+- (NSArray <JHBaseDanmaku*>*)danmakuEngine:(JHDanmakuEngine *)danmakuEngine didSendDanmakuAtTime:(NSUInteger)time {
+    if (_loadTestDanmakus) {
+        return self.danmakuDic[@(time)];
+    }
+    return nil;
+}
+
 #pragma mark - 懒加载
 - (JHDanmakuEngine *)aEngine {
     if(_aEngine == nil) {
         _aEngine = [[JHDanmakuEngine alloc] init];
+        _aEngine.delegate = self;
     }
     return _aEngine;
 }
@@ -186,11 +196,11 @@
     return _floatDanmakuDirection;
 }
 
-- (NSDictionary *)DanmakuDic {
-    if(_DanmakuDic == nil) {
-        _DanmakuDic = [DanMuDataFormatter dicWithObj:[[NSData alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"xml"]]];
+- (NSDictionary *)danmakuDic {
+    if(_danmakuDic == nil) {
+        _danmakuDic = [DanMuDataFormatter dicWithObj:[[NSData alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"xml"]]];
     }
-    return _DanmakuDic;
+    return _danmakuDic;
 }
 
 @end

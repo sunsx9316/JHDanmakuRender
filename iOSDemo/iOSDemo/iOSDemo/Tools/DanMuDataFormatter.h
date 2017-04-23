@@ -8,7 +8,7 @@
 //
 #import "JHDanmakuEngine.h"
 
-@class ParentDanmaku;
+@class JHBaseDanmaku;
 
 @interface DanMuDataFormatter : NSObject
 /**

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JHDanmakuHeader.h"
+#import "JHDanmakuMacroDefinition.h"
 /**
  *  弹幕画布自动布局风格
  */

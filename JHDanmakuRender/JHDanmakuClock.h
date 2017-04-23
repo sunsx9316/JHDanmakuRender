@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JHDanmakuHeader.h"
+#import "JHDanmakuMacroDefinition.h"
 @class JHDanmakuClock;
 @protocol JHDanmakuClockDelegate <NSObject>
 - (void)danmakuClock:(JHDanmakuClock *)clock time:(NSTimeInterval)time;

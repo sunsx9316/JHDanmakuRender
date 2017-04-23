@@ -20,22 +20,22 @@
     NSTimeInterval _offsetTime;
 }
 
-- (void)start{
+- (void)start {
     _isStart = YES;
     [self.displayLink start];
 }
 
-- (void)stop{
+- (void)stop {
     _previousDate = nil;
     _currentTime = 0.0;
     [self.displayLink stop];
 }
 
-- (void)pause{
+- (void)pause {
     _isStart = NO;
 }
 
-- (void)setCurrentTime:(NSTimeInterval)currentTime{
+- (void)setCurrentTime:(NSTimeInterval)currentTime {
     if (currentTime >= 0) {
         _currentTime = currentTime;
     }
@@ -45,7 +45,7 @@
     _offsetTime = offsetTime;
 }
 
-- (void)updateTime{
+- (void)updateTime {
     NSDate *date = [NSDate date];
     _currentTime += [date timeIntervalSinceDate:self.previousDate] * _isStart;
     self.previousDate = date;
@@ -55,7 +55,7 @@
     }
 }
 
-- (void)displayLink:(JHDisplayLink *)displayLink didRequestFrameForTime:(const CVTimeStamp *)outputTimeStamp{
+- (void)displayLink:(JHDisplayLink *)displayLink didRequestFrameForTime:(const CVTimeStamp *)outputTimeStamp {
     [self updateTime];
 }
 

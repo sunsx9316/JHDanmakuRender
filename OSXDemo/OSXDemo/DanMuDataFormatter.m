@@ -8,22 +8,22 @@
 
 #import "DanMuDataFormatter.h"
 #import "DanMuDataModel.h"
-#import "ScrollDanmaku.h"
-#import "FloatDanmaku.h"
+#import "JHFloatDanmaku.h"
+#import "JHFloatDanmaku.h"
 #import "JHDanmakuEngine+Tools.h"
 #import "GDataXMLNode.h"
 
 typedef void(^callBackBlock)(DanMuDataModel *model);
 @implementation DanMuDataFormatter
 + (NSDictionary *)dicWithObj:(id)obj{
-    NSMutableDictionary <NSNumber *,NSMutableArray <ParentDanmaku *> *> *dic = [NSMutableDictionary dictionary];
+    NSMutableDictionary <NSNumber *,NSMutableArray <JHBaseDanmaku *> *> *dic = [NSMutableDictionary dictionary];
     
     NSFont *font = [NSFont systemFontOfSize:25];
-    NSInteger danMufontSpecially = danmakuShadowStyleNone;
+    NSInteger danMufontSpecially = JHDanmakuShadowStyleNone;
     [self danMuWithBilibiliData:obj block:^(DanMuDataModel *model) {
         NSInteger time = model.time;
         if (!dic[@(time)]) dic[@(time)] = [NSMutableArray array];
-        ParentDanmaku *danmaku = [JHDanmakuEngine DanmakuWithText:model.message color:model.color spiritStyle:model.mode shadowStyle:danMufontSpecially fontSize: font.pointSize font:font];
+        JHBaseDanmaku *danmaku = [JHDanmakuEngine DanmakuWithText:model.message color:model.color spiritStyle:model.mode shadowStyle:danMufontSpecially fontSize: font.pointSize font:font];
         danmaku.appearTime = model.time;
         [dic[@(time)] addObject: danmaku];
     }];

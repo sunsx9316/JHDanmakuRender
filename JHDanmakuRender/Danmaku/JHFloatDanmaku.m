@@ -1,21 +1,21 @@
 //
-//  FloatDanmaku.m
+//  JHFloatDanmaku.m
 //  JHDanmakuRenderDemo
 //
 //  Created by JimHuang on 16/2/22.
 //  Copyright © 2016年 JimHuang. All rights reserved.
 //
 
-#import "FloatDanmaku.h"
-#import "DanmakuContainer.h"
+#import "JHFloatDanmaku.h"
+#import "JHDanmakuContainer.h"
 
-@interface FloatDanmaku()
+@interface JHFloatDanmaku()
 @property (assign, nonatomic) CGFloat during;
-@property (assign, nonatomic) floatDanmakuDirection direction;
+@property (assign, nonatomic) JHFloatDanmakuDirection direction;
 @end
 
-@implementation FloatDanmaku
-- (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(danmakuShadowStyle)shadowStyle font:(JHFont *)font during:(CGFloat)during direction:(floatDanmakuDirection)direction{
+@implementation JHFloatDanmaku
+- (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font during:(CGFloat)during direction:(JHFloatDanmakuDirection)direction{
     
     if (self = [super initWithFontSize:fontSize textColor:textColor text:text shadowStyle:shadowStyle font:font]) {
         _direction = direction;
@@ -24,7 +24,7 @@
     return self;
 }
 
-- (BOOL)updatePositonWithTime:(NSTimeInterval)time container:(DanmakuContainer *)container{
+- (BOOL)updatePositonWithTime:(NSTimeInterval)time container:(JHDanmakuContainer *)container{
     return self.appearTime + _during >= time;
 }
 
@@ -34,15 +34,15 @@
  如果都有 选择弹幕最少的轨道
  *
  */
-- (CGPoint)originalPositonWithContainerArr:(NSArray <DanmakuContainer *>*)arr channelCount:(NSInteger)channelCount contentRect:(CGRect)rect danmakuSize:(CGSize)danmakuSize timeDifference:(NSTimeInterval)timeDifference{
-    NSMutableDictionary <NSNumber *, NSMutableArray <DanmakuContainer *>*>*dic = [NSMutableDictionary dictionary];
+- (CGPoint)originalPositonWithContainerArr:(NSArray <JHDanmakuContainer *>*)arr channelCount:(NSInteger)channelCount contentRect:(CGRect)rect danmakuSize:(CGSize)danmakuSize timeDifference:(NSTimeInterval)timeDifference{
+    NSMutableDictionary <NSNumber *, NSMutableArray <JHDanmakuContainer *>*>*dic = [NSMutableDictionary dictionary];
     channelCount = (channelCount == 0) ? [self channelCountWithContentRect:rect danmakuSize:danmakuSize] : channelCount;
     //轨道高
     NSInteger channelHeight = rect.size.height / channelCount;
     
     for (int i = 0; i < arr.count; ++i) {
-        DanmakuContainer *obj = arr[i];
-        if ([obj.danmaku isKindOfClass:[FloatDanmaku class]] && [(FloatDanmaku *)obj.danmaku direction] == _direction) {
+        JHDanmakuContainer *obj = arr[i];
+        if ([obj.danmaku isKindOfClass:[JHFloatDanmaku class]] && [(JHFloatDanmaku *)obj.danmaku direction] == _direction) {
             //判断弹幕所在轨道
             NSInteger channel = obj.frame.origin.y / channelHeight;
             
@@ -56,7 +56,7 @@
     //每条轨道都有弹幕
     if (dic.count == channelCount) {
         __block NSInteger minCount = dic[@(0)].count;
-        [dic enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSMutableArray<DanmakuContainer *> * _Nonnull obj, BOOL * _Nonnull stop) {
+        [dic enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSMutableArray<JHDanmakuContainer *> * _Nonnull obj, BOOL * _Nonnull stop) {
             if (minCount >= obj.count) {
                 minCount = obj.count;
                 channel = key.intValue;
@@ -66,7 +66,7 @@
 #if TARGET_OS_IPHONE
     else {
         //mac坐标原点为左下角 弹幕方向为上到下 按升序查找轨道
-        if (_direction == floatDanmakuDirectionT2B) {
+        if (_direction == JHFloatDanmakuDirectionT2B) {
             for (NSInteger i = 0; i < channelCount; ++i) {
                 if (!dic[@(i)]) {
                     channel = i;
@@ -86,7 +86,7 @@
 #elif TARGET_OS_MAC
     else {
         //mac坐标原点为左下角 弹幕方向为上到下 按降序查找轨道
-        if (_direction == floatDanmakuDirectionT2B) {
+        if (_direction == JHFloatDanmakuDirectionT2B) {
             for (NSInteger i = channelCount - 1; i >= 0; --i) {
                 if (!dic[@(i)]) {
                     channel = i;
@@ -112,7 +112,7 @@
     return _during;
 }
 
-- (floatDanmakuDirection)direction{
+- (JHFloatDanmakuDirection)direction{
     return _direction;
 }
 

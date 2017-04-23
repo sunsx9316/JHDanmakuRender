@@ -58,12 +58,4 @@
     }
 }
 
-//#if !TARGET_OS_IPHONE
-//- (void)resizeWithOldSuperviewSize:(NSSize)oldSize {
-//    [super resizeWithOldSuperviewSize:oldSize];
-//    if (self.resizeCallBackBlock) {
-//        self.resizeCallBackBlock(self.bounds);
-//    }
-//}
-//#endif
 @end

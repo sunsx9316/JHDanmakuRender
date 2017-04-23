@@ -11,7 +11,7 @@
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
 #else
-#import <QuartzCore/CVDisplayLink.h>
+#import <CoreVideo/CVDisplayLink.h>
 #endif
 
 

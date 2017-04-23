@@ -19,10 +19,10 @@
 		89470B061C8D9D2D00ECBE1B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 89470B051C8D9D2D00ECBE1B /* libxml2.tbd */; };
 		89470B091C8D9D9C00ECBE1B /* NSColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B081C8D9D9C00ECBE1B /* NSColor+Tools.m */; };
 		89470B0B1C8D9DDE00ECBE1B /* test.xml in Resources */ = {isa = PBXBuildFile; fileRef = 89470B0A1C8D9DDE00ECBE1B /* test.xml */; };
-		89470B1F1C8DA5C000ECBE1B /* FloatDanmaku.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B0F1C8DA5C000ECBE1B /* FloatDanmaku.m */; };
-		89470B201C8DA5C000ECBE1B /* ParentDanmaku.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B111C8DA5C000ECBE1B /* ParentDanmaku.m */; };
-		89470B211C8DA5C000ECBE1B /* ScrollDanmaku.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B131C8DA5C000ECBE1B /* ScrollDanmaku.m */; };
-		89470B221C8DA5C000ECBE1B /* DanmakuContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B151C8DA5C000ECBE1B /* DanmakuContainer.m */; };
+		89470B1F1C8DA5C000ECBE1B /* JHFloatDanmaku.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B0F1C8DA5C000ECBE1B /* JHFloatDanmaku.m */; };
+		89470B201C8DA5C000ECBE1B /* JHBaseDanmaku.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B111C8DA5C000ECBE1B /* JHBaseDanmaku.m */; };
+		89470B211C8DA5C000ECBE1B /* JHScrollDanmaku.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B131C8DA5C000ECBE1B /* JHScrollDanmaku.m */; };
+		89470B221C8DA5C000ECBE1B /* JHDanmakuContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B151C8DA5C000ECBE1B /* JHDanmakuContainer.m */; };
 		89470B231C8DA5C000ECBE1B /* JHDanmakuCanvas.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B171C8DA5C000ECBE1B /* JHDanmakuCanvas.m */; };
 		89470B241C8DA5C000ECBE1B /* JHDanmakuClock.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B191C8DA5C000ECBE1B /* JHDanmakuClock.m */; };
 		89470B251C8DA5C000ECBE1B /* JHDanmakuEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B1B1C8DA5C000ECBE1B /* JHDanmakuEngine.m */; };
@@ -51,14 +51,14 @@
 		89470B071C8D9D9C00ECBE1B /* NSColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Tools.h"; sourceTree = "<group>"; };
 		89470B081C8D9D9C00ECBE1B /* NSColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Tools.m"; sourceTree = "<group>"; };
 		89470B0A1C8D9DDE00ECBE1B /* test.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.xml; sourceTree = "<group>"; };
-		89470B0E1C8DA5C000ECBE1B /* FloatDanmaku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatDanmaku.h; sourceTree = "<group>"; };
-		89470B0F1C8DA5C000ECBE1B /* FloatDanmaku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatDanmaku.m; sourceTree = "<group>"; };
-		89470B101C8DA5C000ECBE1B /* ParentDanmaku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentDanmaku.h; sourceTree = "<group>"; };
-		89470B111C8DA5C000ECBE1B /* ParentDanmaku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentDanmaku.m; sourceTree = "<group>"; };
-		89470B121C8DA5C000ECBE1B /* ScrollDanmaku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollDanmaku.h; sourceTree = "<group>"; };
-		89470B131C8DA5C000ECBE1B /* ScrollDanmaku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollDanmaku.m; sourceTree = "<group>"; };
-		89470B141C8DA5C000ECBE1B /* DanmakuContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DanmakuContainer.h; sourceTree = "<group>"; };
-		89470B151C8DA5C000ECBE1B /* DanmakuContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DanmakuContainer.m; sourceTree = "<group>"; };
+		89470B0E1C8DA5C000ECBE1B /* JHFloatDanmaku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHFloatDanmaku.h; sourceTree = "<group>"; };
+		89470B0F1C8DA5C000ECBE1B /* JHFloatDanmaku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHFloatDanmaku.m; sourceTree = "<group>"; };
+		89470B101C8DA5C000ECBE1B /* JHBaseDanmaku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHBaseDanmaku.h; sourceTree = "<group>"; };
+		89470B111C8DA5C000ECBE1B /* JHBaseDanmaku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHBaseDanmaku.m; sourceTree = "<group>"; };
+		89470B121C8DA5C000ECBE1B /* JHScrollDanmaku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHScrollDanmaku.h; sourceTree = "<group>"; };
+		89470B131C8DA5C000ECBE1B /* JHScrollDanmaku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHScrollDanmaku.m; sourceTree = "<group>"; };
+		89470B141C8DA5C000ECBE1B /* JHDanmakuContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuContainer.h; sourceTree = "<group>"; };
+		89470B151C8DA5C000ECBE1B /* JHDanmakuContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDanmakuContainer.m; sourceTree = "<group>"; };
 		89470B161C8DA5C000ECBE1B /* JHDanmakuCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuCanvas.h; sourceTree = "<group>"; };
 		89470B171C8DA5C000ECBE1B /* JHDanmakuCanvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDanmakuCanvas.m; sourceTree = "<group>"; };
 		89470B181C8DA5C000ECBE1B /* JHDanmakuClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuClock.h; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		89470B1C1C8DA5C000ECBE1B /* JHDanmakuRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuRender.h; sourceTree = "<group>"; };
 		89470B1D1C8DA5C000ECBE1B /* JHDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDisplayLink.h; sourceTree = "<group>"; };
 		89470B1E1C8DA5C000ECBE1B /* JHDisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDisplayLink.m; sourceTree = "<group>"; };
-		896F228C1D031740000384BA /* JHDanmakuHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHDanmakuHeader.h; sourceTree = "<group>"; };
+		896F228C1D031740000384BA /* JHDanmakuMacroDefinition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHDanmakuMacroDefinition.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,9 +155,9 @@
 			isa = PBXGroup;
 			children = (
 				89470B0D1C8DA5C000ECBE1B /* Danmaku */,
-				896F228C1D031740000384BA /* JHDanmakuHeader.h */,
-				89470B141C8DA5C000ECBE1B /* DanmakuContainer.h */,
-				89470B151C8DA5C000ECBE1B /* DanmakuContainer.m */,
+				896F228C1D031740000384BA /* JHDanmakuMacroDefinition.h */,
+				89470B141C8DA5C000ECBE1B /* JHDanmakuContainer.h */,
+				89470B151C8DA5C000ECBE1B /* JHDanmakuContainer.m */,
 				89470B161C8DA5C000ECBE1B /* JHDanmakuCanvas.h */,
 				89470B171C8DA5C000ECBE1B /* JHDanmakuCanvas.m */,
 				89470B181C8DA5C000ECBE1B /* JHDanmakuClock.h */,
@@ -175,12 +175,12 @@
 		89470B0D1C8DA5C000ECBE1B /* Danmaku */ = {
 			isa = PBXGroup;
 			children = (
-				89470B0E1C8DA5C000ECBE1B /* FloatDanmaku.h */,
-				89470B0F1C8DA5C000ECBE1B /* FloatDanmaku.m */,
-				89470B101C8DA5C000ECBE1B /* ParentDanmaku.h */,
-				89470B111C8DA5C000ECBE1B /* ParentDanmaku.m */,
-				89470B121C8DA5C000ECBE1B /* ScrollDanmaku.h */,
-				89470B131C8DA5C000ECBE1B /* ScrollDanmaku.m */,
+				89470B101C8DA5C000ECBE1B /* JHBaseDanmaku.h */,
+				89470B111C8DA5C000ECBE1B /* JHBaseDanmaku.m */,
+				89470B0E1C8DA5C000ECBE1B /* JHFloatDanmaku.h */,
+				89470B0F1C8DA5C000ECBE1B /* JHFloatDanmaku.m */,
+				89470B121C8DA5C000ECBE1B /* JHScrollDanmaku.h */,
+				89470B131C8DA5C000ECBE1B /* JHScrollDanmaku.m */,
 			);
 			path = Danmaku;
 			sourceTree = "<group>";
@@ -211,7 +211,7 @@
 		8904F8671C8D731F0076C284 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = JimHuang;
 				TargetAttributes = {
 					8904F86E1C8D731F0076C284 = {
@@ -257,20 +257,20 @@
 			files = (
 				89470B261C8DA5C000ECBE1B /* JHDisplayLink.m in Sources */,
 				89470B041C8D9C7100ECBE1B /* GDataXMLNode.m in Sources */,
-				89470B221C8DA5C000ECBE1B /* DanmakuContainer.m in Sources */,
+				89470B221C8DA5C000ECBE1B /* JHDanmakuContainer.m in Sources */,
 				89470AFC1C8D9A6E00ECBE1B /* DanMuDataFormatter.m in Sources */,
-				89470B1F1C8DA5C000ECBE1B /* FloatDanmaku.m in Sources */,
+				89470B1F1C8DA5C000ECBE1B /* JHFloatDanmaku.m in Sources */,
 				89470B251C8DA5C000ECBE1B /* JHDanmakuEngine.m in Sources */,
 				89470B241C8DA5C000ECBE1B /* JHDanmakuClock.m in Sources */,
 				89470B091C8D9D9C00ECBE1B /* NSColor+Tools.m in Sources */,
 				8904F87A1C8D731F0076C284 /* ViewController.m in Sources */,
 				8904F8771C8D731F0076C284 /* main.m in Sources */,
 				89470B001C8D9B5700ECBE1B /* DanMuDataModel.m in Sources */,
-				89470B201C8DA5C000ECBE1B /* ParentDanmaku.m in Sources */,
+				89470B201C8DA5C000ECBE1B /* JHBaseDanmaku.m in Sources */,
 				89470AFD1C8D9A6E00ECBE1B /* JHDanmakuEngine+Tools.m in Sources */,
 				8904F8741C8D731F0076C284 /* AppDelegate.m in Sources */,
 				89470B231C8DA5C000ECBE1B /* JHDanmakuCanvas.m in Sources */,
-				89470B211C8DA5C000ECBE1B /* ScrollDanmaku.m in Sources */,
+				89470B211C8DA5C000ECBE1B /* JHScrollDanmaku.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,8 +301,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -344,8 +346,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
