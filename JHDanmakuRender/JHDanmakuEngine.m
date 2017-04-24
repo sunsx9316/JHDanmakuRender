@@ -11,6 +11,7 @@
 #import "JHDanmakuContainer.h"
 #import "JHFloatDanmaku.h"
 #import "JHFloatDanmaku.h"
+
 @interface JHDanmakuEngine()<JHDanmakuClockDelegate>
 @property (strong, nonatomic) JHDanmakuClock *clock;
 /**
@@ -45,6 +46,7 @@
 }
 
 - (void)stop {
+    _intTime = -_timeInterval;
     [self.clock stop];
     [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj removeFromSuperview];
@@ -66,6 +68,7 @@
 }
 
 - (void)setOffsetTime:(NSTimeInterval)offsetTime {
+    _intTime = -_timeInterval;
     [self.clock setOffsetTime:offsetTime];
     [self reloadPreDanmaku];
 }
@@ -77,6 +80,7 @@
 - (void)setCurrentTime:(NSTimeInterval)currentTime {
     if (currentTime < 0) return;
     _currentTime = currentTime;
+    _intTime = -_timeInterval;
     [self.clock setCurrentTime:currentTime];
     [self reloadPreDanmaku];
 }
@@ -93,6 +97,10 @@
     [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.danmaku.extraSpeed = _extraSpeed;
     }];
+}
+
+- (float)speed {
+    return _extraSpeed;
 }
 
 - (void)setGlobalAttributedDic:(NSDictionary *)globalAttributedDic {
@@ -206,9 +214,9 @@
     }
     else {
         [self.inactiveContainer removeObject:con];
-        [con setWithDanmaku:danmaku];
     }
     
+    [con setWithDanmaku:danmaku];
     con.originalPosition = [danmaku originalPositonWithContainerArr:self.activeContainer channelCount:self.channelCount contentRect:self.canvas.bounds danmakuSize:con.bounds.size timeDifference:_currentTime - danmaku.appearTime];
     [self.canvas addSubview: con];
     //将弹幕容器激活
@@ -244,7 +252,9 @@
         _canvas = [[JHDanmakuCanvas alloc] init];
         __weak typeof(self)weakSelf = self;
         [_canvas setResizeCallBackBlock:^(CGRect bounds) {
-            [weakSelf resetOriginalPosition:bounds];
+            __strong typeof(weakSelf)self = weakSelf;
+            if (!self) return;
+            [self resetOriginalPosition:bounds];
         }];
     }
     return _canvas;

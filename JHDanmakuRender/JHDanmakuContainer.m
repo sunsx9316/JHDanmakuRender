@@ -56,8 +56,14 @@
         self.jh_attributedText = [[NSMutableAttributedString alloc] initWithString:self.jh_attributedText.string attributes:globalAttributed];
     }
     
+    NSMutableDictionary *originalAttributed = nil;
+    if (self.jh_attributedText.length) {
+        originalAttributed = [self.jh_attributedText attributesAtIndex:0 effectiveRange:nil].mutableCopy;
+    }
+    else {
+        originalAttributed = [NSMutableDictionary dictionary];
+    }
     
-    NSMutableDictionary *originalAttributed = [self.jh_attributedText attributesAtIndex:0 effectiveRange:nil].mutableCopy;
     JHFont *font = [self.danmakuEngine globalFont];
     if (font) {
         originalAttributed[NSFontAttributeName] = font;

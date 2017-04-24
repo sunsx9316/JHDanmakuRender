@@ -76,12 +76,11 @@
  */
 @property (assign, nonatomic) JHDanmakuShadowStyle globalShadowStyle;
 
+
 /**
  全局速度 默认1.0
-
- @param speed 设置速度
  */
-- (void)setSpeed:(float)speed;
+@property (assign, nonatomic) float speed;
 
 /**
  开始计时器 暂停状态就是恢复运动
