@@ -24,5 +24,5 @@
 
 
 @protocol JHDisplayLinkDelegate <NSObject>
-- (void)displayLink:(JHDisplayLink *)displayLink didRequestFrameForTime:(const CVTimeStamp *)outputTimeStamp;
+- (void)displayLinkDidCallback;
 @end

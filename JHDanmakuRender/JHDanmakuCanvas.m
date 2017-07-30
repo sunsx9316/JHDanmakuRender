@@ -58,4 +58,12 @@
     }
 }
 
+
+/**
+ 翻转mac原点
+ */
+- (BOOL)isFlipped {
+    return YES;
+}
+
 @end

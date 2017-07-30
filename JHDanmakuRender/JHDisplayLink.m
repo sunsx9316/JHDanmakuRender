@@ -74,7 +74,7 @@ typedef enum : unsigned {
 - (void)start {
 #if TARGET_OS_IPHONE
     [self stop];
-    SEL selector = @selector(displayLink:didRequestFrameForTime:);
+    SEL selector = @selector(displayLinkDidCallback);
     if ([self.delegate respondsToSelector:selector]) {
         _IOSDisplayLink = [CADisplayLink displayLinkWithTarget:self.delegate selector:selector];
         [_IOSDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
@@ -139,8 +139,7 @@ static CVReturn JHDisplayLinkCallback(CVDisplayLinkRef displayLink,
 static void JHDisplayLinkRender(void *ctx) {
     JHDisplayLink *self = CFBridgingRelease(ctx);
     if (self->_isRunning) {
-        [self->_delegate displayLink:self
-              didRequestFrameForTime:&self->_timeStamp];
+        [self->_delegate displayLinkDidCallback];
     }
     __sync_fetch_and_and(&self->_atomicFlags, ~kJHDisplayLinkIsRendering);
 }

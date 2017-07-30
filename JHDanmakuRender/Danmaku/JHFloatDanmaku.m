@@ -63,9 +63,7 @@
             }
         }];
     }
-#if TARGET_OS_IPHONE
     else {
-        //mac坐标原点为左下角 弹幕方向为上到下 按升序查找轨道
         if (_direction == JHFloatDanmakuDirectionT2B) {
             for (NSInteger i = 0; i < channelCount; ++i) {
                 if (!dic[@(i)]) {
@@ -83,27 +81,6 @@
             }
         }
     }
-#elif TARGET_OS_MAC
-    else {
-        //mac坐标原点为左下角 弹幕方向为上到下 按降序查找轨道
-        if (_direction == JHFloatDanmakuDirectionT2B) {
-            for (NSInteger i = channelCount - 1; i >= 0; --i) {
-                if (!dic[@(i)]) {
-                    channel = i;
-                    break;
-                }
-            }
-        }
-        else{
-            for (NSInteger i = 0; i < channelCount; ++i) {
-                if (!dic[@(i)]) {
-                    channel = i;
-                    break;
-                }
-            }
-        }
-    }
-#endif
     return CGPointMake((rect.size.width - danmakuSize.width) / 2, channelHeight * channel);
 }
 

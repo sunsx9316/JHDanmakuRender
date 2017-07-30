@@ -30,6 +30,9 @@
  @return 是否发射
  */
 - (BOOL)danmakuEngine:(JHDanmakuEngine *)danmakuEngine shouldSendDanmaku:(__kindof JHBaseDanmaku *)danmaku;
+
+- (NSTimeInterval)engineTimeSystemFollowWithOuterTimeSystem;
+
 @end
 
 @interface JHDanmakuEngine : NSObject

@@ -55,7 +55,8 @@
     }
 }
 
-- (void)displayLink:(JHDisplayLink *)displayLink didRequestFrameForTime:(const CVTimeStamp *)outputTimeStamp {
+#pragma mark - JHDisplayLinkDelegate
+- (void)displayLinkDidCallback {
     [self updateTime];
 }
 

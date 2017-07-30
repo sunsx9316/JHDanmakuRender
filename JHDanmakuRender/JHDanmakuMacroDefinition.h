@@ -25,6 +25,8 @@ b;\
 })
 #define JHView UIView
 
+#define DANMAKU_MAX_CACHE_COUNT 20
+
 #else
 
 #import <Cocoa/Cocoa.h>
@@ -35,6 +37,8 @@ b;\
 #define JHFont NSFont
 #define JHColorBrightness(color) color.brightnessComponent
 #define JHView NSView
+
+#define DANMAKU_MAX_CACHE_COUNT 80
 #endif
 
 #endif /* JHDanmakuMacroDefinition_h */

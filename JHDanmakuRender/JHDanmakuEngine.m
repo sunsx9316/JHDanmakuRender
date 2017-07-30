@@ -12,6 +12,7 @@
 #import "JHFloatDanmaku.h"
 #import "JHFloatDanmaku.h"
 
+
 @interface JHDanmakuEngine()<JHDanmakuClockDelegate>
 @property (strong, nonatomic) JHDanmakuClock *clock;
 /**
@@ -135,15 +136,27 @@
 
 #pragma mark - JHDanmakuClockDelegate
 - (void)danmakuClock:(JHDanmakuClock *)clock time:(NSTimeInterval)time {
-    _currentTime = time;
-    //根据间隔获取一次弹幕 开启回退功能时启用
-    if ([self.delegate respondsToSelector:@selector(danmakuEngine:didSendDanmakuAtTime:)] && (NSInteger)_currentTime - _intTime >= _timeInterval) {
+    
+    if ([self.delegate respondsToSelector:@selector(engineTimeSystemFollowWithOuterTimeSystem)]) {
+        _currentTime = [self.delegate engineTimeSystemFollowWithOuterTimeSystem];
         _intTime = _currentTime;
         NSArray <JHBaseDanmaku*>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:_intTime];
         
         [danmakus enumerateObjectsUsingBlock:^(JHBaseDanmaku * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [self sendDanmaku:obj updateAppearTime:NO];
         }];
+    }
+    else {
+        _currentTime = time;
+        //根据间隔获取一次弹幕
+        if ([self.delegate respondsToSelector:@selector(danmakuEngine:didSendDanmakuAtTime:)] && (NSInteger)_currentTime - _intTime >= _timeInterval) {
+            _intTime = _currentTime;
+            NSArray <JHBaseDanmaku*>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:_intTime];
+            
+            [danmakus enumerateObjectsUsingBlock:^(JHBaseDanmaku * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self sendDanmaku:obj updateAppearTime:NO];
+            }];
+        }
     }
     
     //遍历激活的弹幕容器 逐一发射
@@ -152,7 +165,9 @@
         //如果弹幕移出屏幕或者到达显示时长 则移出画布 状态改为失活
         if ([container updatePositionWithTime:_currentTime] == NO) {
             [self.activeContainer removeObjectAtIndex:idx];
-            [self.inactiveContainer addObject:container];
+            if (self.inactiveContainer.count < DANMAKU_MAX_CACHE_COUNT) {
+                [self.inactiveContainer addObject:container];
+            }
             [container removeFromSuperview];
             container.danmaku.disappearTime = _currentTime;
         }

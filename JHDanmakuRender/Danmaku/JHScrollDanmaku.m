@@ -29,9 +29,11 @@
 #if TARGET_OS_IPHONE
         if (direction == JHScrollDanmakuDirectionT2B) {
             _direction = JHScrollDanmakuDirectionB2T;
-        }else if (direction == JHScrollDanmakuDirectionB2T) {
+        }
+        else if (direction == JHScrollDanmakuDirectionB2T) {
             _direction = JHScrollDanmakuDirectionT2B;
-        }else{
+        }
+        else {
             _direction = direction;
         }
 #else
@@ -127,21 +129,12 @@
         }
     }
     else {
-#if TARGET_OS_IPHONE
         for (NSInteger i = 0; i < channelCount; ++i) {
             if (!dic[@(i)]) {
                 channel = i;
                 break;
             }
         }
-#else
-        for (NSInteger i = channelCount - 1; i >= 0; --i) {
-            if (!dic[@(i)]) {
-                channel = i;
-                break;
-            }
-        }
-#endif
     }
     
     switch (_direction) {

@@ -87,9 +87,6 @@
 }
 
 - (IBAction)clickLoadTestDanmakuButton:(NSButton *)sender {
-//    [self.aEngine sendAllDanmakusDic:self.DanmakuDic];
-//    //开启回退功能必须设置为yes
-//    self.aEngine.turnonBackFunction = YES;
     _loadTestDanmakus = YES;
     [self.aEngine start];
     
