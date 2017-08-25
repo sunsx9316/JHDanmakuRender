@@ -10,7 +10,6 @@
 #import "JHDisplayLink.h"
 @interface JHDanmakuClock()<JHDisplayLinkDelegate>
 @property (strong, nonatomic) JHDisplayLink *displayLink;
-@property (strong, nonatomic) NSDate *previousDate;
 @end
 
 @implementation JHDanmakuClock
@@ -18,15 +17,17 @@
     BOOL _isStart;
     NSTimeInterval _currentTime;
     NSTimeInterval _offsetTime;
+    CFTimeInterval _previousDate;
 }
 
 - (void)start {
     _isStart = YES;
+    _previousDate = CACurrentMediaTime();
     [self.displayLink start];
 }
 
 - (void)stop {
-    _previousDate = nil;
+    _previousDate = 0;
     _currentTime = 0.0;
     [self.displayLink stop];
 }
@@ -46,9 +47,9 @@
 }
 
 - (void)updateTime {
-    NSDate *date = [NSDate date];
-    _currentTime += [date timeIntervalSinceDate:self.previousDate] * _isStart;
-    self.previousDate = date;
+    CFTimeInterval currentDate = CACurrentMediaTime();
+    _currentTime += (currentDate - _previousDate) * _isStart;
+    _previousDate = CACurrentMediaTime();
     
     if ([self.delegate respondsToSelector:@selector(danmakuClock:time:)]) {
         [self.delegate danmakuClock:self time:_currentTime + _offsetTime];
@@ -61,13 +62,6 @@
 }
 
 #pragma mark - 懒加载
-
-- (NSDate *)previousDate {
-    if(_previousDate == nil) {
-        _previousDate = [NSDate date];
-    }
-    return _previousDate;
-}
 
 - (JHDisplayLink *)displayLink {
     if(_displayLink == nil) {

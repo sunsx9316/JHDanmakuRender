@@ -27,6 +27,8 @@
 		89470B241C8DA5C000ECBE1B /* JHDanmakuClock.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B191C8DA5C000ECBE1B /* JHDanmakuClock.m */; };
 		89470B251C8DA5C000ECBE1B /* JHDanmakuEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B1B1C8DA5C000ECBE1B /* JHDanmakuEngine.m */; };
 		89470B261C8DA5C000ECBE1B /* JHDisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B1E1C8DA5C000ECBE1B /* JHDisplayLink.m */; };
+		89E8B5BE1F501045009CF325 /* JHBaseDanmaku+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5BD1F501045009CF325 /* JHBaseDanmaku+Private.m */; };
+		89E8B5C11F50138A009CF325 /* JHDanmakuEngine+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5C01F50138A009CF325 /* JHDanmakuEngine+Private.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,10 @@
 		89470B1D1C8DA5C000ECBE1B /* JHDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDisplayLink.h; sourceTree = "<group>"; };
 		89470B1E1C8DA5C000ECBE1B /* JHDisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDisplayLink.m; sourceTree = "<group>"; };
 		896F228C1D031740000384BA /* JHDanmakuMacroDefinition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHDanmakuMacroDefinition.h; sourceTree = "<group>"; };
+		89E8B5BC1F501045009CF325 /* JHBaseDanmaku+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JHBaseDanmaku+Private.h"; sourceTree = "<group>"; };
+		89E8B5BD1F501045009CF325 /* JHBaseDanmaku+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JHBaseDanmaku+Private.m"; sourceTree = "<group>"; };
+		89E8B5BF1F50138A009CF325 /* JHDanmakuEngine+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JHDanmakuEngine+Private.h"; sourceTree = "<group>"; };
+		89E8B5C01F50138A009CF325 /* JHDanmakuEngine+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JHDanmakuEngine+Private.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +160,7 @@
 		89470B0C1C8DA5C000ECBE1B /* JHDanmakuRender */ = {
 			isa = PBXGroup;
 			children = (
+				89E8B5B91F4FFB7B009CF325 /* Private */,
 				89470B0D1C8DA5C000ECBE1B /* Danmaku */,
 				896F228C1D031740000384BA /* JHDanmakuMacroDefinition.h */,
 				89470B141C8DA5C000ECBE1B /* JHDanmakuContainer.h */,
@@ -183,6 +190,17 @@
 				89470B131C8DA5C000ECBE1B /* JHScrollDanmaku.m */,
 			);
 			path = Danmaku;
+			sourceTree = "<group>";
+		};
+		89E8B5B91F4FFB7B009CF325 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				89E8B5BC1F501045009CF325 /* JHBaseDanmaku+Private.h */,
+				89E8B5BD1F501045009CF325 /* JHBaseDanmaku+Private.m */,
+				89E8B5BF1F50138A009CF325 /* JHDanmakuEngine+Private.h */,
+				89E8B5C01F50138A009CF325 /* JHDanmakuEngine+Private.m */,
+			);
+			path = Private;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +283,8 @@
 				89470B091C8D9D9C00ECBE1B /* NSColor+Tools.m in Sources */,
 				8904F87A1C8D731F0076C284 /* ViewController.m in Sources */,
 				8904F8771C8D731F0076C284 /* main.m in Sources */,
+				89E8B5BE1F501045009CF325 /* JHBaseDanmaku+Private.m in Sources */,
+				89E8B5C11F50138A009CF325 /* JHDanmakuEngine+Private.m in Sources */,
 				89470B001C8D9B5700ECBE1B /* DanMuDataModel.m in Sources */,
 				89470B201C8DA5C000ECBE1B /* JHBaseDanmaku.m in Sources */,
 				89470AFD1C8D9A6E00ECBE1B /* JHDanmakuEngine+Tools.m in Sources */,

@@ -26,10 +26,12 @@
     return self;
 }
 
+- (id<CAAction>)actionForKey:(NSString *)event {
+    return nil;
+}
+
 - (void)setWithDanmaku:(JHBaseDanmaku *)danmaku {
     _danmaku = danmaku;
-    self.textColor = danmaku.textColor;
-    self.jh_text = danmaku.text ? danmaku.text : @"";
     self.jh_attributedText = danmaku.attributedString;
     [self updateAttributed];
 }
@@ -50,9 +52,8 @@
 }
 
 - (void)updateAttributed {
-    
     NSDictionary *globalAttributed = [self.danmakuEngine globalAttributedDic];
-    if (globalAttributed && self.jh_text.length) {
+    if (globalAttributed && self.jh_attributedText.length) {
         self.jh_attributedText = [[NSMutableAttributedString alloc] initWithString:self.jh_attributedText.string attributes:globalAttributed];
     }
     

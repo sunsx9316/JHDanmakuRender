@@ -24,12 +24,14 @@ CGFloat b;\
 b;\
 })
 #define JHView UIView
-
 #define DANMAKU_MAX_CACHE_COUNT 20
+#define JHSCALE [UIScreen mainScreen].scale
 
 #else
 
 #import <Cocoa/Cocoa.h>
+#import <Quartz/Quartz.h>
+
 #define JHLabel NSTextField
 #define jh_attributedText attributedStringValue
 #define jh_text stringValue
@@ -37,8 +39,9 @@ b;\
 #define JHFont NSFont
 #define JHColorBrightness(color) color.brightnessComponent
 #define JHView NSView
-
 #define DANMAKU_MAX_CACHE_COUNT 80
+#define JHSCALE [NSScreen mainScreen].backingScaleFactor
+
 #endif
 
 #endif /* JHDanmakuMacroDefinition_h */

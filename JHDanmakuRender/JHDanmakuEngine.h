@@ -31,6 +31,11 @@
  */
 - (BOOL)danmakuEngine:(JHDanmakuEngine *)danmakuEngine shouldSendDanmaku:(__kindof JHBaseDanmaku *)danmaku;
 
+/**
+ 使用外部时间系统
+
+ @return 外部时间
+ */
 - (NSTimeInterval)engineTimeSystemFollowWithOuterTimeSystem;
 
 @end

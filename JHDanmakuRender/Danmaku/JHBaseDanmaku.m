@@ -7,7 +7,7 @@
 //
 
 #import "JHBaseDanmaku.h"
-
+#import "JHDanmakuEngine+Private.h"
 
 @implementation JHBaseDanmaku
 
@@ -16,7 +16,7 @@
         //字体为空根据fontSize初始化
         if (!font) font = [JHFont systemFontOfSize: fontSize];
         if (!text) text = @"";
-        if (!textColor) textColor = [JHColor colorWithRed:0 green:0 blue:0 alpha:1];
+        if (!textColor) textColor = [JHColor blackColor];
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         dic[NSFontAttributeName] = font;
@@ -63,7 +63,13 @@
  *
  *  @return 弹幕初始位置
  */
-- (CGPoint)originalPositonWithContainerArr:(NSArray <JHDanmakuContainer *>*)arr channelCount:(NSInteger)channelCount contentRect:(CGRect)rect danmakuSize:(CGSize)danmakuSize timeDifference:(NSTimeInterval)timeDifference {
+//- (CGPoint)originalPositonWithContainerArr:(NSArray <JHDanmakuContainer *>*)arr channelCount:(NSInteger)channelCount contentRect:(CGRect)rect danmakuSize:(CGSize)danmakuSize timeDifference:(NSTimeInterval)timeDifference {
+//    return CGPointZero;
+//}
+- (CGPoint)originalPositonWithEngine:(JHDanmakuEngine *)engine
+                                rect:(CGRect)rect
+                         danmakuSize:(CGSize)danmakuSize
+                      timeDifference:(NSTimeInterval)timeDifference {
     return CGPointZero;
 }
 

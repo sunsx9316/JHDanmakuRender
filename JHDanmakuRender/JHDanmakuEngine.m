@@ -11,7 +11,7 @@
 #import "JHDanmakuContainer.h"
 #import "JHFloatDanmaku.h"
 #import "JHFloatDanmaku.h"
-
+#import "JHBaseDanmaku+Private.h"
 
 @interface JHDanmakuEngine()<JHDanmakuClockDelegate>
 @property (strong, nonatomic) JHDanmakuClock *clock;
@@ -23,6 +23,8 @@
  *  当前激活的弹幕
  */
 @property (strong, nonatomic) NSMutableArray <JHDanmakuContainer *>*activeContainer;
+
+@property (strong, nonatomic) NSDictionary <NSNumber *, NSMutableDictionary <NSNumber *, NSNumber *> *>*channelDic;
 
 @end
 
@@ -136,7 +138,7 @@
 
 #pragma mark - JHDanmakuClockDelegate
 - (void)danmakuClock:(JHDanmakuClock *)clock time:(NSTimeInterval)time {
-    
+    //是否启用外部时间
     if ([self.delegate respondsToSelector:@selector(engineTimeSystemFollowWithOuterTimeSystem)]) {
         _currentTime = [self.delegate engineTimeSystemFollowWithOuterTimeSystem];
         _intTime = _currentTime;
@@ -164,12 +166,25 @@
     [danmakus enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(JHDanmakuContainer * _Nonnull container, NSUInteger idx, BOOL * _Nonnull stop) {
         //如果弹幕移出屏幕或者到达显示时长 则移出画布 状态改为失活
         if ([container updatePositionWithTime:_currentTime] == NO) {
+            JHBaseDanmaku *aDanmaku = container.danmaku;
+            NSMutableDictionary <NSNumber *, NSNumber *>*dic = self.channelDic[@(aDanmaku.channelDirectionType)];
+            
             [self.activeContainer removeObjectAtIndex:idx];
+            //当前轨道弹幕数量-1
+            NSInteger count = dic[@(aDanmaku.currentChannel)].integerValue;
+            count--;
+            if (count <= 0) {
+                dic[@(aDanmaku.currentChannel)] = nil;
+            }
+            else {
+                dic[@(aDanmaku.currentChannel)] = @(count);
+            }
+            
             if (self.inactiveContainer.count < DANMAKU_MAX_CACHE_COUNT) {
                 [self.inactiveContainer addObject:container];
             }
             [container removeFromSuperview];
-            container.danmaku.disappearTime = _currentTime;
+            aDanmaku.disappearTime = _currentTime;
         }
     }];
 }
@@ -197,7 +212,7 @@
 //重设当前弹幕初始位置
 - (void)resetOriginalPosition:(CGRect)bounds {
     [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.originalPosition = [obj.danmaku originalPositonWithContainerArr:self.activeContainer channelCount:self.channelCount contentRect:bounds danmakuSize:obj.bounds.size timeDifference:_currentTime - obj.danmaku.appearTime];
+        [obj.danmaku originalPositonWithEngine:self rect:bounds danmakuSize:obj.bounds.size timeDifference:_currentTime - obj.danmaku.appearTime];
     }];
 }
 
@@ -232,8 +247,18 @@
     }
     
     [con setWithDanmaku:danmaku];
-    con.originalPosition = [danmaku originalPositonWithContainerArr:self.activeContainer channelCount:self.channelCount contentRect:self.canvas.bounds danmakuSize:con.bounds.size timeDifference:_currentTime - danmaku.appearTime];
-    [self.canvas addSubview: con];
+    con.originalPosition = [con.danmaku originalPositonWithEngine:self rect:self.canvas.bounds danmakuSize:con.bounds.size timeDifference:_currentTime - danmaku.appearTime];
+    
+    //增加对应轨道弹幕数量
+    NSMutableDictionary <NSNumber *,NSNumber *>*dic = self.channelDic[@(danmaku.channelDirectionType)];
+    if (dic == nil) {
+        dic = [NSMutableDictionary dictionary];
+    }
+    NSInteger count = [dic[@(danmaku.currentChannel)] integerValue];
+    count++;
+    dic[@(danmaku.currentChannel)] = @(count);
+    
+    [self.canvas addSubview:con];
     //将弹幕容器激活
     [self.activeContainer addObject:con];
 }
@@ -269,10 +294,19 @@
         [_canvas setResizeCallBackBlock:^(CGRect bounds) {
             __strong typeof(weakSelf)self = weakSelf;
             if (!self) return;
+            self.channelDic = nil;
+            
             [self resetOriginalPosition:bounds];
         }];
     }
     return _canvas;
+}
+
+- (NSDictionary<NSNumber *,NSMutableDictionary<NSNumber *,NSNumber *> *> *)channelDic {
+    if (_channelDic == nil) {
+        _channelDic = @{@(ChannelDirectionTypeVertical) : @{}.mutableCopy, @(ChannelDirectionTypeHorizontal) : @{}.mutableCopy};
+    }
+    return _channelDic;
 }
 
 @end
