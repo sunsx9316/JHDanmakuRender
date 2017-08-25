@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C3BF202A4832DBB20518C634534AEE421BE291C3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C3BF202A4832DBB20518C634534AEE421BE291C3" : 9223372036854775807,
+    "DA5AF25BF897C975E959CC78ECAB655835334280" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "FC3FFE2E-B526-4D1D-871F-DE4BA6DF8D4A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C3BF202A4832DBB20518C634534AEE421BE291C3" : "JHDanmakuRender\/",
+    "DA5AF25BF897C975E959CC78ECAB655835334280" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "OSXDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "OSXDemo\/OSXDemo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/sunsx9316\/JHDanmakuRender.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3BF202A4832DBB20518C634534AEE421BE291C3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/dev.tjconvoy.com:8888\/tfs\/DefaultCollection\/_git\/mydoctorios",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DA5AF25BF897C975E959CC78ECAB655835334280"
+    }
+  ]
+}
