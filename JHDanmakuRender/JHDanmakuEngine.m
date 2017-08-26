@@ -106,6 +106,14 @@
     return _extraSpeed;
 }
 
+- (void)setSystemSpeed:(float)systemSpeed {
+    self.clock.speed = systemSpeed;
+}
+
+- (float)systemSpeed {
+    return self.clock.speed;
+}
+
 - (void)setGlobalAttributedDic:(NSDictionary *)globalAttributedDic {
     if ([_globalAttributedDic isEqualToDictionary:globalAttributedDic] == NO) {
         _globalAttributedDic = globalAttributedDic;
@@ -190,7 +198,7 @@
 }
 
 #pragma mark - 私有方法
-//预加载前5秒的弹幕
+//加载当前时间显示的弹幕弹幕
 - (void)reloadPreDanmaku {
     if ([self.delegate respondsToSelector:@selector(danmakuEngine:didSendDanmakuAtTime:)]) {
         //移除当前显示的弹幕
@@ -198,14 +206,50 @@
             [obj removeFromSuperview];
         }];
         [self.activeContainer removeAllObjects];
+        self.channelDic = nil;
         
-        for (NSInteger i = 1; i <= 5; ++i) {
+        __block BOOL flag = NO;
+        NSMutableArray <JHBaseDanmaku *>*sendDanmakus = [NSMutableArray array];
+        for (NSInteger i = 1; i <= _currentTime; ++i) {
             NSInteger time = _currentTime - i;
             NSArray <JHBaseDanmaku *>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:time];
+            flag = NO;
             [danmakus enumerateObjectsUsingBlock:^(JHBaseDanmaku * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [self sendDanmaku:obj updateAppearTime:NO];
+                if (obj.disappearTime == 0) {
+                    //计算当前弹幕消失时间
+                    if ([obj isKindOfClass:[JHFloatDanmaku class]]) {
+                        JHFloatDanmaku *floatDanmaku = (JHFloatDanmaku *)obj;
+                        obj.disappearTime = floatDanmaku.appearTime + floatDanmaku.during;
+                    }
+                    else {
+                        JHScrollDanmaku *scrollDanmaku = (JHScrollDanmaku *)obj;
+                        float speed = scrollDanmaku.speed + scrollDanmaku.extraSpeed;
+                        CGSize size = scrollDanmaku.contentSize;
+                        float distance = 0;
+                        if (scrollDanmaku.direction == JHScrollDanmakuDirectionB2T || scrollDanmaku.direction == JHScrollDanmakuDirectionT2B) {
+                            distance = self.canvas.frame.size.height + size.height;
+                        }
+                        else {
+                            distance = self.canvas.frame.size.width + size.width;
+                        }
+                        
+                        obj.disappearTime = distance / speed + scrollDanmaku.appearTime;
+                    }
+                }
+                
+                if (obj.disappearTime > _currentTime) {
+                    [sendDanmakus addObject:obj];
+                    flag = YES;
+                }
             }];
+            
+            //当前没有弹幕在时间区间内
+            if (flag == NO) break;
         }
+        
+        [sendDanmakus enumerateObjectsUsingBlock:^(JHBaseDanmaku * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self sendDanmaku:obj updateAppearTime:NO];
+        }];
     }
 }
 

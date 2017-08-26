@@ -20,6 +20,13 @@
     CFTimeInterval _previousDate;
 }
 
+- (instancetype)init {
+    if (self = [super init]) {
+        _speed = 1.0;
+    }
+    return self;
+}
+
 - (void)start {
     _isStart = YES;
     _previousDate = CACurrentMediaTime();
@@ -48,7 +55,7 @@
 
 - (void)updateTime {
     CFTimeInterval currentDate = CACurrentMediaTime();
-    _currentTime += (currentDate - _previousDate) * _isStart;
+    _currentTime += (currentDate - _previousDate) * _speed * _isStart;
     _previousDate = CACurrentMediaTime();
     
     if ([self.delegate respondsToSelector:@selector(danmakuClock:time:)]) {

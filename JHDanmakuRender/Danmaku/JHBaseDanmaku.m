@@ -52,20 +52,6 @@
     return NO;
 }
 
-/**
- *  获取当前弹幕初始位置
- *
- *  @param arr            所有弹幕容器的数组
- *  @param channelCount   平分窗口的个数
- *  @param rect           窗口大小
- *  @param danmakuSize    弹幕尺寸
- *  @param timeDifference 弹幕出现时间与当前时间的时间差 回退功能需要使用
- *
- *  @return 弹幕初始位置
- */
-//- (CGPoint)originalPositonWithContainerArr:(NSArray <JHDanmakuContainer *>*)arr channelCount:(NSInteger)channelCount contentRect:(CGRect)rect danmakuSize:(CGSize)danmakuSize timeDifference:(NSTimeInterval)timeDifference {
-//    return CGPointZero;
-//}
 - (CGPoint)originalPositonWithEngine:(JHDanmakuEngine *)engine
                                 rect:(CGRect)rect
                          danmakuSize:(CGSize)danmakuSize
@@ -82,8 +68,16 @@
     
     return [_attributedString attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
 }
+
 - (NSAttributedString *)attributedString {
     return _attributedString;
+}
+
+- (CGSize)contentSize {
+    if (CGSizeEqualToSize(_contentSize, CGSizeZero)) {
+        _contentSize = [_attributedString boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+    }
+    return _contentSize;
 }
 
 #pragma mark - 私有方法

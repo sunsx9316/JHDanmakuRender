@@ -30,6 +30,8 @@ typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
 //当前所在轨道
 @property (assign, nonatomic) NSInteger currentChannel;
 
+@property (assign, nonatomic) CGSize contentSize;
+
 - (NSString *)text;
 - (JHColor *)textColor;
 
@@ -55,11 +57,16 @@ typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
  *
  *  @return 是否处于激活状态
  */
-- (BOOL)updatePositonWithTime:(NSTimeInterval)time container:(JHDanmakuContainer *)container;
+- (BOOL)updatePositonWithTime:(NSTimeInterval)time
+                    container:(JHDanmakuContainer *)container;
 /**
  *  父类方法 不要使用
  */
-- (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font;
+- (instancetype)initWithFontSize:(CGFloat)fontSize
+                       textColor:(JHColor *)textColor
+                            text:(NSString *)text
+                     shadowStyle:(JHDanmakuShadowStyle)shadowStyle
+                            font:(JHFont *)font;
 
 
 @end

@@ -9,6 +9,7 @@
 #import "JHBaseDanmaku.h"
 #import "JHDanmakuEngine+Private.h"
 
+@class JHDanmakuContainer;
 @interface JHBaseDanmaku (Private)
 @property (assign, nonatomic, readonly) ChannelDirectionType channelDirectionType;
 @end

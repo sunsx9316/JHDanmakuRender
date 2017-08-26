@@ -8,6 +8,7 @@
 
 #import "JHDanmakuContainer.h"
 #import "JHDanmakuEngine.h"
+#import "JHBaseDanmaku+Private.h"
 
 @implementation JHDanmakuContainer
 {

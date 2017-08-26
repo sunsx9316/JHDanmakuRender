@@ -11,11 +11,11 @@
 #import "JHBaseDanmaku+Private.h"
 
 //当前窗口大小
-#if TARGET_OS_IPHONE
-#define kWindowFrame [UIScreen mainScreen].bounds
-#else
-#define kWindowFrame NSApp.keyWindow.frame
-#endif
+//#if TARGET_OS_IPHONE
+//#define kWindowFrame [UIScreen mainScreen].bounds
+//#else
+//#define kWindowFrame NSApp.keyWindow.frame
+//#endif
 
 @interface JHScrollDanmaku()
 @property (assign, nonatomic) CGFloat speed;
@@ -27,7 +27,13 @@
     NSInteger _currentChannel;
 }
 
-- (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font speed:(CGFloat)speed direction:(JHScrollDanmakuDirection)direction {
+- (instancetype)initWithFontSize:(CGFloat)fontSize
+                       textColor:(JHColor *)textColor
+                            text:(NSString *)text
+                     shadowStyle:(JHDanmakuShadowStyle)shadowStyle
+                            font:(JHFont *)font
+                           speed:(CGFloat)speed
+                       direction:(JHScrollDanmakuDirection)direction {
     if (self = [super initWithFontSize:fontSize textColor:textColor text:text shadowStyle:shadowStyle font:font]) {
         _speed = speed;
         _direction = direction;
@@ -35,8 +41,8 @@
     return self;
 }
 
-- (BOOL)updatePositonWithTime:(NSTimeInterval)time container:(JHDanmakuContainer *)container{
-    CGRect windowFrame = kWindowFrame;
+- (BOOL)updatePositonWithTime:(NSTimeInterval)time container:(JHDanmakuContainer *)container {
+    CGRect windowFrame = container.danmakuEngine.canvas.frame;
     CGRect containerFrame = container.frame;
     CGPoint point = container.originalPosition;
     
@@ -46,7 +52,7 @@
             point.x -= (_speed * self.extraSpeed) * (time - self.appearTime);
             containerFrame.origin = point;
             container.frame = containerFrame;
-            return containerFrame.origin.x + containerFrame.size.width >= 0;
+            return CGRectGetMaxX(containerFrame) >= 0;
         }
         case JHScrollDanmakuDirectionL2R:
         {

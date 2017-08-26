@@ -29,7 +29,13 @@ typedef NS_ENUM(NSUInteger, JHScrollDanmakuDirection) {
  *
  *  @return self
  */
-- (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font speed:(CGFloat)speed direction:(JHScrollDanmakuDirection)direction;
+- (instancetype)initWithFontSize:(CGFloat)fontSize
+                       textColor:(JHColor *)textColor
+                            text:(NSString *)text
+                     shadowStyle:(JHDanmakuShadowStyle)shadowStyle
+                            font:(JHFont *)font
+                           speed:(CGFloat)speed
+                       direction:(JHScrollDanmakuDirection)direction;
 - (CGFloat)speed;
 - (JHScrollDanmakuDirection)direction;
 @end
