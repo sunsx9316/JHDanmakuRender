@@ -10,8 +10,6 @@
 #import "JHDanmakuClock.h"
 #import "JHDanmakuContainer.h"
 #import "JHFloatDanmaku.h"
-#import "JHFloatDanmaku.h"
-#import "JHBaseDanmaku+Private.h"
 
 @interface JHDanmakuEngine()<JHDanmakuClockDelegate>
 @property (strong, nonatomic) JHDanmakuClock *clock;
@@ -23,9 +21,6 @@
  *  当前激活的弹幕
  */
 @property (strong, nonatomic) NSMutableArray <JHDanmakuContainer *>*activeContainer;
-
-@property (strong, nonatomic) NSDictionary <NSNumber *, NSMutableDictionary <NSNumber *, NSNumber *> *>*channelDic;
-
 @end
 
 @implementation JHDanmakuEngine
@@ -33,12 +28,14 @@
     //用于记录当前时间的整数值
     NSInteger _intTime;
     float _extraSpeed;
+    dispatch_queue_t _queue;
 }
 
 - (instancetype)init {
     if (self = [super init]) {
         _intTime = -1;
         _timeInterval = 1;
+        _queue = dispatch_queue_create("JHDanmakuEngine.queue", DISPATCH_QUEUE_SERIAL);
         [self setSpeed: 1.0];
     }
     return self;
@@ -175,18 +172,8 @@
         //如果弹幕移出屏幕或者到达显示时长 则移出画布 状态改为失活
         if ([container updatePositionWithTime:_currentTime] == NO) {
             JHBaseDanmaku *aDanmaku = container.danmaku;
-            NSMutableDictionary <NSNumber *, NSNumber *>*dic = self.channelDic[@(aDanmaku.channelDirectionType)];
             
             [self.activeContainer removeObjectAtIndex:idx];
-            //当前轨道弹幕数量-1
-            NSInteger count = dic[@(aDanmaku.currentChannel)].integerValue;
-            count--;
-            if (count <= 0) {
-                dic[@(aDanmaku.currentChannel)] = nil;
-            }
-            else {
-                dic[@(aDanmaku.currentChannel)] = @(count);
-            }
             
             if (self.inactiveContainer.count < DANMAKU_MAX_CACHE_COUNT) {
                 [self.inactiveContainer addObject:container];
@@ -206,57 +193,23 @@
             [obj removeFromSuperview];
         }];
         [self.activeContainer removeAllObjects];
-        self.channelDic = nil;
         
-        __block BOOL flag = NO;
-        NSMutableArray <JHBaseDanmaku *>*sendDanmakus = [NSMutableArray array];
-        for (NSInteger i = 1; i <= _currentTime; ++i) {
+//        __block BOOL flag = NO;
+//        NSMutableArray <JHBaseDanmaku *>*sendDanmakus = [NSMutableArray array];
+        for (NSInteger i = 1; i < 5; ++i) {
             NSInteger time = _currentTime - i;
             NSArray <JHBaseDanmaku *>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:time];
-            flag = NO;
             [danmakus enumerateObjectsUsingBlock:^(JHBaseDanmaku * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (obj.disappearTime == 0) {
-                    //计算当前弹幕消失时间
-                    if ([obj isKindOfClass:[JHFloatDanmaku class]]) {
-                        JHFloatDanmaku *floatDanmaku = (JHFloatDanmaku *)obj;
-                        obj.disappearTime = floatDanmaku.appearTime + floatDanmaku.during;
-                    }
-                    else {
-                        JHScrollDanmaku *scrollDanmaku = (JHScrollDanmaku *)obj;
-                        float speed = scrollDanmaku.speed + scrollDanmaku.extraSpeed;
-                        CGSize size = scrollDanmaku.contentSize;
-                        float distance = 0;
-                        if (scrollDanmaku.direction == JHScrollDanmakuDirectionB2T || scrollDanmaku.direction == JHScrollDanmakuDirectionT2B) {
-                            distance = self.canvas.frame.size.height + size.height;
-                        }
-                        else {
-                            distance = self.canvas.frame.size.width + size.width;
-                        }
-                        
-                        obj.disappearTime = distance / speed + scrollDanmaku.appearTime;
-                    }
-                }
-                
-                if (obj.disappearTime > _currentTime) {
-                    [sendDanmakus addObject:obj];
-                    flag = YES;
-                }
+                [self sendDanmaku:obj updateAppearTime:NO];
             }];
-            
-            //当前没有弹幕在时间区间内
-            if (flag == NO) break;
         }
-        
-        [sendDanmakus enumerateObjectsUsingBlock:^(JHBaseDanmaku * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [self sendDanmaku:obj updateAppearTime:NO];
-        }];
     }
 }
 
 //重设当前弹幕初始位置
 - (void)resetOriginalPosition:(CGRect)bounds {
     [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj.danmaku originalPositonWithEngine:self rect:bounds danmakuSize:obj.bounds.size timeDifference:_currentTime - obj.danmaku.appearTime];
+        obj.originalPosition = [obj.danmaku originalPositonWithEngine:self rect:bounds danmakuSize:obj.bounds.size timeDifference:_currentTime - obj.danmaku.appearTime];
     }];
 }
 
@@ -292,15 +245,6 @@
     
     [con setWithDanmaku:danmaku];
     con.originalPosition = [con.danmaku originalPositonWithEngine:self rect:self.canvas.bounds danmakuSize:con.bounds.size timeDifference:_currentTime - danmaku.appearTime];
-    
-    //增加对应轨道弹幕数量
-    NSMutableDictionary <NSNumber *,NSNumber *>*dic = self.channelDic[@(danmaku.channelDirectionType)];
-    if (dic == nil) {
-        dic = [NSMutableDictionary dictionary];
-    }
-    NSInteger count = [dic[@(danmaku.currentChannel)] integerValue];
-    count++;
-    dic[@(danmaku.currentChannel)] = @(count);
     
     [self.canvas addSubview:con];
     //将弹幕容器激活
@@ -338,19 +282,11 @@
         [_canvas setResizeCallBackBlock:^(CGRect bounds) {
             __strong typeof(weakSelf)self = weakSelf;
             if (!self) return;
-            self.channelDic = nil;
             
             [self resetOriginalPosition:bounds];
         }];
     }
     return _canvas;
-}
-
-- (NSDictionary<NSNumber *,NSMutableDictionary<NSNumber *,NSNumber *> *> *)channelDic {
-    if (_channelDic == nil) {
-        _channelDic = @{@(ChannelDirectionTypeVertical) : @{}.mutableCopy, @(ChannelDirectionTypeHorizontal) : @{}.mutableCopy};
-    }
-    return _channelDic;
 }
 
 @end

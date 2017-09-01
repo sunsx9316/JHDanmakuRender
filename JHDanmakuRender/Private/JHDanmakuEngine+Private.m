@@ -9,5 +9,5 @@
 #import "JHDanmakuEngine+Private.h"
 
 @implementation JHDanmakuEngine (Private)
-@dynamic channelDic;
+@dynamic activeContainer;
 @end

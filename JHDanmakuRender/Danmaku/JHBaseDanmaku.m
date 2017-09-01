@@ -10,6 +10,9 @@
 #import "JHDanmakuEngine+Private.h"
 
 @implementation JHBaseDanmaku
+{
+    NSValue *_contentSizeValue;
+}
 
 - (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font{
     if (self = [super init]) {
@@ -43,6 +46,7 @@
             default:
                 break;
         }
+        _font = font;
         self.attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:dic];
     }
     return self;
@@ -74,10 +78,25 @@
 }
 
 - (CGSize)contentSize {
-    if (CGSizeEqualToSize(_contentSize, CGSizeZero)) {
-        _contentSize = [_attributedString boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+#if TARGET_OS_IPHONE
+    if (_contentSizeValue == nil) {
+        _contentSizeValue = [NSValue valueWithCGSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
     }
-    return _contentSize;
+    return _contentSizeValue.CGSizeValue;
+#else
+    if (_contentSizeValue == nil) {
+        _contentSizeValue = [NSValue valueWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+    }
+    return _contentSizeValue.sizeValue;
+#endif
+}
+
+- (void)setContentSize:(CGSize)contentSize {
+#if TARGET_OS_IPHONE
+    _contentSizeValue = [NSValue valueWithCGSize:contentSize];
+#else
+    _contentSizeValue = [NSValue valueWithSize:contentSize];
+#endif
 }
 
 #pragma mark - 私有方法

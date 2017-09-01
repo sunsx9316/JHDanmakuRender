@@ -8,14 +8,14 @@
 
 #import "JHScrollDanmaku.h"
 #import "JHDanmakuContainer.h"
-#import "JHBaseDanmaku+Private.h"
+#import "JHDanmakuEngine+Private.h"
 
 //当前窗口大小
-//#if TARGET_OS_IPHONE
-//#define kWindowFrame [UIScreen mainScreen].bounds
-//#else
-//#define kWindowFrame NSApp.keyWindow.frame
-//#endif
+#if TARGET_OS_IPHONE
+#define kWindowFrame [UIScreen mainScreen].bounds
+#else
+#define kWindowFrame NSApp.keyWindow.frame
+#endif
 
 @interface JHScrollDanmaku()
 @property (assign, nonatomic) CGFloat speed;
@@ -42,7 +42,7 @@
 }
 
 - (BOOL)updatePositonWithTime:(NSTimeInterval)time container:(JHDanmakuContainer *)container {
-    CGRect windowFrame = container.danmakuEngine.canvas.frame;
+    CGRect windowFrame = container.danmakuEngine.canvas.bounds;
     CGRect containerFrame = container.frame;
     CGPoint point = container.originalPosition;
     
@@ -93,22 +93,41 @@
                                 rect:(CGRect)rect
                          danmakuSize:(CGSize)danmakuSize
                       timeDifference:(NSTimeInterval)timeDifference {
+    NSMutableDictionary <NSNumber *, NSMutableArray<JHDanmakuContainer *> *>*dic = [NSMutableDictionary dictionary];
+    
     NSInteger channelCount = (engine.channelCount == 0) ? [self channelCountWithContentRect:rect danmakuSize:danmakuSize] : engine.channelCount;
-    NSDictionary <NSNumber *, NSNumber *>*dic = engine.channelDic[@(self.channelDirectionType)];
+    NSMutableArray <JHDanmakuContainer *>*activeContainer = engine.activeContainer;
     
     //轨道高
     NSInteger channelHeight = [self channelHeightWithChannelCount:channelCount contentRect:rect];
     
+    [activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.danmaku isKindOfClass:[JHScrollDanmaku class]]) {
+            JHScrollDanmaku *aDanmaku = (JHScrollDanmaku *)obj.danmaku;
+            //同方向
+            if (_direction - aDanmaku.direction <= 1) {
+                //计算弹幕所在轨道
+                NSNumber *channel = @([self channelWithFrame:obj.frame channelHeight:channelHeight]);
+                
+                if (dic[channel] == nil) {
+                    dic[channel] = [NSMutableArray array];
+                }
+                
+                [dic[channel] addObject:obj];
+            }
+        }
+    }];
+    
     __block NSInteger channel = channelCount - 1;
     
     if (dic.count >= channelCount) {
-        __block NSUInteger minCount = dic.allValues.firstObject.integerValue;
+        __block NSUInteger minCount = dic[@(0)].count;
         __block BOOL isChange = NO;
         //选择弹幕最少的轨道
-        [dic enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSNumber * _Nonnull obj, BOOL * _Nonnull stop) {
-            if (minCount >= obj.integerValue) {
-                minCount = obj.integerValue;
+        [dic enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSArray * _Nonnull obj, BOOL * _Nonnull stop) {
+            if (obj.count <= minCount) {
                 channel = key.integerValue;
+                minCount = obj.count;
                 isChange = YES;
             }
         }];
@@ -138,6 +157,7 @@
         case JHScrollDanmakuDirectionT2B:
             return CGPointMake(channelHeight * channel, -danmakuSize.height + timeDifference * (_speed * self.extraSpeed));
     }
+    
     return CGPointMake(rect.size.width, rect.size.height);
 }
 
@@ -151,14 +171,6 @@
 
 - (NSInteger)currentChannel {
     return _currentChannel;
-}
-
-- (ChannelDirectionType)channelDirectionType {
-    if (_direction == JHScrollDanmakuDirectionR2L || _direction == JHScrollDanmakuDirectionL2R) {
-        return ChannelDirectionTypeHorizontal;
-    }
-    
-    return ChannelDirectionTypeVertical;
 }
 
 #pragma mark - 私有方法

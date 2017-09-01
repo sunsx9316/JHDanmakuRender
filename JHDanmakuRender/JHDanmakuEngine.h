@@ -86,7 +86,7 @@
 
 
 /**
- 额外速度 默认1.0
+ 额外速度 默认1.0倍速
  */
 @property (assign, nonatomic) float speed;
 

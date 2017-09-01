@@ -8,7 +8,7 @@
 
 #import "JHFloatDanmaku.h"
 #import "JHDanmakuContainer.h"
-#import "JHBaseDanmaku+Private.h"
+#import "JHDanmakuEngine+Private.h"
 
 @interface JHFloatDanmaku()
 @property (assign, nonatomic) CGFloat during;
@@ -43,21 +43,34 @@
                                 rect:(CGRect)rect
                          danmakuSize:(CGSize)danmakuSize
                       timeDifference:(NSTimeInterval)timeDifference {
+    NSMutableDictionary <NSNumber *, NSMutableArray <JHDanmakuContainer *>*>*dic = [NSMutableDictionary dictionary];
+    
     NSInteger channelCount = (engine.channelCount == 0) ? [self channelCountWithContentRect:rect danmakuSize:danmakuSize] : engine.channelCount;
-    NSDictionary <NSNumber *, NSNumber *>*dic = engine.channelDic[@(self.channelDirectionType)];
     
     //轨道高
     NSInteger channelHeight = rect.size.height / channelCount;
     
+    NSMutableArray <JHDanmakuContainer *>*activeContainer = engine.activeContainer;
+    
+    [activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.danmaku isKindOfClass:[JHFloatDanmaku class]]) {
+            //判断弹幕所在轨道
+            NSInteger channel = obj.frame.origin.y / channelHeight;
+            
+            if (!dic[@(channel)]) dic[@(channel)] = [NSMutableArray array];
+            
+            [dic[@(channel)] addObject:obj];
+        }
+    }];
+    
     __block NSInteger channel = channelCount - 1;
     //每条轨道都有弹幕
     if (dic.count >= channelCount) {
-        //选择弹幕最少的轨道
-        __block NSInteger minCount = dic.allValues.firstObject.integerValue;
-        [dic enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSNumber * _Nonnull obj, BOOL * _Nonnull stop) {
-            if (minCount >= obj.integerValue) {
-                minCount = obj.integerValue;
-                channel = key.integerValue;
+        __block NSInteger minCount = dic[@(0)].count;
+        [dic enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSMutableArray<JHDanmakuContainer *> * _Nonnull obj, BOOL * _Nonnull stop) {
+            if (minCount >= obj.count) {
+                minCount = obj.count;
+                channel = key.intValue;
             }
         }];
     }
@@ -96,10 +109,6 @@
 
 - (NSInteger)currentChannel {
     return _currentChannel;
-}
-
-- (ChannelDirectionType)channelDirectionType {
-    return ChannelDirectionTypeVertical;
 }
 
 #pragma mark - 私有方法

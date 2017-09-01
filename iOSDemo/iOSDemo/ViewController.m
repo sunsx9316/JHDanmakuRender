@@ -34,7 +34,7 @@
     [super viewDidLoad];
     [self.danmakuHoldView addSubview:self.aEngine.canvas];
     //需要设置画布尺寸
-    self.aEngine.canvas.frame = self.danmakuHoldView.bounds;
+    self.aEngine.canvas.frame = self.view.bounds;
     [self hideMenu];
 }
 

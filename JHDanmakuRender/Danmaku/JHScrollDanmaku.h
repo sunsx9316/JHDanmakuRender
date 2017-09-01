@@ -11,7 +11,7 @@
 typedef NS_ENUM(NSUInteger, JHScrollDanmakuDirection) {
     JHScrollDanmakuDirectionR2L = 10,
     JHScrollDanmakuDirectionL2R,
-    JHScrollDanmakuDirectionT2B,
+    JHScrollDanmakuDirectionT2B = 20,
     JHScrollDanmakuDirectionB2T,
 };
 

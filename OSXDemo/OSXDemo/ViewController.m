@@ -35,6 +35,7 @@
     [self.danmakuHoldView addSubview: self.aEngine.canvas];
     //需要设置画布尺寸
     self.aEngine.canvas.frame = self.danmakuHoldView.bounds;
+    self.aEngine.canvas.layoutStyle = JHDanmakuCanvasLayoutStyleWhenSizeChanged;
     self.aEngine.globalShadowStyle = JHDanmakuShadowStyleNone;
 }
 

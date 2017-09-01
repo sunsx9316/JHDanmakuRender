@@ -8,11 +8,6 @@
 
 #import "JHDanmakuEngine.h"
 
-typedef NS_ENUM(NSUInteger, ChannelDirectionType) {
-    ChannelDirectionTypeHorizontal,
-    ChannelDirectionTypeVertical,
-};
-
 @interface JHDanmakuEngine (Private)
-@property (strong, nonatomic, readonly) NSDictionary<NSNumber *,NSMutableDictionary<NSNumber *,NSNumber *> *> *channelDic;
+@property (strong, nonatomic, readonly) NSMutableArray <JHDanmakuContainer *>*activeContainer;
 @end

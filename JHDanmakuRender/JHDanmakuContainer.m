@@ -8,7 +8,6 @@
 
 #import "JHDanmakuContainer.h"
 #import "JHDanmakuEngine.h"
-#import "JHBaseDanmaku+Private.h"
 
 @implementation JHDanmakuContainer
 {
@@ -106,7 +105,16 @@
         self.jh_attributedText = [[NSMutableAttributedString alloc] initWithString:self.jh_attributedText.string attributes:dic];
     }
     
-    [self sizeToFit];
+    if (_danmaku.contentSize.width == CGFLOAT_MAX) {
+        [self sizeToFit];
+        _danmaku.contentSize = self.frame.size;
+    }
+    else {
+        CGRect frame = self.frame;
+        frame.size = _danmaku.contentSize;
+        self.frame = frame;
+    }
+
 }
 
 #pragma mark - 私有方法
