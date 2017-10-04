@@ -53,68 +53,56 @@
 
 - (void)updateAttributed {
     NSDictionary *globalAttributed = [self.danmakuEngine globalAttributedDic];
-    if (globalAttributed && self.jh_attributedText.length) {
-        self.jh_attributedText = [[NSMutableAttributedString alloc] initWithString:self.jh_attributedText.string attributes:globalAttributed];
-    }
-    
-    NSMutableDictionary *originalAttributed = nil;
-    if (self.jh_attributedText.length) {
-        originalAttributed = [self.jh_attributedText attributesAtIndex:0 effectiveRange:nil].mutableCopy;
-    }
-    else {
-        originalAttributed = [NSMutableDictionary dictionary];
-    }
-    
     JHFont *font = [self.danmakuEngine globalFont];
-    if (font) {
-        originalAttributed[NSFontAttributeName] = font;
-        self.jh_attributedText = [[NSMutableAttributedString alloc] initWithString:self.jh_attributedText.string attributes:originalAttributed];
-    }
-    
-    
     JHDanmakuShadowStyle shadowStyle = [self.danmakuEngine globalShadowStyle];
-    if (shadowStyle >= JHDanmakuShadowStyleNone) {
-        JHColor *textColor = originalAttributed[NSForegroundColorAttributeName];
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        dic[NSFontAttributeName] = originalAttributed[NSFontAttributeName];
-        dic[NSForegroundColorAttributeName] = textColor;
+    
+    if (self.jh_attributedText.length) {
+        NSMutableAttributedString *str = [self.jh_attributedText mutableCopy];
+        NSRange range = NSMakeRange(0, str.length);
         
-        switch (shadowStyle) {
-            case JHDanmakuShadowStyleGlow:
-            {
-                NSShadow *shadow = [self shadowWithTextColor:textColor];
-                shadow.shadowBlurRadius = 3;
-                dic[NSShadowAttributeName] = shadow;
-            }
-                break;
-            case JHDanmakuShadowStyleShadow:
-            {
-                dic[NSShadowAttributeName] = [self shadowWithTextColor:textColor];
-            }
-                break;
-            case JHDanmakuShadowStyleStroke:
-            {
-                dic[NSStrokeColorAttributeName] = [self shadowColorWithTextColor:textColor];
-                dic[NSStrokeWidthAttributeName] = @-3;
-            }
-                break;
-            default:
-                break;
+        if (globalAttributed) {
+            [str addAttributes:globalAttributed range:range];
         }
         
-        self.jh_attributedText = [[NSMutableAttributedString alloc] initWithString:self.jh_attributedText.string attributes:dic];
+        if (font) {
+            [str addAttributes:@{NSFontAttributeName : font} range:range];
+        }
+        
+        if (shadowStyle >= JHDanmakuShadowStyleNone) {
+            JHColor *textColor = [self.jh_attributedText attributesAtIndex:0 effectiveRange:nil][NSForegroundColorAttributeName];
+            [str removeAttribute:NSShadowAttributeName range:range];
+            [str removeAttribute:NSStrokeColorAttributeName range:range];
+            [str removeAttribute:NSStrokeWidthAttributeName range:range];
+            
+            switch (shadowStyle) {
+                case JHDanmakuShadowStyleGlow:
+                {
+                    NSShadow *shadow = [self shadowWithTextColor:textColor];
+                    shadow.shadowBlurRadius = 3;
+                    [str addAttributes:@{NSShadowAttributeName : shadow} range:range];
+                }
+                    break;
+                case JHDanmakuShadowStyleShadow:
+                {
+                    [str addAttributes:@{NSShadowAttributeName : [self shadowWithTextColor:textColor]} range:range];
+                }
+                    break;
+                case JHDanmakuShadowStyleStroke:
+                {
+                    [str addAttributes:@{NSStrokeColorAttributeName : [self shadowColorWithTextColor:textColor],
+                                         NSStrokeWidthAttributeName : @-3} range:range];
+                }
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+        
+        self.jh_attributedText = str;
     }
     
-    if (_danmaku.contentSize.width == CGFLOAT_MAX) {
-        [self sizeToFit];
-        _danmaku.contentSize = self.frame.size;
-    }
-    else {
-        CGRect frame = self.frame;
-        frame.size = _danmaku.contentSize;
-        self.frame = frame;
-    }
-
+    [self sizeToFit];
 }
 
 #pragma mark - 私有方法
@@ -133,3 +121,4 @@
 }
 
 @end
+

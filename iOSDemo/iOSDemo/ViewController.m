@@ -33,9 +33,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.danmakuHoldView addSubview:self.aEngine.canvas];
+    self.aEngine.globalShadowStyle = JHDanmakuShadowStyleGlow;
+    [self hideMenu];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     //需要设置画布尺寸
     self.aEngine.canvas.frame = self.view.bounds;
-    [self hideMenu];
 }
 
 - (IBAction)touchShowMenuButton:(UIButton *)sender {

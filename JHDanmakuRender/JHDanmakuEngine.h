@@ -88,12 +88,12 @@
 /**
  额外速度 默认1.0倍速
  */
-@property (assign, nonatomic) float speed;
+@property (assign, nonatomic) CGFloat speed;
 
 /**
  系统整体速度 默认1.0 会使得整个系统时间加快 用于比如视频加速播放的场景
  */
-@property (assign, nonatomic) float systemSpeed;
+@property (assign, nonatomic) CGFloat systemSpeed;
 
 /**
  开始计时器 暂停状态就是恢复运动

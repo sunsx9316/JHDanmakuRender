@@ -27,7 +27,7 @@
 {
     //用于记录当前时间的整数值
     NSInteger _intTime;
-    float _extraSpeed;
+    CGFloat _extraSpeed;
     dispatch_queue_t _queue;
 }
 
@@ -92,52 +92,43 @@
     }
 }
 
-- (void)setSpeed:(float)speed {
+- (void)setSpeed:(CGFloat)speed {
     _extraSpeed = speed > 0 ? speed : 0.1;
     [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.danmaku.extraSpeed = _extraSpeed;
     }];
 }
 
-- (float)speed {
+- (CGFloat)speed {
     return _extraSpeed;
 }
 
-- (void)setSystemSpeed:(float)systemSpeed {
+- (void)setSystemSpeed:(CGFloat)systemSpeed {
     self.clock.speed = systemSpeed;
 }
 
-- (float)systemSpeed {
+- (CGFloat)systemSpeed {
     return self.clock.speed;
 }
 
 - (void)setGlobalAttributedDic:(NSDictionary *)globalAttributedDic {
     if ([_globalAttributedDic isEqualToDictionary:globalAttributedDic] == NO) {
         _globalAttributedDic = globalAttributedDic;
-        NSArray <JHDanmakuContainer *>*activeContainer = self.activeContainer;
-        [activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj updateAttributed];
-        }];
+        [self reloadCurrentActiveDanmaukus];
     }
 }
 
 - (void)setGlobalFont:(JHFont *)globalFont {
     if ([_globalFont isEqual: globalFont] == NO) {
         _globalFont = globalFont;
-        NSArray <JHDanmakuContainer *>*activeContainer = self.activeContainer;
-        [activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj updateAttributed];
-        }];
+        [self reloadCurrentActiveDanmaukus];
     }
 }
 
 - (void)setGlobalShadowStyle:(JHDanmakuShadowStyle)globalShadowStyle {
     if (_globalShadowStyle != globalShadowStyle) {
         _globalShadowStyle = globalShadowStyle;
-        NSArray <JHDanmakuContainer *>*activeContainer = self.activeContainer;
-        [activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj updateAttributed];
-        }];
+        [self reloadCurrentActiveDanmaukus];
     }
 }
 
@@ -194,8 +185,6 @@
         }];
         [self.activeContainer removeAllObjects];
         
-//        __block BOOL flag = NO;
-//        NSMutableArray <JHBaseDanmaku *>*sendDanmakus = [NSMutableArray array];
         for (NSInteger i = 1; i < 5; ++i) {
             NSInteger time = _currentTime - i;
             NSArray <JHBaseDanmaku *>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:time];
@@ -249,6 +238,17 @@
     [self.canvas addSubview:con];
     //将弹幕容器激活
     [self.activeContainer addObject:con];
+}
+
+
+/**
+ 刷新当前弹幕属性
+ */
+- (void)reloadCurrentActiveDanmaukus {
+    NSArray <JHDanmakuContainer *>*activeContainer = self.activeContainer;
+    [activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj updateAttributed];
+    }];
 }
 
 #pragma mark - 懒加载

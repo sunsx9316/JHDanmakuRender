@@ -31,8 +31,6 @@ typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
 //当前所在轨道
 @property (assign, nonatomic) NSInteger currentChannel;
 
-@property (assign, nonatomic) CGSize contentSize;
-
 - (NSString *)text;
 - (JHColor *)textColor;
 
