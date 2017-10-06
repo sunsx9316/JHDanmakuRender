@@ -214,6 +214,11 @@
     if ([self.delegate respondsToSelector:@selector(danmakuEngine:shouldSendDanmaku:)] && [self.delegate danmakuEngine:self shouldSendDanmaku:danmaku] == NO) {
         return;
     }
+    
+    //当前弹幕数量大于限制数量
+    if (_limitCount > 0 && self.activeContainer.count > _limitCount) {
+        return;
+    }
 
     if (updateAppearTime) {
         danmaku.appearTime = _currentTime;

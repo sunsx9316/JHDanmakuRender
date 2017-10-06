@@ -96,6 +96,11 @@
 @property (assign, nonatomic) CGFloat systemSpeed;
 
 /**
+ 同屏弹幕数 默认0 不限制
+ */
+@property (assign, nonatomic) NSUInteger limitCount;
+
+/**
  开始计时器 暂停状态就是恢复运动
  */
 - (void)start;
