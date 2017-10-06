@@ -48,14 +48,14 @@
     NSInteger channelCount = (engine.channelCount == 0) ? [self channelCountWithContentRect:rect danmakuSize:danmakuSize] : engine.channelCount;
     
     //轨道高
-    NSInteger channelHeight = rect.size.height / channelCount;
+    NSInteger channelHeight = [self channelHeightWithChannelCount:channelCount contentRect:rect];
     
     NSMutableArray <JHDanmakuContainer *>*activeContainer = engine.activeContainer;
     
     [activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj.danmaku isKindOfClass:[JHFloatDanmaku class]]) {
             //判断弹幕所在轨道
-            NSInteger channel = obj.frame.origin.y / channelHeight;
+            NSInteger channel = obj.danmaku.currentChannel;
             
             if (!dic[@(channel)]) dic[@(channel)] = [NSMutableArray array];
             
@@ -116,4 +116,10 @@
     NSInteger channelCount = contentRect.size.height / danmakuSize.height;
     return channelCount > 4 ? channelCount : 4;
 }
+
+- (NSInteger)channelHeightWithChannelCount:(NSInteger)channelCount contentRect:(CGRect)rect {
+    return rect.size.height / channelCount;
+}
+
 @end
+

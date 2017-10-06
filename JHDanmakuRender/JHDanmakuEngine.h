@@ -15,7 +15,7 @@
 
 /**
  在指定时间发射弹幕
-
+ 
  @param danmakuEngine 弹幕引擎
  @param time 时间
  @return 发射的弹幕
@@ -24,7 +24,7 @@
 
 /**
  是否发射某个弹幕
-
+ 
  @param danmakuEngine 弹幕引擎
  @param danmaku 弹幕
  @return 是否发射
@@ -33,7 +33,7 @@
 
 /**
  使用外部时间系统
-
+ 
  @return 外部时间
  */
 - (NSTimeInterval)engineTimeSystemFollowWithOuterTimeSystem;
@@ -114,3 +114,4 @@
  */
 - (void)sendDanmaku:(JHBaseDanmaku *)danmaku;
 @end
+

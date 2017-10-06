@@ -11,6 +11,7 @@
 
 @class JHDanmakuContainer, JHDanmakuEngine;
 typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
+    JHDanmakuShadowStyleUndefine = 0,
     //啥也没有
     JHDanmakuShadowStyleNone = 100,
     //描边
@@ -36,7 +37,7 @@ typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
 
 /**
  计算弹幕初始位置
-
+ 
  @param engine 弹幕引擎
  @param rect 显示范围
  @param danmakuSize 弹幕尺寸
@@ -69,3 +70,4 @@ typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
 
 
 @end
+

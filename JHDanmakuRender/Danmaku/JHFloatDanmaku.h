@@ -35,4 +35,24 @@ typedef NS_ENUM(NSUInteger, JHFloatDanmakuDirection) {
                        direction:(JHFloatDanmakuDirection)direction;
 - (CGFloat)during;
 - (JHFloatDanmakuDirection)direction;
+
+/**
+ 计算当前窗口所能容纳的轨道数量
+ 
+ @param contentRect 窗口大小
+ @param danmakuSize 弹幕大小
+ @return 当前窗口所能容纳的轨道数量
+ */
+- (NSInteger)channelCountWithContentRect:(CGRect)contentRect danmakuSize:(CGSize)danmakuSize;
+
+/**
+ 计算当前轨道高度
+ 
+ @param channelCount 轨道数量
+ @param rect 窗口尺寸
+ @return 当前轨道高度
+ */
+- (NSInteger)channelHeightWithChannelCount:(NSInteger)channelCount contentRect:(CGRect)rect;
+
 @end
+

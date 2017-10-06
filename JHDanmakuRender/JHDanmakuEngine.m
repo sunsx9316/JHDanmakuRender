@@ -205,7 +205,7 @@
 
 /**
  发射弹幕
-
+ 
  @param danmaku 弹幕
  @param updateAppearTime 是否更改当前时间为弹幕的时间
  */
@@ -219,7 +219,7 @@
     if (_limitCount > 0 && self.activeContainer.count > _limitCount) {
         return;
     }
-
+    
     if (updateAppearTime) {
         danmaku.appearTime = _currentTime;
     }
@@ -295,3 +295,4 @@
 }
 
 @end
+

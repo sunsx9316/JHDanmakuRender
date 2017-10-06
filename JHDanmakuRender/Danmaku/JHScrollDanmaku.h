@@ -8,11 +8,11 @@
 
 #import "JHBaseDanmaku.h"
 
-typedef NS_ENUM(NSUInteger, JHScrollDanmakuDirection) {
+typedef NS_ENUM(NSInteger, JHScrollDanmakuDirection) {
     JHScrollDanmakuDirectionR2L = 10,
-    JHScrollDanmakuDirectionL2R,
+    JHScrollDanmakuDirectionL2R = 11,
     JHScrollDanmakuDirectionT2B = 20,
-    JHScrollDanmakuDirectionB2T,
+    JHScrollDanmakuDirectionB2T = 21,
 };
 
 @interface JHScrollDanmaku : JHBaseDanmaku
@@ -38,4 +38,35 @@ typedef NS_ENUM(NSUInteger, JHScrollDanmakuDirection) {
                        direction:(JHScrollDanmakuDirection)direction;
 - (CGFloat)speed;
 - (JHScrollDanmakuDirection)direction;
+
+
+
+/**
+ 计算当前窗口所能容纳的轨道数量
+ 
+ @param contentRect 窗口大小
+ @param danmakuSize 弹幕大小
+ @return 当前窗口所能容纳的轨道数量
+ */
+- (NSInteger)channelCountWithContentRect:(CGRect)contentRect danmakuSize:(CGSize)danmakuSize;
+
+/**
+ 计算当前轨道高度
+ 
+ @param channelCount 轨道数量
+ @param rect 窗口尺寸
+ @return 当前轨道高度
+ */
+- (NSInteger)channelHeightWithChannelCount:(NSInteger)channelCount contentRect:(CGRect)rect;
+
+/**
+ *  计算弹幕所在轨道
+ *
+ *  @param frame         弹幕 frame
+ *  @param channelHeight 轨道高
+ *
+ *  @return 轨道
+ */
+- (NSInteger)channelWithFrame:(CGRect)frame channelHeight:(CGFloat)channelHeight;
 @end
+

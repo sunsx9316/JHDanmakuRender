@@ -10,13 +10,6 @@
 #import "JHDanmakuContainer.h"
 #import "JHDanmakuEngine+Private.h"
 
-//当前窗口大小
-#if TARGET_OS_IPHONE
-#define kWindowFrame [UIScreen mainScreen].bounds
-#else
-#define kWindowFrame NSApp.keyWindow.frame
-#endif
-
 @interface JHScrollDanmaku()
 @property (assign, nonatomic) CGFloat speed;
 @property (assign, nonatomic) JHScrollDanmakuDirection direction;
@@ -105,9 +98,10 @@
         if ([obj.danmaku isKindOfClass:[JHScrollDanmaku class]]) {
             JHScrollDanmaku *aDanmaku = (JHScrollDanmaku *)obj.danmaku;
             //同方向
-            if (_direction - aDanmaku.direction <= 1) {
+            if (labs(_direction - aDanmaku.direction) <= 1) {
                 //计算弹幕所在轨道
-                NSNumber *channel = @([self channelWithFrame:obj.frame channelHeight:channelHeight]);
+                //                NSNumber *channel = @([self channelWithFrame:obj.frame channelHeight:channelHeight]);
+                NSNumber *channel = @(aDanmaku.currentChannel);
                 
                 if (dic[channel] == nil) {
                     dic[channel] = [NSMutableArray array];
@@ -193,20 +187,14 @@
     }
 }
 
-/**
- *  计算轨道
- *
- *  @param frame         弹幕 frame
- *  @param channelHeight 轨道高
- *
- *  @return 轨道
- */
 - (NSInteger)channelWithFrame:(CGRect)frame channelHeight:(CGFloat)channelHeight {
     if (_direction == JHScrollDanmakuDirectionL2R || _direction == JHScrollDanmakuDirectionR2L) {
         return frame.origin.y / channelHeight;
-    }else{
+    }
+    else {
         return frame.origin.x / channelHeight;
     }
 }
 
 @end
+

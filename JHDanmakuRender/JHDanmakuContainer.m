@@ -68,32 +68,35 @@
             [str addAttributes:@{NSFontAttributeName : font} range:range];
         }
         
-        JHColor *textColor = [self.jh_attributedText attributesAtIndex:0 effectiveRange:nil][NSForegroundColorAttributeName];
-        [str removeAttribute:NSShadowAttributeName range:range];
-        [str removeAttribute:NSStrokeColorAttributeName range:range];
-        [str removeAttribute:NSStrokeWidthAttributeName range:range];
-        
-        switch (shadowStyle) {
-            case JHDanmakuShadowStyleGlow:
-            {
-                NSShadow *shadow = [self shadowWithTextColor:textColor];
-                shadow.shadowBlurRadius = 3;
-                [str addAttributes:@{NSShadowAttributeName : shadow} range:range];
+        if (shadowStyle > JHDanmakuShadowStyleUndefine) {
+            JHColor *textColor = [self.jh_attributedText attributesAtIndex:0 effectiveRange:nil][NSForegroundColorAttributeName];
+            [str removeAttribute:NSShadowAttributeName range:range];
+            [str removeAttribute:NSStrokeColorAttributeName range:range];
+            [str removeAttribute:NSStrokeWidthAttributeName range:range];
+            
+            switch (shadowStyle) {
+                case JHDanmakuShadowStyleGlow:
+                {
+                    NSShadow *shadow = [self shadowWithTextColor:textColor];
+                    shadow.shadowBlurRadius = 3;
+                    [str addAttributes:@{NSShadowAttributeName : shadow} range:range];
+                }
+                    break;
+                case JHDanmakuShadowStyleShadow:
+                {
+                    [str addAttributes:@{NSShadowAttributeName : [self shadowWithTextColor:textColor]} range:range];
+                }
+                    break;
+                case JHDanmakuShadowStyleStroke:
+                {
+                    [str addAttributes:@{NSStrokeColorAttributeName : [self shadowColorWithTextColor:textColor],
+                                         NSStrokeWidthAttributeName : @-3} range:range];
+                }
+                    break;
+                default:
+                    break;
             }
-                break;
-            case JHDanmakuShadowStyleShadow:
-            {
-                [str addAttributes:@{NSShadowAttributeName : [self shadowWithTextColor:textColor]} range:range];
-            }
-                break;
-            case JHDanmakuShadowStyleStroke:
-            {
-                [str addAttributes:@{NSStrokeColorAttributeName : [self shadowColorWithTextColor:textColor],
-                                     NSStrokeWidthAttributeName : @-3} range:range];
-            }
-                break;
-            default:
-                break;
+            
         }
         
         self.jh_attributedText = str;
@@ -118,4 +121,5 @@
 }
 
 @end
+
 
