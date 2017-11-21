@@ -45,8 +45,7 @@ typedef enum : unsigned {
 - (instancetype)init{
     if (self = [super init]) {
 #if !TARGET_OS_IPHONE
-        CVReturn status =
-        CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
+        CVReturn status = CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         assert(status == kCVReturnSuccess);
         
         _stateChangeQueue = dispatch_queue_create("JHDisplayLink.stateChange", NULL);
@@ -74,20 +73,21 @@ typedef enum : unsigned {
 - (void)start {
 #if TARGET_OS_IPHONE
     [self stop];
-    SEL selector = @selector(displayLinkDidCallback);
-    if ([self.delegate respondsToSelector:selector]) {
-        _IOSDisplayLink = [CADisplayLink displayLinkWithTarget:self.delegate selector:selector];
+
+    if ([self.delegate respondsToSelector:@selector(displayLinkDidCallbackWithTimestamp:)]) {
+        _IOSDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkStart)];
         [_IOSDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     }
 #else
     dispatch_async(_stateChangeQueue, ^{
-        if (_isRunning)
-            return;
-        
-        _isRunning = true;
-        CFRetain((__bridge CFTypeRef)self);
-        
-        CVDisplayLinkStart(_displayLink);
+        if ([self.delegate respondsToSelector:@selector(displayLinkDidCallbackWithTimestamp:)]) {
+            if (_isRunning) return;
+            
+            _isRunning = true;
+            CFRetain((__bridge CFTypeRef)self);
+            
+            CVDisplayLinkStart(_displayLink);
+        }
     });
 #endif
 }
@@ -119,14 +119,14 @@ static CVReturn JHDisplayLinkCallback(CVDisplayLinkRef displayLink,
                       CVOptionFlags *flagsOut,
                       void *ctx) {
     JHDisplayLink *self = (__bridge JHDisplayLink*)ctx;
-    
+
     if (!self->_isRunning) {
         CVDisplayLinkStop(displayLink);
         dispatch_resume(self->_stateChangeQueue);
         CFRelease(ctx);
         
-    } else if (!__sync_fetch_and_or(&self->_atomicFlags,
-                                    kJHDisplayLinkIsRendering)) {
+    }
+    else if (!__sync_fetch_and_or(&self->_atomicFlags, kJHDisplayLinkIsRendering)) {
         self->_timeStamp = *inOutputTime;
         dispatch_async_f(self->_internalDispatchQueue,
                          (void *)CFBridgingRetain(self),
@@ -139,11 +139,21 @@ static CVReturn JHDisplayLinkCallback(CVDisplayLinkRef displayLink,
 static void JHDisplayLinkRender(void *ctx) {
     JHDisplayLink *self = CFBridgingRelease(ctx);
     if (self->_isRunning) {
-        [self->_delegate displayLinkDidCallback];
+        [self displayLinkStart];
     }
     __sync_fetch_and_and(&self->_atomicFlags, ~kJHDisplayLinkIsRendering);
 }
 
 #endif
+
+#pragma mark - 私有方法
+- (void)displayLinkStart {
+#if !TARGET_OS_IPHONE
+    [self.delegate displayLinkDidCallbackWithTimestamp:_timeStamp.hostTime];
+#else
+    
+    [self.delegate displayLinkDidCallbackWithTimestamp:_IOSDisplayLink.timestamp];
+#endif
+}
 
 @end

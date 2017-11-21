@@ -28,6 +28,8 @@
 		89E8B60A1F50575C009CF325 /* JHDanmakuEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5FA1F50575C009CF325 /* JHDanmakuEngine.m */; };
 		89E8B60B1F50575C009CF325 /* JHDisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5FE1F50575C009CF325 /* JHDisplayLink.m */; };
 		89E8B60D1F50575C009CF325 /* JHDanmakuEngine+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B6031F50575C009CF325 /* JHDanmakuEngine+Private.m */; };
+		8BD6D2DE1FBAEB5100789017 /* JHDanmakuChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6D2DD1FBAEB5100789017 /* JHDanmakuChannel.m */; };
+		8BD6D2EE1FBC180700789017 /* JHFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6D2ED1FBC180700789017 /* JHFPSLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,10 @@
 		89E8B5FE1F50575C009CF325 /* JHDisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDisplayLink.m; sourceTree = "<group>"; };
 		89E8B6021F50575C009CF325 /* JHDanmakuEngine+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JHDanmakuEngine+Private.h"; sourceTree = "<group>"; };
 		89E8B6031F50575C009CF325 /* JHDanmakuEngine+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JHDanmakuEngine+Private.m"; sourceTree = "<group>"; };
+		8BD6D2DC1FBAEB5100789017 /* JHDanmakuChannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHDanmakuChannel.h; sourceTree = "<group>"; };
+		8BD6D2DD1FBAEB5100789017 /* JHDanmakuChannel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JHDanmakuChannel.m; sourceTree = "<group>"; };
+		8BD6D2EC1FBC180700789017 /* JHFPSLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHFPSLabel.h; sourceTree = "<group>"; };
+		8BD6D2ED1FBC180700789017 /* JHFPSLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JHFPSLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,11 +137,12 @@
 		892FA60F1D644256007D1F05 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8BD6D2EB1FBC17EA00789017 /* FPSLabel */,
+				892FA6141D644256007D1F05 /* GDataXML */,
 				892FA6101D644256007D1F05 /* DanMuDataFormatter.h */,
 				892FA6111D644256007D1F05 /* DanMuDataFormatter.m */,
 				892FA6121D644256007D1F05 /* DanMuDataModel.h */,
 				892FA6131D644256007D1F05 /* DanMuDataModel.m */,
-				892FA6141D644256007D1F05 /* GDataXML */,
 				892FA6171D644256007D1F05 /* JHDanmakuEngine+Tools.h */,
 				892FA6181D644256007D1F05 /* JHDanmakuEngine+Tools.m */,
 				892FA6191D644256007D1F05 /* UIColor+Tools.h */,
@@ -156,6 +163,7 @@
 		89E8B5EB1F50575C009CF325 /* JHDanmakuRender */ = {
 			isa = PBXGroup;
 			children = (
+				89E8B5FF1F50575C009CF325 /* Private */,
 				89E8B5EC1F50575C009CF325 /* Danmaku */,
 				89E8B5F31F50575C009CF325 /* JHDanmakuCanvas.h */,
 				89E8B5F41F50575C009CF325 /* JHDanmakuCanvas.m */,
@@ -165,11 +173,9 @@
 				89E8B5F81F50575C009CF325 /* JHDanmakuContainer.m */,
 				89E8B5F91F50575C009CF325 /* JHDanmakuEngine.h */,
 				89E8B5FA1F50575C009CF325 /* JHDanmakuEngine.m */,
-				89E8B5FB1F50575C009CF325 /* JHDanmakuMacroDefinition.h */,
 				89E8B5FC1F50575C009CF325 /* JHDanmakuRender.h */,
 				89E8B5FD1F50575C009CF325 /* JHDisplayLink.h */,
 				89E8B5FE1F50575C009CF325 /* JHDisplayLink.m */,
-				89E8B5FF1F50575C009CF325 /* Private */,
 			);
 			name = JHDanmakuRender;
 			path = ../../JHDanmakuRender;
@@ -191,10 +197,22 @@
 		89E8B5FF1F50575C009CF325 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				89E8B5FB1F50575C009CF325 /* JHDanmakuMacroDefinition.h */,
 				89E8B6021F50575C009CF325 /* JHDanmakuEngine+Private.h */,
 				89E8B6031F50575C009CF325 /* JHDanmakuEngine+Private.m */,
+				8BD6D2DC1FBAEB5100789017 /* JHDanmakuChannel.h */,
+				8BD6D2DD1FBAEB5100789017 /* JHDanmakuChannel.m */,
 			);
 			path = Private;
+			sourceTree = "<group>";
+		};
+		8BD6D2EB1FBC17EA00789017 /* FPSLabel */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6D2EC1FBC180700789017 /* JHFPSLabel.h */,
+				8BD6D2ED1FBC180700789017 /* JHFPSLabel.m */,
+			);
+			path = FPSLabel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,6 +246,8 @@
 				TargetAttributes = {
 					892FA5F21D644212007D1F05 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = Q35T78D2D5;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -268,7 +288,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD6D2EE1FBC180700789017 /* JHFPSLabel.m in Sources */,
 				89E8B60B1F50575C009CF325 /* JHDisplayLink.m in Sources */,
+				8BD6D2DE1FBAEB5100789017 /* JHDanmakuChannel.m in Sources */,
 				89E8B6051F50575C009CF325 /* JHFloatDanmaku.m in Sources */,
 				892FA5FE1D644212007D1F05 /* ViewController.m in Sources */,
 				892FA61E1D644256007D1F05 /* JHDanmakuEngine+Tools.m in Sources */,
@@ -400,13 +422,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q35T78D2D5;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = iOSDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jim.iOSDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jimhuang.iOSDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -414,13 +441,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q35T78D2D5;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = iOSDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jim.iOSDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jimhuang.iOSDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "JHDanmakuRender.h"
 #import "DanMuDataFormatter.h"
+#import "JHFPSLabel.h"
 
 @interface ViewController ()<UIAlertViewDelegate, JHDanmakuEngineDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *danmakuTypeLabel;
@@ -23,6 +24,8 @@
 @property (strong, nonatomic) NSArray *scrollDanmakuDirection;
 @property (strong, nonatomic) NSArray *floatDanmakuDirection;
 @property (strong, nonatomic) NSDictionary *danmakuDic;
+
+@property (nonatomic, strong) JHFPSLabel *FPSLabel;
 @end
 
 @implementation ViewController
@@ -35,6 +38,8 @@
     [self.danmakuHoldView addSubview:self.aEngine.canvas];
     self.aEngine.globalShadowStyle = JHDanmakuShadowStyleGlow;
     [self hideMenu];
+    
+    [self.view addSubview:self.FPSLabel];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -90,7 +95,7 @@
 
 - (IBAction)touchTestDanmakuButton:(UIButton *)sender {
     _loadTestDanmakus = YES;
-    [self.aEngine start];
+    [self touchStartButton:nil];
 }
 
 - (IBAction)touchStopButton:(UIButton *)sender {
@@ -99,6 +104,7 @@
 
 - (IBAction)touchStartButton:(UIButton *)sender {
     [self.aEngine start];
+    [self.FPSLabel showFPS];
 }
 
 - (IBAction)touchSuspandButton:(UIButton *)sender {
@@ -206,6 +212,13 @@
         _danmakuDic = [DanMuDataFormatter dicWithObj:[[NSData alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"xml"]]];
     }
     return _danmakuDic;
+}
+
+- (JHFPSLabel *)FPSLabel {
+    if (_FPSLabel == nil) {
+        _FPSLabel = [[JHFPSLabel alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+    }
+    return _FPSLabel;
 }
 
 @end

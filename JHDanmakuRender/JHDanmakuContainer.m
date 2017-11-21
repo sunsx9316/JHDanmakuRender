@@ -102,7 +102,8 @@
         self.jh_attributedText = str;
     }
     
-    [self sizeToFit];
+//    self.frame = (CGRect){self.frame.origin, 100, 60};
+//    [self sizeToFit];
 }
 
 #pragma mark - 私有方法

@@ -28,6 +28,8 @@
 		89470B251C8DA5C000ECBE1B /* JHDanmakuEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B1B1C8DA5C000ECBE1B /* JHDanmakuEngine.m */; };
 		89470B261C8DA5C000ECBE1B /* JHDisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B1E1C8DA5C000ECBE1B /* JHDisplayLink.m */; };
 		89E8B5C11F50138A009CF325 /* JHDanmakuEngine+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5C01F50138A009CF325 /* JHDanmakuEngine+Private.m */; };
+		8BD6D2E11FBBD6EF00789017 /* JHDanmakuChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6D2DF1FBBD6EF00789017 /* JHDanmakuChannel.m */; };
+		8BD6D2F21FBC1E1700789017 /* JHFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6D2F11FBC1E1700789017 /* JHFPSLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,9 +71,13 @@
 		89470B1C1C8DA5C000ECBE1B /* JHDanmakuRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuRender.h; sourceTree = "<group>"; };
 		89470B1D1C8DA5C000ECBE1B /* JHDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDisplayLink.h; sourceTree = "<group>"; };
 		89470B1E1C8DA5C000ECBE1B /* JHDisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDisplayLink.m; sourceTree = "<group>"; };
-		896F228C1D031740000384BA /* JHDanmakuMacroDefinition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHDanmakuMacroDefinition.h; sourceTree = "<group>"; };
 		89E8B5BF1F50138A009CF325 /* JHDanmakuEngine+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JHDanmakuEngine+Private.h"; sourceTree = "<group>"; };
 		89E8B5C01F50138A009CF325 /* JHDanmakuEngine+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JHDanmakuEngine+Private.m"; sourceTree = "<group>"; };
+		8BD6D2DF1FBBD6EF00789017 /* JHDanmakuChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDanmakuChannel.m; sourceTree = "<group>"; };
+		8BD6D2E01FBBD6EF00789017 /* JHDanmakuChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuChannel.h; sourceTree = "<group>"; };
+		8BD6D2E61FBBD86000789017 /* JHDanmakuMacroDefinition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHDanmakuMacroDefinition.h; sourceTree = "<group>"; };
+		8BD6D2F01FBC1E1700789017 /* JHFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHFPSLabel.h; sourceTree = "<group>"; };
+		8BD6D2F11FBC1E1700789017 /* JHFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHFPSLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +140,7 @@
 		89470AF71C8D9A5F00ECBE1B /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8BD6D2EF1FBC1E1700789017 /* FPSLabel */,
 				89470B071C8D9D9C00ECBE1B /* NSColor+Tools.h */,
 				89470B081C8D9D9C00ECBE1B /* NSColor+Tools.m */,
 				89470B011C8D9C7100ECBE1B /* GDataXML */,
@@ -159,7 +166,6 @@
 			children = (
 				89E8B5B91F4FFB7B009CF325 /* Private */,
 				89470B0D1C8DA5C000ECBE1B /* Danmaku */,
-				896F228C1D031740000384BA /* JHDanmakuMacroDefinition.h */,
 				89470B141C8DA5C000ECBE1B /* JHDanmakuContainer.h */,
 				89470B151C8DA5C000ECBE1B /* JHDanmakuContainer.m */,
 				89470B161C8DA5C000ECBE1B /* JHDanmakuCanvas.h */,
@@ -192,10 +198,23 @@
 		89E8B5B91F4FFB7B009CF325 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				8BD6D2E61FBBD86000789017 /* JHDanmakuMacroDefinition.h */,
 				89E8B5BF1F50138A009CF325 /* JHDanmakuEngine+Private.h */,
 				89E8B5C01F50138A009CF325 /* JHDanmakuEngine+Private.m */,
+				8BD6D2E01FBBD6EF00789017 /* JHDanmakuChannel.h */,
+				8BD6D2DF1FBBD6EF00789017 /* JHDanmakuChannel.m */,
 			);
 			path = Private;
+			sourceTree = "<group>";
+		};
+		8BD6D2EF1FBC1E1700789017 /* FPSLabel */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6D2F01FBC1E1700789017 /* JHFPSLabel.h */,
+				8BD6D2F11FBC1E1700789017 /* JHFPSLabel.m */,
+			);
+			name = FPSLabel;
+			path = ../../iOSDemo/iOSDemo/Tools/FPSLabel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,7 +287,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD6D2F21FBC1E1700789017 /* JHFPSLabel.m in Sources */,
 				89470B261C8DA5C000ECBE1B /* JHDisplayLink.m in Sources */,
+				8BD6D2E11FBBD6EF00789017 /* JHDanmakuChannel.m in Sources */,
 				89470B041C8D9C7100ECBE1B /* GDataXMLNode.m in Sources */,
 				89470B221C8DA5C000ECBE1B /* JHDanmakuContainer.m in Sources */,
 				89470AFC1C8D9A6E00ECBE1B /* DanMuDataFormatter.m in Sources */,

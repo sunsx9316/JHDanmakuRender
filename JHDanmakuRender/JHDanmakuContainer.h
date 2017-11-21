@@ -17,7 +17,7 @@
 @property (weak, nonatomic) JHDanmakuEngine *danmakuEngine;
 - (void)updateAttributed;
 
-- (JHBaseDanmaku *)danmaku;
+- (__kindof JHBaseDanmaku *)danmaku;
 - (instancetype)initWithDanmaku:(JHBaseDanmaku *)danmaku;
 - (void)setWithDanmaku:(JHBaseDanmaku *)danmaku;
 /**

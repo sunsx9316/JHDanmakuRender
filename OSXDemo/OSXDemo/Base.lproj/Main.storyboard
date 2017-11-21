@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -656,6 +657,9 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="h1a-Lh-qKf"/>
+                        </connections>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
@@ -679,6 +683,13 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="400" id="aAI-d1-j5X"/>
                                 </constraints>
                             </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="EyG-od-fhK">
+                                <rect key="frame" x="0.0" y="401" width="80" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="A8w-sa-xOE"/>
+                                    <constraint firstAttribute="width" constant="80" id="diB-JB-0db"/>
+                                </constraints>
+                            </customView>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vFg-wT-cge">
                                 <rect key="frame" x="595" y="397" width="125" height="26"/>
                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="XDn-YZ-zt5">
@@ -696,7 +707,7 @@
                                 </connections>
                             </popUpButton>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A8a-zO-069">
-                                <rect key="frame" x="595" y="223" width="124" height="21"/>
+                                <rect key="frame" x="595" y="227" width="124" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="NWo-b8-xbM"/>
                                 </constraints>
@@ -736,14 +747,14 @@
                                 </connections>
                             </button>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="a0d-3Q-esg">
-                                <rect key="frame" x="595" y="156" width="124" height="21"/>
+                                <rect key="frame" x="595" y="162" width="124" height="19"/>
                                 <sliderCell key="cell" state="on" alignment="left" maxValue="100" tickMarkPosition="above" sliderType="linear" id="6CE-L3-9Rh"/>
                                 <connections>
                                     <action selector="clickDanmakuEdgeSlider:" target="XfG-lQ-9wD" id="RAv-Jh-12h"/>
                                 </connections>
                             </slider>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BVP-vi-vwB">
-                                <rect key="frame" x="591" y="37" width="132" height="32"/>
+                                <rect key="frame" x="591" y="43" width="132" height="32"/>
                                 <buttonCell key="cell" type="push" title="发射" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xw0-NE-9yp">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -761,7 +772,7 @@
                                 </popUpButtonCell>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w1K-Os-ac6">
-                                <rect key="frame" x="640" y="319" width="34" height="17"/>
+                                <rect key="frame" x="640" y="319" width="35" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="速度" id="iRU-5q-EhE">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -769,7 +780,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c7u-Gf-Wg7">
-                                <rect key="frame" x="629" y="252" width="56" height="17"/>
+                                <rect key="frame" x="628" y="254" width="58" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="字体大小" id="chv-wV-BFR">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -777,7 +788,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8SW-bj-zv6">
-                                <rect key="frame" x="629" y="185" width="56" height="17"/>
+                                <rect key="frame" x="628" y="189" width="58" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="弹幕间距" id="wI9-ur-fpc">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -785,21 +796,21 @@
                                 </textFieldCell>
                             </textField>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RAg-Iu-dw6">
-                                <rect key="frame" x="595" y="290" width="124" height="21"/>
+                                <rect key="frame" x="595" y="292" width="124" height="19"/>
                                 <sliderCell key="cell" state="on" alignment="left" minValue="0.10000000000000001" maxValue="3" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="SOr-xz-LCX"/>
                                 <connections>
                                     <action selector="clickSpeedSlider:" target="XfG-lQ-9wD" id="gYI-T4-BXq"/>
                                 </connections>
                             </slider>
                             <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Puh-13-NXu">
-                                <rect key="frame" x="701" y="116" width="19" height="27"/>
+                                <rect key="frame" x="701" y="122" width="19" height="27"/>
                                 <stepperCell key="cell" continuous="YES" alignment="left" minValue="-100" maxValue="100" id="97P-Iq-GZy"/>
                                 <connections>
                                     <action selector="clickTimeStepper:" target="XfG-lQ-9wD" id="pPF-B4-LDK"/>
                                 </connections>
                             </stepper>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AQ3-cY-M5K">
-                                <rect key="frame" x="595" y="121" width="91" height="17"/>
+                                <rect key="frame" x="595" y="127" width="91" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="g8l-O3-mTB">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -807,7 +818,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P5v-o6-qkM">
-                                <rect key="frame" x="597" y="84" width="120" height="17"/>
+                                <rect key="frame" x="597" y="90" width="120" height="17"/>
                                 <buttonCell key="cell" type="inline" title="测试弹幕" bezelStyle="inline" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jdu-mh-Ecg">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -835,6 +846,7 @@
                             <constraint firstItem="w1K-Os-ac6" firstAttribute="centerX" secondItem="RAg-Iu-dw6" secondAttribute="centerX" id="MqR-zY-aPL"/>
                             <constraint firstItem="SGl-f0-vue" firstAttribute="centerX" secondItem="vFg-wT-cge" secondAttribute="centerX" id="NZZ-ph-t5c"/>
                             <constraint firstItem="oV9-Dh-Na7" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="OGx-qf-Bqg"/>
+                            <constraint firstItem="EyG-od-fhK" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="OdN-Py-CEc"/>
                             <constraint firstItem="RAg-Iu-dw6" firstAttribute="top" secondItem="w1K-Os-ac6" secondAttribute="bottom" constant="10" id="OfU-rw-aXh"/>
                             <constraint firstItem="RAg-Iu-dw6" firstAttribute="width" secondItem="vFg-wT-cge" secondAttribute="width" id="SvT-2O-TXR"/>
                             <constraint firstItem="c7u-Gf-Wg7" firstAttribute="centerX" secondItem="A8a-zO-069" secondAttribute="centerX" id="TT9-Lc-wOh"/>
@@ -842,6 +854,7 @@
                             <constraint firstAttribute="trailing" secondItem="vFg-wT-cge" secondAttribute="trailing" constant="10" id="WMk-xy-tos"/>
                             <constraint firstItem="vFg-wT-cge" firstAttribute="leading" secondItem="oV9-Dh-Na7" secondAttribute="trailing" constant="10" id="WXr-2m-dCG"/>
                             <constraint firstItem="BVP-vi-vwB" firstAttribute="centerX" secondItem="a0d-3Q-esg" secondAttribute="centerX" id="Wwy-pl-WfE"/>
+                            <constraint firstItem="EyG-od-fhK" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="X2y-IF-pBv"/>
                             <constraint firstItem="4Up-Jg-eaB" firstAttribute="leading" secondItem="cay-vA-5Xd" secondAttribute="trailing" constant="10" id="XGq-Yd-rhV"/>
                             <constraint firstItem="8SW-bj-zv6" firstAttribute="centerX" secondItem="a0d-3Q-esg" secondAttribute="centerX" id="YR2-MY-lsm"/>
                             <constraint firstItem="oV9-Dh-Na7" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="aMB-jK-uMV"/>
@@ -865,6 +878,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="FPSHolderView" destination="EyG-od-fhK" id="zn1-Vy-Mbe"/>
                         <outlet property="danmakuDirectionPopUpButton" destination="SGl-f0-vue" id="vsc-yz-GPJ"/>
                         <outlet property="danmakuHoldView" destination="oV9-Dh-Na7" id="m3o-cD-P2y"/>
                         <outlet property="danmakuTypePopUpButton" destination="vFg-wT-cge" id="56a-9b-Obv"/>

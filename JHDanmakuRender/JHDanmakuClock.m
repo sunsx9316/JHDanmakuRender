@@ -64,7 +64,7 @@
 }
 
 #pragma mark - JHDisplayLinkDelegate
-- (void)displayLinkDidCallback {
+- (void)displayLinkDidCallbackWithTimestamp:(NSTimeInterval)timestamp {
     [self updateTime];
 }
 

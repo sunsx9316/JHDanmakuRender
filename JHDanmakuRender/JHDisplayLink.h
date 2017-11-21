@@ -24,5 +24,5 @@
 
 
 @protocol JHDisplayLinkDelegate <NSObject>
-- (void)displayLinkDidCallback;
+- (void)displayLinkDidCallbackWithTimestamp:(NSTimeInterval)timestamp;
 @end
