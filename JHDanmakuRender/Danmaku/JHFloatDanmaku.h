@@ -7,34 +7,39 @@
 //
 #import "JHBaseDanmaku.h"
 
-typedef NS_ENUM(NSUInteger, JHFloatDanmakuDirection) {
-    JHFloatDanmakuDirectionB2T = 100,
-    JHFloatDanmakuDirectionT2B
+/**
+ 浮动弹幕位置
+
+ - JHFloatDanmakuPositionAtBottom: 在底部
+ - JHFloatDanmakuPositionAtTop: 在顶部
+ */
+typedef NS_ENUM(NSUInteger, JHFloatDanmakuPosition) {
+    JHFloatDanmakuPositionAtBottom = 100,
+    JHFloatDanmakuPositionAtTop
 };
 
 @interface JHFloatDanmaku : JHBaseDanmaku
 /**
  *  初始化 阴影 字体
  *
- *  @param fontSize    文字大小
- *  @param textColor   文字颜色(务必使用 colorWithRed:green:blue:alpha初始化)
- *  @param text        文本
- *  @param shadowStyle 阴影类型
  *  @param font        字体
+ *  @param text        文本
+ *  @param textColor   文字颜色(务必使用 colorWithRed:green:blue:alpha初始化)
+ *  @param effectStyle 阴影类型
  *  @param during      弹幕持续时间
  *  @param direction   弹幕方向
  *
  *  @return self
  */
-- (instancetype)initWithFontSize:(CGFloat)fontSize
-                       textColor:(JHColor *)textColor
-                            text:(NSString *)text
-                     shadowStyle:(JHDanmakuShadowStyle)shadowStyle
-                            font:(JHFont *)font
-                          during:(CGFloat)during
-                       direction:(JHFloatDanmakuDirection)direction;
-- (CGFloat)during;
-- (JHFloatDanmakuDirection)direction;
+- (instancetype)initWithFont:(JHFont *)font
+                        text:(NSString *)text
+                   textColor:(JHColor *)textColor
+                 effectStyle:(JHDanmakuEffectStyle)effectStyle
+                      during:(CGFloat)during
+                   position:(JHFloatDanmakuPosition)position;
+
+@property (assign, nonatomic, readonly) CGFloat during;
+@property (assign, nonatomic, readonly) JHFloatDanmakuPosition position;
 
 /**
  计算当前窗口所能容纳的轨道数量

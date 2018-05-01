@@ -36,7 +36,7 @@
     //需要设置画布尺寸
     self.aEngine.canvas.frame = self.danmakuHoldView.bounds;
     self.aEngine.canvas.layoutStyle = JHDanmakuCanvasLayoutStyleWhenSizeChanged;
-    self.aEngine.globalShadowStyle = JHDanmakuShadowStyleNone;
+    self.aEngine.globalEffectStyle = JHDanmakuEffectStyleGlow;
 }
 
 - (IBAction)clickDanmakuTypeButton:(NSPopUpButton *)sender {
@@ -76,11 +76,12 @@
         }
         
         [self.aEngine sendDanmaku:[self scrollDanmakuWithFontSize:self.fontSizeSlider.floatValue textColor:[NSColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:d speed:arc4random_uniform(100) + 50]];
-    }else{
+    }
+    else {
         NSString *title = [self.danmakuDirectionPopUpButton titleOfSelectedItem];
-        JHFloatDanmakuDirection direction = JHFloatDanmakuDirectionB2T;
+        JHFloatDanmakuPosition direction = JHFloatDanmakuPositionAtBottom;
         if ([title isEqualToString:@"顶部弹幕"]) {
-            direction = JHFloatDanmakuDirectionT2B;
+            direction = JHFloatDanmakuPositionAtTop;
         }
         
         [self.aEngine sendDanmaku:[self floatDanmakuWithFontSize:self.fontSizeSlider.floatValue textColor:[NSColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"浮动弹幕" direction:direction]];
@@ -121,12 +122,12 @@
 
 #pragma mark - 私有方法
 //初始化一个浮动弹幕
-- (JHFloatDanmaku *)floatDanmakuWithFontSize:(CGFloat)fontSize textColor:(NSColor *)textColor text:(NSString *)text direction:(JHFloatDanmakuDirection)direction{
-    return [[JHFloatDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:JHDanmakuShadowStyleGlow font:nil during:3 direction:direction];
+- (JHFloatDanmaku *)floatDanmakuWithFontSize:(CGFloat)fontSize textColor:(NSColor *)textColor text:(NSString *)text direction:(JHFloatDanmakuPosition)direction {
+    return [[JHFloatDanmaku alloc] initWithFont:[NSFont systemFontOfSize:fontSize] text:text textColor:textColor effectStyle:JHDanmakuEffectStyleGlow during:3 position:direction];
 }
 //初始化一个滚动弹幕
 - (JHScrollDanmaku *)scrollDanmakuWithFontSize:(CGFloat)fontSize textColor:(NSColor *)textColor text:(NSString *)text direction:(JHScrollDanmakuDirection)direction speed:(CGFloat)speed{
-    return [[JHScrollDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:JHDanmakuShadowStyleGlow font:nil speed:speed direction:direction];
+    return [[JHScrollDanmaku alloc] initWithFont:[NSFont systemFontOfSize:fontSize] text:text textColor:textColor effectStyle:JHDanmakuEffectStyleGlow speed:speed direction:direction];
 }
 
 #pragma mark - 懒加载

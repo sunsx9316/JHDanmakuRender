@@ -7,33 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JHDanmakuMacroDefinition.h"
+#import "JHDanmakuDefinition.h"
 
 @class JHDanmakuContainer, JHDanmakuEngine;
-typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
-    JHDanmakuShadowStyleUndefine = 0,
-    //啥也没有
-    JHDanmakuShadowStyleNone = 100,
-    //描边
-    JHDanmakuShadowStyleStroke,
-    //投影
-    JHDanmakuShadowStyleShadow,
-    //模糊阴影
-    JHDanmakuShadowStyleGlow,
-};
 
 @interface JHBaseDanmaku : NSObject
-@property (strong, nonatomic, readonly) JHFont *font;
-@property (assign, nonatomic) NSTimeInterval appearTime;
+
 @property (assign, nonatomic) NSTimeInterval disappearTime;
+@property (assign, nonatomic) NSTimeInterval appearTime;
 //额外的速度 用于调节全局速度时更改个体速度 目前只影响滚动弹幕
 @property (assign, nonatomic) float extraSpeed;
-@property (strong, nonatomic) NSAttributedString *attributedString;
 //当前所在轨道
-@property (assign, nonatomic) NSInteger currentChannel;
+@property (assign, nonatomic, readonly) NSInteger currentChannel;
 
-- (NSString *)text;
-- (JHColor *)textColor;
+@property (copy, nonatomic, readonly) NSString *text;
+@property (strong, nonatomic, readonly) JHColor *textColor;
+@property (assign, nonatomic, readonly) JHDanmakuEffectStyle effectStyle;
 
 /**
  计算弹幕初始位置
@@ -62,11 +51,10 @@ typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
 /**
  *  父类方法 不要使用
  */
-- (instancetype)initWithFontSize:(CGFloat)fontSize
-                       textColor:(JHColor *)textColor
-                            text:(NSString *)text
-                     shadowStyle:(JHDanmakuShadowStyle)shadowStyle
-                            font:(JHFont *)font;
+- (instancetype)initWithFont:(JHFont *)font
+                        text:(NSString *)text
+                   textColor:(JHColor *)textColor
+                 effectStyle:(JHDanmakuEffectStyle)effectStyle;
 
 
 @end

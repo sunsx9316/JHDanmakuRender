@@ -20,16 +20,15 @@
     NSInteger _currentChannel;
 }
 
-- (instancetype)initWithFontSize:(CGFloat)fontSize
-                       textColor:(JHColor *)textColor
-                            text:(NSString *)text
-                     shadowStyle:(JHDanmakuShadowStyle)shadowStyle
-                            font:(JHFont *)font
-                           speed:(CGFloat)speed
-                       direction:(JHScrollDanmakuDirection)direction {
-    if (self = [super initWithFontSize:fontSize textColor:textColor text:text shadowStyle:shadowStyle font:font]) {
-        _speed = speed;
-        _direction = direction;
+- (instancetype)initWithFont:(JHFont *)font
+                        text:(NSString *)text
+                   textColor:(JHColor *)textColor
+                 effectStyle:(JHDanmakuEffectStyle)effectStyle
+                       speed:(CGFloat)speed
+                   direction:(JHScrollDanmakuDirection)direction {
+    if (self = [super initWithFont:font text:text textColor:textColor effectStyle:effectStyle]) {
+        self.speed = speed;
+        self.direction = direction;
     }
     return self;
 }
@@ -98,7 +97,7 @@
         if ([obj.danmaku isKindOfClass:[JHScrollDanmaku class]]) {
             JHScrollDanmaku *aDanmaku = (JHScrollDanmaku *)obj.danmaku;
             //同方向
-            if (labs(_direction - aDanmaku.direction) <= 1) {
+            if (labs(self.direction - aDanmaku.direction) <= 1) {
                 //计算弹幕所在轨道
                 //                NSNumber *channel = @([self channelWithFrame:obj.frame channelHeight:channelHeight]);
                 NSNumber *channel = @(aDanmaku.currentChannel);

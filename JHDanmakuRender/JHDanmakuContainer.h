@@ -9,17 +9,23 @@
 
 #import "JHFloatDanmaku.h"
 #import "JHScrollDanmaku.h"
-#import "JHDanmakuMacroDefinition.h"
+#import "JHDanmakuDefinition.h"
 
 @class JHDanmakuEngine;
 @interface JHDanmakuContainer : JHLabel
+/**
+ 初始位置
+ */
 @property (assign, nonatomic) CGPoint originalPosition;
 @property (weak, nonatomic) JHDanmakuEngine *danmakuEngine;
+@property (strong, nonatomic) JHBaseDanmaku *danmaku;
+
+/**
+ 刷新当前弹幕属性
+ */
 - (void)updateAttributed;
 
-- (JHBaseDanmaku *)danmaku;
 - (instancetype)initWithDanmaku:(JHBaseDanmaku *)danmaku;
-- (void)setWithDanmaku:(JHBaseDanmaku *)danmaku;
 /**
  *  更新位置
  *

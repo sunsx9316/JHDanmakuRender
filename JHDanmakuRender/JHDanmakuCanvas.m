@@ -7,15 +7,16 @@
 //
 
 #import "JHDanmakuCanvas.h"
+#import "JHDanmakuDefinition.h"
 
 @implementation JHDanmakuCanvas
-- (JHView *)hitTest:(CGPoint)aPoint{
-    return nil;
-}
+//- (JHView *)hitTest:(CGPoint)aPoint{
+//    return nil;
+//}
 
 - (instancetype)init{
     if (self = [super init]) {
-#if TARGET_OS_IPHONE
+#if JH_IOS
         self.userInteractionEnabled = NO;
         self.clipsToBounds = YES;
         self.backgroundColor = [UIColor clearColor];
@@ -36,7 +37,8 @@
     if (_layoutStyle == layoutStyle) {
         return;
     }
-#if !TARGET_OS_IPHONE
+    
+#if JH_MAC_OS
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     _layoutStyle = layoutStyle;
     switch (_layoutStyle) {

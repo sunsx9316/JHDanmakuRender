@@ -8,6 +8,8 @@
 
 #import "JHDanmakuContainer.h"
 #import "JHDanmakuEngine.h"
+#import "JHDanmakuMethod.h"
+#import "JHLabel+Tools.h"
 
 @implementation JHDanmakuContainer
 {
@@ -21,7 +23,7 @@
         self.drawsBackground = NO;
         self.bordered = NO;
 #endif
-        [self setWithDanmaku:danmaku];
+        self.danmaku = danmaku;
     }
     return self;
 }
@@ -30,9 +32,10 @@
     return nil;
 }
 
-- (void)setWithDanmaku:(JHBaseDanmaku *)danmaku {
+- (void)setDanmaku:(JHBaseDanmaku *)danmaku {
     _danmaku = danmaku;
-    self.jh_attributedText = danmaku.attributedString;
+    self.attributedString = [[NSMutableAttributedString alloc] initWithString:_danmaku.text attributes:[JHDanmakuMethod edgeEffectDicWithStyle:_danmaku.effectStyle textColor:_danmaku.textColor]];
+    
     [self updateAttributed];
 }
 
@@ -54,10 +57,10 @@
 - (void)updateAttributed {
     NSDictionary *globalAttributed = [self.danmakuEngine globalAttributedDic];
     JHFont *font = [self.danmakuEngine globalFont];
-    JHDanmakuShadowStyle shadowStyle = [self.danmakuEngine globalShadowStyle];
+    JHDanmakuEffectStyle shadowStyle = [self.danmakuEngine globalEffectStyle];
     
-    if (self.jh_attributedText.length) {
-        NSMutableAttributedString *str = [self.jh_attributedText mutableCopy];
+    if (self.attributedString.length) {
+        NSMutableAttributedString *str = [self.attributedString mutableCopy];
         NSRange range = NSMakeRange(0, str.length);
         
         if (globalAttributed) {
@@ -68,56 +71,18 @@
             [str addAttributes:@{NSFontAttributeName : font} range:range];
         }
         
-        if (shadowStyle > JHDanmakuShadowStyleUndefine) {
-            JHColor *textColor = [self.jh_attributedText attributesAtIndex:0 effectiveRange:nil][NSForegroundColorAttributeName];
+        if (shadowStyle > JHDanmakuEffectStyleUndefine) {
             [str removeAttribute:NSShadowAttributeName range:range];
             [str removeAttribute:NSStrokeColorAttributeName range:range];
             [str removeAttribute:NSStrokeWidthAttributeName range:range];
             
-            switch (shadowStyle) {
-                case JHDanmakuShadowStyleGlow:
-                {
-                    NSShadow *shadow = [self shadowWithTextColor:textColor];
-                    shadow.shadowBlurRadius = 3;
-                    [str addAttributes:@{NSShadowAttributeName : shadow} range:range];
-                }
-                    break;
-                case JHDanmakuShadowStyleShadow:
-                {
-                    [str addAttributes:@{NSShadowAttributeName : [self shadowWithTextColor:textColor]} range:range];
-                }
-                    break;
-                case JHDanmakuShadowStyleStroke:
-                {
-                    [str addAttributes:@{NSStrokeColorAttributeName : [self shadowColorWithTextColor:textColor],
-                                         NSStrokeWidthAttributeName : @-3} range:range];
-                }
-                    break;
-                default:
-                    break;
-            }
-            
+            [str addAttributes:[JHDanmakuMethod edgeEffectDicWithStyle:shadowStyle textColor:self.danmaku.textColor] range:range];
         }
         
-        self.jh_attributedText = str;
+        self.attributedString = str;
     }
     
     [self sizeToFit];
-}
-
-#pragma mark - 私有方法
-- (NSShadow *)shadowWithTextColor:(JHColor *)textColor {
-    NSShadow *shadow = [[NSShadow alloc] init];
-    shadow.shadowOffset = CGSizeMake(1, -1);
-    shadow.shadowColor = [self shadowColorWithTextColor:textColor];
-    return shadow;
-}
-
-- (JHColor *)shadowColorWithTextColor:(JHColor *)textColor {
-    if (JHColorBrightness(textColor) > 0.5) {
-        return [JHColor colorWithRed:0 green:0 blue:0 alpha:1];
-    }
-    return [JHColor colorWithRed:1 green:1 blue:1 alpha:1];
 }
 
 @end
