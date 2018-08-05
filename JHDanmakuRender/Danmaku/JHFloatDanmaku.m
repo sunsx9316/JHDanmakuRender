@@ -12,7 +12,7 @@
 
 @interface JHFloatDanmaku()
 @property (assign, nonatomic) CGFloat during;
-@property (assign, nonatomic) JHFloatDanmakuDirection direction;
+@property (assign, nonatomic) JHFloatDanmakuPosition position;
 @end
 
 @implementation JHFloatDanmaku
@@ -22,8 +22,21 @@
 
 - (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font during:(CGFloat)during direction:(JHFloatDanmakuDirection)direction {
     
-    if (self = [super initWithFontSize:fontSize textColor:textColor text:text shadowStyle:shadowStyle font:font]) {
-        _direction = direction;
+    if (font == nil) {
+        font = [JHFont systemFontOfSize:fontSize];
+    }
+    
+    return [self initWithFont:font text:text textColor:textColor effectStyle:(JHDanmakuEffectStyle)shadowStyle during:direction position:(JHFloatDanmakuPosition)direction];
+}
+
+- (instancetype)initWithFont:(JHFont *)font
+                        text:(NSString *)text
+                   textColor:(JHColor *)textColor
+                 effectStyle:(JHDanmakuEffectStyle)effectStyle
+                      during:(CGFloat)during
+                    position:(JHFloatDanmakuPosition)position {
+    if (self = [super initWithFont:font text:text textColor:textColor effectStyle:effectStyle]) {
+        _position = position;
         _during = during;
     }
     return self;
@@ -76,7 +89,7 @@
     }
     //选择没有弹幕的轨道
     else {
-        if (_direction == JHFloatDanmakuDirectionT2B) {
+        if (_position == JHFloatDanmakuPositionAtTop) {
             for (NSInteger i = 0; i < channelCount; ++i) {
                 if (!dic[@(i)]) {
                     channel = i;
@@ -104,7 +117,7 @@
 }
 
 - (JHFloatDanmakuDirection)direction {
-    return _direction;
+    return (JHFloatDanmakuDirection)_position;
 }
 
 - (NSInteger)currentChannel {

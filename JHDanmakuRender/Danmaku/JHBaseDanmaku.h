@@ -7,20 +7,34 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JHDanmakuMacroDefinition.h"
+#import "JHDanmakuDefinition.h"
 
 @class JHDanmakuContainer, JHDanmakuEngine;
-typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
-    JHDanmakuShadowStyleUndefine = 0,
+
+typedef NS_ENUM(NSUInteger, JHDanmakuEffectStyle) {
+    JHDanmakuEffectStyleUndefine = 0,
     //啥也没有
-    JHDanmakuShadowStyleNone = 100,
+    JHDanmakuEffectStyleNone = 100,
     //描边
-    JHDanmakuShadowStyleStroke,
+    JHDanmakuEffectStyleStroke,
     //投影
-    JHDanmakuShadowStyleShadow,
+    JHDanmakuEffectStyleShadow,
     //模糊阴影
-    JHDanmakuShadowStyleGlow,
+    JHDanmakuEffectStyleGlow,
 };
+
+
+typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
+    JHDanmakuShadowStyleUndefine = JHDanmakuEffectStyleUndefine,
+    //啥也没有
+    JHDanmakuShadowStyleNone = JHDanmakuEffectStyleNone,
+    //描边
+    JHDanmakuShadowStyleStroke = JHDanmakuEffectStyleStroke,
+    //投影
+    JHDanmakuShadowStyleShadow = JHDanmakuEffectStyleShadow,
+    //模糊阴影
+    JHDanmakuShadowStyleGlow = JHDanmakuEffectStyleGlow,
+} JHDeprecated("使用 JHDanmakuEffectStyle");
 
 @interface JHBaseDanmaku : NSObject
 @property (strong, nonatomic, readonly) JHFont *font;
@@ -66,7 +80,15 @@ typedef NS_ENUM(NSUInteger, JHDanmakuShadowStyle) {
                        textColor:(JHColor *)textColor
                             text:(NSString *)text
                      shadowStyle:(JHDanmakuShadowStyle)shadowStyle
-                            font:(JHFont *)font;
+                            font:(JHFont *)font JHDeprecated("请使用 - initWithFont:text:textColor:effectStyle");
+
+/**
+ *  父类方法 不要使用
+ */
+- (instancetype)initWithFont:(JHFont *)font
+                        text:(NSString *)text
+                   textColor:(JHColor *)textColor
+                 effectStyle:(JHDanmakuEffectStyle)effectStyle;
 
 
 @end

@@ -32,8 +32,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self.danmakuHoldView addSubview:self.aEngine.canvas];
-    self.aEngine.globalShadowStyle = JHDanmakuShadowStyleGlow;
+    self.aEngine.globalEffectStyle = JHDanmakuEffectStyleGlow;
     [self hideMenu];
 }
 
@@ -121,9 +122,9 @@
     }
     else {
         NSString *str = self.danmakuDirectionLabel.text;
-        JHFloatDanmakuDirection dir = JHFloatDanmakuDirectionB2T;
+        JHFloatDanmakuPosition dir = JHFloatDanmakuPositionAtBottom;
         if ([str isEqualToString:@"顶部弹幕"]) {
-            dir = JHFloatDanmakuDirectionT2B;
+            dir = JHFloatDanmakuPositionAtTop;
         }
         [self.aEngine sendDanmaku:[self floatDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"浮动弹幕" direction:dir]];
     }
@@ -131,13 +132,13 @@
 
 #pragma mark - 私有方法
 //初始化一个浮动弹幕
-- (JHFloatDanmaku *)floatDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(JHFloatDanmakuDirection)direction{
-    return [[JHFloatDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:JHDanmakuShadowStyleShadow font:nil during:3 direction:direction];
+- (JHFloatDanmaku *)floatDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(JHFloatDanmakuPosition)direction{
+    return [[JHFloatDanmaku alloc] initWithFont:[UIFont systemFontOfSize:fontSize] text:text textColor:textColor effectStyle:JHDanmakuEffectStyleShadow during:3 position:(JHFloatDanmakuPosition)direction];
 }
 
 //初始化一个滚动弹幕
 - (JHScrollDanmaku *)scrollDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(JHScrollDanmakuDirection)direction speed:(CGFloat)speed{
-    return [[JHScrollDanmaku alloc] initWithFontSize:fontSize textColor:textColor text:text shadowStyle:JHDanmakuShadowStyleShadow font:nil speed:speed direction:direction];
+    return [[JHScrollDanmaku alloc] initWithFont:[UIFont systemFontOfSize:fontSize] text:text textColor:textColor effectStyle:JHDanmakuEffectStyleShadow speed:speed direction:direction];
 }
 
 - (void)hideMenu{

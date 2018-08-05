@@ -8,41 +8,31 @@
 
 #import "JHBaseDanmaku.h"
 #import "JHDanmakuEngine+Private.h"
+#import "JHDanmakuPrivateHeader.h"
 
 @implementation JHBaseDanmaku
 
 - (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font{
+    if (!font) font = [JHFont systemFontOfSize: fontSize];
+    return [self initWithFont:font text:text textColor:textColor effectStyle:(JHDanmakuEffectStyle)shadowStyle];
+}
+
+- (instancetype)initWithFont:(JHFont *)font
+                        text:(NSString *)text
+                   textColor:(JHColor *)textColor
+                 effectStyle:(JHDanmakuEffectStyle)effectStyle {
     if (self = [super init]) {
         //字体为空根据fontSize初始化
-        if (!font) font = [JHFont systemFontOfSize: fontSize];
+        if (!font) font = [JHFont systemFontOfSize: 15];
         if (!text) text = @"";
         if (!textColor) textColor = [JHColor blackColor];
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         dic[NSFontAttributeName] = font;
         dic[NSForegroundColorAttributeName] = textColor;
-        switch (shadowStyle) {
-            case JHDanmakuShadowStyleGlow:
-            {
-                NSShadow *shadow = [self shadowWithTextColor:textColor];
-                shadow.shadowBlurRadius = 3;
-                dic[NSShadowAttributeName] = shadow;
-            }
-                break;
-            case JHDanmakuShadowStyleShadow:
-            {
-                dic[NSShadowAttributeName] = [self shadowWithTextColor:textColor];
-            }
-                break;
-            case JHDanmakuShadowStyleStroke:
-            {
-                dic[NSStrokeColorAttributeName] = [self shadowColorWithTextColor:textColor];
-                dic[NSStrokeWidthAttributeName] = @-3;
-            }
-                break;
-            default:
-                break;
-        }
+
+        [dic addEntriesFromDictionary:[JHDanmakuMethod edgeEffectDicWithStyle:effectStyle textColor:textColor]];
+        
         _font = font;
         self.attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:dic];
     }
@@ -72,22 +62,6 @@
 
 - (NSAttributedString *)attributedString {
     return _attributedString;
-}
-
-#pragma mark - 私有方法
-
-- (NSShadow *)shadowWithTextColor:(JHColor *)textColor {
-    NSShadow *shadow = [[NSShadow alloc] init];
-    shadow.shadowOffset = CGSizeMake(1, -1);
-    shadow.shadowColor = [self shadowColorWithTextColor:textColor];
-    return shadow;
-}
-
-- (JHColor *)shadowColorWithTextColor:(JHColor *)textColor {
-    if (JHColorBrightness(textColor) > 0.5) {
-        return [JHColor colorWithRed:0 green:0 blue:0 alpha:1];
-    }
-    return [JHColor colorWithRed:1 green:1 blue:1 alpha:1];
 }
 
 @end

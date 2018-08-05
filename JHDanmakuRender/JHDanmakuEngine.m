@@ -126,8 +126,12 @@
 }
 
 - (void)setGlobalShadowStyle:(JHDanmakuShadowStyle)globalShadowStyle {
-    if (_globalShadowStyle != globalShadowStyle) {
-        _globalShadowStyle = globalShadowStyle;
+    self.globalEffectStyle = (JHDanmakuEffectStyle)globalShadowStyle;
+}
+
+- (void)setGlobalEffectStyle:(JHDanmakuEffectStyle)globalEffectStyle {
+    if (_globalEffectStyle != globalEffectStyle) {
+        _globalEffectStyle = globalEffectStyle;
         [self reloadCurrentActiveDanmaukus];
     }
 }
@@ -237,7 +241,7 @@
         [self.inactiveContainer removeObject:con];
     }
     
-    [con setWithDanmaku:danmaku];
+    con.danmaku = danmaku;
     con.originalPosition = [con.danmaku originalPositonWithEngine:self rect:self.canvas.bounds danmakuSize:con.bounds.size timeDifference:_currentTime - danmaku.appearTime];
     
     [self.canvas addSubview:con];

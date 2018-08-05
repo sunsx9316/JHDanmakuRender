@@ -7,7 +7,16 @@
 //
 
 #import "JHBaseDanmaku.h"
+#import "JHDanmakuDefinition.h"
 
+/**
+ 滚动弹幕方向
+ 
+ - JHScrollDanmakuDirectionR2L: 从右到左
+ - JHScrollDanmakuDirectionL2R: 从左到右
+ - JHScrollDanmakuDirectionT2B: 从上到下
+ - JHScrollDanmakuDirectionB2T: 从下到上
+ */
 typedef NS_ENUM(NSInteger, JHScrollDanmakuDirection) {
     JHScrollDanmakuDirectionR2L = 10,
     JHScrollDanmakuDirectionL2R = 11,
@@ -35,9 +44,30 @@ typedef NS_ENUM(NSInteger, JHScrollDanmakuDirection) {
                      shadowStyle:(JHDanmakuShadowStyle)shadowStyle
                             font:(JHFont *)font
                            speed:(CGFloat)speed
-                       direction:(JHScrollDanmakuDirection)direction;
-- (CGFloat)speed;
-- (JHScrollDanmakuDirection)direction;
+                       direction:(JHScrollDanmakuDirection)direction JHDeprecated("使用 initWithFont:text:textColor:effectStyle:speed:direction");
+
+/**
+ *  初始化 阴影 字体
+ *
+ *  @param font        字体
+ *  @param text        文本内容
+ *  @param textColor   文字颜色(务必使用 colorWithRed:green:blue:alpha初始化)
+ *  @param effectStyle 阴影风格
+ *  @param speed       弹幕速度
+ *  @param direction   弹幕运动方向
+ *
+ *  @return self
+ */
+
+- (instancetype)initWithFont:(JHFont *)font
+                        text:(NSString *)text
+                   textColor:(JHColor *)textColor
+                 effectStyle:(JHDanmakuEffectStyle)effectStyle
+                       speed:(CGFloat)speed
+                   direction:(JHScrollDanmakuDirection)direction;
+
+@property (assign, nonatomic, readonly) CGFloat speed;
+@property (assign, nonatomic, readonly) JHScrollDanmakuDirection direction;
 
 
 

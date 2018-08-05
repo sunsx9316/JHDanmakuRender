@@ -7,21 +7,21 @@
 //
 
 #import "JHDisplayLink.h"
+#import "JHDanmakuPrivateHeader.h"
 
-#if TARGET_OS_IPHONE
+#if JH_IOS
 #import <UIKit/UIKit.h>
 #else
 #import <CoreVideo/CVDisplayLink.h>
 #endif
 
-
-typedef enum : unsigned {
+typedef NS_ENUM(NSUInteger, JHDisplayLinkAtomicFlags) {
     kJHDisplayLinkIsRendering = 1u << 0
-} JHDisplayLinkAtomicFlags;
+};
 
 
 @interface JHDisplayLink () {
-#if TARGET_OS_IPHONE
+#if JH_IOS
     CADisplayLink *_IOSDisplayLink;
 #else
     
@@ -44,7 +44,7 @@ typedef enum : unsigned {
 
 - (instancetype)init{
     if (self = [super init]) {
-#if !TARGET_OS_IPHONE
+#if JH_MACOS
         CVReturn status =
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         assert(status == kCVReturnSuccess);
@@ -62,7 +62,7 @@ typedef enum : unsigned {
 }
 
 - (void)dealloc {
-#if TARGET_OS_IPHONE
+#if JH_IOS
     [self stop];
 #else
     CVDisplayLinkRelease(_displayLink);
@@ -72,7 +72,7 @@ typedef enum : unsigned {
 }
 
 - (void)start {
-#if TARGET_OS_IPHONE
+#if JH_IOS
     [self stop];
     SEL selector = @selector(displayLinkDidCallback);
     if ([self.delegate respondsToSelector:selector]) {
@@ -93,7 +93,7 @@ typedef enum : unsigned {
 }
 
 - (void)stop {
-#if TARGET_OS_IPHONE
+#if JH_IOS
     if (_IOSDisplayLink) {
         [_IOSDisplayLink invalidate];
     }
@@ -106,7 +106,7 @@ typedef enum : unsigned {
 #endif
 }
 
-#if !TARGET_OS_IPHONE
+#if JH_MACOS
 - (void)setDispatchQueue:(dispatch_queue_t)dispatchQueue {
     dispatch_set_target_queue(_internalDispatchQueue, dispatchQueue);
     _clientDispatchQueue = dispatchQueue;
