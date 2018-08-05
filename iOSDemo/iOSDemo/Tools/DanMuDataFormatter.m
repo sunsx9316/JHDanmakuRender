@@ -19,11 +19,12 @@ typedef void(^callBackBlock)(DanMuDataModel *model);
     NSMutableDictionary <NSNumber *,NSMutableArray <JHBaseDanmaku *> *> *dic = [NSMutableDictionary dictionary];
     
     UIFont *font = [UIFont systemFontOfSize:15];
-    NSInteger danMufontSpecially = JHDanmakuShadowStyleNone;
+    NSInteger danMufontSpecially = JHDanmakuEffectStyleNone;
+    
     [self danMuWithBilibiliData:obj block:^(DanMuDataModel *model) {
         NSInteger time = model.time;
         if (!dic[@(time)]) dic[@(time)] = [NSMutableArray array];
-        JHBaseDanmaku *danmaku = [JHDanmakuEngine DanmakuWithText:model.message color:model.color spiritStyle:model.mode shadowStyle:danMufontSpecially fontSize: font.pointSize font:font];
+        JHBaseDanmaku *danmaku = [JHDanmakuEngine DanmakuWithText:model.message color:model.color spiritStyle:model.mode shadowStyle:danMufontSpecially font:font];
         danmaku.appearTime = model.time;
         [dic[@(time)] addObject: danmaku];
     }];
