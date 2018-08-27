@@ -14,23 +14,16 @@
 		892FA6031D644212007D1F05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 892FA6021D644212007D1F05 /* Assets.xcassets */; };
 		892FA6061D644212007D1F05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 892FA6041D644212007D1F05 /* LaunchScreen.storyboard */; };
 		892FA60E1D64424F007D1F05 /* test.xml in Resources */ = {isa = PBXBuildFile; fileRef = 892FA60D1D64424F007D1F05 /* test.xml */; };
-		892FA61B1D644256007D1F05 /* DanMuDataFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 892FA6111D644256007D1F05 /* DanMuDataFormatter.m */; };
-		892FA61C1D644256007D1F05 /* DanMuDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 892FA6131D644256007D1F05 /* DanMuDataModel.m */; };
-		892FA61D1D644256007D1F05 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 892FA6161D644256007D1F05 /* GDataXMLNode.m */; };
-		892FA61E1D644256007D1F05 /* JHDanmakuEngine+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 892FA6181D644256007D1F05 /* JHDanmakuEngine+Tools.m */; };
-		892FA61F1D644256007D1F05 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 892FA61A1D644256007D1F05 /* UIColor+Tools.m */; };
-		89E8B6041F50575C009CF325 /* JHBaseDanmaku.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5EE1F50575C009CF325 /* JHBaseDanmaku.m */; };
-		89E8B6051F50575C009CF325 /* JHFloatDanmaku.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5F01F50575C009CF325 /* JHFloatDanmaku.m */; };
-		89E8B6061F50575C009CF325 /* JHScrollDanmaku.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5F21F50575C009CF325 /* JHScrollDanmaku.m */; };
-		89E8B6071F50575C009CF325 /* JHDanmakuCanvas.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5F41F50575C009CF325 /* JHDanmakuCanvas.m */; };
-		89E8B6081F50575C009CF325 /* JHDanmakuClock.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5F61F50575C009CF325 /* JHDanmakuClock.m */; };
-		89E8B6091F50575C009CF325 /* JHDanmakuContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5F81F50575C009CF325 /* JHDanmakuContainer.m */; };
-		89E8B60A1F50575C009CF325 /* JHDanmakuEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5FA1F50575C009CF325 /* JHDanmakuEngine.m */; };
-		89E8B60B1F50575C009CF325 /* JHDisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B5FE1F50575C009CF325 /* JHDisplayLink.m */; };
-		89E8B60D1F50575C009CF325 /* JHDanmakuEngine+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E8B6031F50575C009CF325 /* JHDanmakuEngine+Private.m */; };
+		899C670B2116F71400EDF507 /* DanMuDataFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 899C67072116F71400EDF507 /* DanMuDataFormatter.m */; };
+		899C670C2116F71400EDF507 /* JHDanmakuEngine+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 899C67082116F71400EDF507 /* JHDanmakuEngine+Tools.m */; };
+		899C670D2116F71400EDF507 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 899C67092116F71400EDF507 /* UIColor+Tools.m */; };
+		899C670E2116F71400EDF507 /* DanMuDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 899C670A2116F71400EDF507 /* DanMuDataModel.m */; };
+		B7A3AA9DB0AE346FDC13B81A /* libPods-iOSDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9E5EE59C111D84B82924445 /* libPods-iOSDemo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		59B78EE2160977E460090C93 /* Pods-iOSDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSDemo/Pods-iOSDemo.release.xcconfig"; sourceTree = "<group>"; };
+		64E28E13207574D2F78C3451 /* Pods-iOSDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSDemo/Pods-iOSDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		892FA5F31D644212007D1F05 /* iOSDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		892FA5F71D644212007D1F05 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		892FA5F91D644212007D1F05 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -42,36 +35,15 @@
 		892FA6051D644212007D1F05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		892FA6071D644212007D1F05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		892FA60D1D64424F007D1F05 /* test.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.xml; sourceTree = "<group>"; };
-		892FA6101D644256007D1F05 /* DanMuDataFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DanMuDataFormatter.h; sourceTree = "<group>"; };
-		892FA6111D644256007D1F05 /* DanMuDataFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DanMuDataFormatter.m; sourceTree = "<group>"; };
-		892FA6121D644256007D1F05 /* DanMuDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DanMuDataModel.h; sourceTree = "<group>"; };
-		892FA6131D644256007D1F05 /* DanMuDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DanMuDataModel.m; sourceTree = "<group>"; };
-		892FA6151D644256007D1F05 /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
-		892FA6161D644256007D1F05 /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
-		892FA6171D644256007D1F05 /* JHDanmakuEngine+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JHDanmakuEngine+Tools.h"; sourceTree = "<group>"; };
-		892FA6181D644256007D1F05 /* JHDanmakuEngine+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JHDanmakuEngine+Tools.m"; sourceTree = "<group>"; };
-		892FA6191D644256007D1F05 /* UIColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tools.h"; sourceTree = "<group>"; };
-		892FA61A1D644256007D1F05 /* UIColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tools.m"; sourceTree = "<group>"; };
-		89E8B5ED1F50575C009CF325 /* JHBaseDanmaku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHBaseDanmaku.h; sourceTree = "<group>"; };
-		89E8B5EE1F50575C009CF325 /* JHBaseDanmaku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHBaseDanmaku.m; sourceTree = "<group>"; };
-		89E8B5EF1F50575C009CF325 /* JHFloatDanmaku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHFloatDanmaku.h; sourceTree = "<group>"; };
-		89E8B5F01F50575C009CF325 /* JHFloatDanmaku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHFloatDanmaku.m; sourceTree = "<group>"; };
-		89E8B5F11F50575C009CF325 /* JHScrollDanmaku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHScrollDanmaku.h; sourceTree = "<group>"; };
-		89E8B5F21F50575C009CF325 /* JHScrollDanmaku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHScrollDanmaku.m; sourceTree = "<group>"; };
-		89E8B5F31F50575C009CF325 /* JHDanmakuCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuCanvas.h; sourceTree = "<group>"; };
-		89E8B5F41F50575C009CF325 /* JHDanmakuCanvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDanmakuCanvas.m; sourceTree = "<group>"; };
-		89E8B5F51F50575C009CF325 /* JHDanmakuClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuClock.h; sourceTree = "<group>"; };
-		89E8B5F61F50575C009CF325 /* JHDanmakuClock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDanmakuClock.m; sourceTree = "<group>"; };
-		89E8B5F71F50575C009CF325 /* JHDanmakuContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuContainer.h; sourceTree = "<group>"; };
-		89E8B5F81F50575C009CF325 /* JHDanmakuContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDanmakuContainer.m; sourceTree = "<group>"; };
-		89E8B5F91F50575C009CF325 /* JHDanmakuEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuEngine.h; sourceTree = "<group>"; };
-		89E8B5FA1F50575C009CF325 /* JHDanmakuEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDanmakuEngine.m; sourceTree = "<group>"; };
-		89E8B5FB1F50575C009CF325 /* JHDanmakuMacroDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuMacroDefinition.h; sourceTree = "<group>"; };
-		89E8B5FC1F50575C009CF325 /* JHDanmakuRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDanmakuRender.h; sourceTree = "<group>"; };
-		89E8B5FD1F50575C009CF325 /* JHDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDisplayLink.h; sourceTree = "<group>"; };
-		89E8B5FE1F50575C009CF325 /* JHDisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDisplayLink.m; sourceTree = "<group>"; };
-		89E8B6021F50575C009CF325 /* JHDanmakuEngine+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JHDanmakuEngine+Private.h"; sourceTree = "<group>"; };
-		89E8B6031F50575C009CF325 /* JHDanmakuEngine+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JHDanmakuEngine+Private.m"; sourceTree = "<group>"; };
+		899C67032116F71400EDF507 /* DanMuDataFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DanMuDataFormatter.h; sourceTree = "<group>"; };
+		899C67042116F71400EDF507 /* JHDanmakuEngine+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JHDanmakuEngine+Tools.h"; sourceTree = "<group>"; };
+		899C67052116F71400EDF507 /* DanMuDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DanMuDataModel.h; sourceTree = "<group>"; };
+		899C67062116F71400EDF507 /* UIColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tools.h"; sourceTree = "<group>"; };
+		899C67072116F71400EDF507 /* DanMuDataFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DanMuDataFormatter.m; sourceTree = "<group>"; };
+		899C67082116F71400EDF507 /* JHDanmakuEngine+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JHDanmakuEngine+Tools.m"; sourceTree = "<group>"; };
+		899C67092116F71400EDF507 /* UIColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tools.m"; sourceTree = "<group>"; };
+		899C670A2116F71400EDF507 /* DanMuDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DanMuDataModel.m; sourceTree = "<group>"; };
+		F9E5EE59C111D84B82924445 /* libPods-iOSDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iOSDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7A3AA9DB0AE346FDC13B81A /* libPods-iOSDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +64,8 @@
 				892FA60D1D64424F007D1F05 /* test.xml */,
 				892FA5F51D644212007D1F05 /* iOSDemo */,
 				892FA5F41D644212007D1F05 /* Products */,
+				DEA18D606BDBA9F8F7BBD05B /* Pods */,
+				B05405C72682C7154D919AFE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,8 +80,7 @@
 		892FA5F51D644212007D1F05 /* iOSDemo */ = {
 			isa = PBXGroup;
 			children = (
-				89E8B5EB1F50575C009CF325 /* JHDanmakuRender */,
-				892FA60F1D644256007D1F05 /* Tools */,
+				899C67022116F71400EDF507 /* Tools */,
 				892FA5F91D644212007D1F05 /* AppDelegate.h */,
 				892FA5FA1D644212007D1F05 /* AppDelegate.m */,
 				892FA5FC1D644212007D1F05 /* ViewController.h */,
@@ -128,73 +102,36 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		892FA60F1D644256007D1F05 /* Tools */ = {
+		899C67022116F71400EDF507 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				892FA6101D644256007D1F05 /* DanMuDataFormatter.h */,
-				892FA6111D644256007D1F05 /* DanMuDataFormatter.m */,
-				892FA6121D644256007D1F05 /* DanMuDataModel.h */,
-				892FA6131D644256007D1F05 /* DanMuDataModel.m */,
-				892FA6141D644256007D1F05 /* GDataXML */,
-				892FA6171D644256007D1F05 /* JHDanmakuEngine+Tools.h */,
-				892FA6181D644256007D1F05 /* JHDanmakuEngine+Tools.m */,
-				892FA6191D644256007D1F05 /* UIColor+Tools.h */,
-				892FA61A1D644256007D1F05 /* UIColor+Tools.m */,
+				899C67032116F71400EDF507 /* DanMuDataFormatter.h */,
+				899C67072116F71400EDF507 /* DanMuDataFormatter.m */,
+				899C67042116F71400EDF507 /* JHDanmakuEngine+Tools.h */,
+				899C67082116F71400EDF507 /* JHDanmakuEngine+Tools.m */,
+				899C67062116F71400EDF507 /* UIColor+Tools.h */,
+				899C67092116F71400EDF507 /* UIColor+Tools.m */,
+				899C67052116F71400EDF507 /* DanMuDataModel.h */,
+				899C670A2116F71400EDF507 /* DanMuDataModel.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
 		};
-		892FA6141D644256007D1F05 /* GDataXML */ = {
+		B05405C72682C7154D919AFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				892FA6151D644256007D1F05 /* GDataXMLNode.h */,
-				892FA6161D644256007D1F05 /* GDataXMLNode.m */,
+				F9E5EE59C111D84B82924445 /* libPods-iOSDemo.a */,
 			);
-			path = GDataXML;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		89E8B5EB1F50575C009CF325 /* JHDanmakuRender */ = {
+		DEA18D606BDBA9F8F7BBD05B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				89E8B5EC1F50575C009CF325 /* Danmaku */,
-				89E8B5F31F50575C009CF325 /* JHDanmakuCanvas.h */,
-				89E8B5F41F50575C009CF325 /* JHDanmakuCanvas.m */,
-				89E8B5F51F50575C009CF325 /* JHDanmakuClock.h */,
-				89E8B5F61F50575C009CF325 /* JHDanmakuClock.m */,
-				89E8B5F71F50575C009CF325 /* JHDanmakuContainer.h */,
-				89E8B5F81F50575C009CF325 /* JHDanmakuContainer.m */,
-				89E8B5F91F50575C009CF325 /* JHDanmakuEngine.h */,
-				89E8B5FA1F50575C009CF325 /* JHDanmakuEngine.m */,
-				89E8B5FB1F50575C009CF325 /* JHDanmakuMacroDefinition.h */,
-				89E8B5FC1F50575C009CF325 /* JHDanmakuRender.h */,
-				89E8B5FD1F50575C009CF325 /* JHDisplayLink.h */,
-				89E8B5FE1F50575C009CF325 /* JHDisplayLink.m */,
-				89E8B5FF1F50575C009CF325 /* Private */,
+				64E28E13207574D2F78C3451 /* Pods-iOSDemo.debug.xcconfig */,
+				59B78EE2160977E460090C93 /* Pods-iOSDemo.release.xcconfig */,
 			);
-			name = JHDanmakuRender;
-			path = ../../JHDanmakuRender;
-			sourceTree = "<group>";
-		};
-		89E8B5EC1F50575C009CF325 /* Danmaku */ = {
-			isa = PBXGroup;
-			children = (
-				89E8B5ED1F50575C009CF325 /* JHBaseDanmaku.h */,
-				89E8B5EE1F50575C009CF325 /* JHBaseDanmaku.m */,
-				89E8B5EF1F50575C009CF325 /* JHFloatDanmaku.h */,
-				89E8B5F01F50575C009CF325 /* JHFloatDanmaku.m */,
-				89E8B5F11F50575C009CF325 /* JHScrollDanmaku.h */,
-				89E8B5F21F50575C009CF325 /* JHScrollDanmaku.m */,
-			);
-			path = Danmaku;
-			sourceTree = "<group>";
-		};
-		89E8B5FF1F50575C009CF325 /* Private */ = {
-			isa = PBXGroup;
-			children = (
-				89E8B6021F50575C009CF325 /* JHDanmakuEngine+Private.h */,
-				89E8B6031F50575C009CF325 /* JHDanmakuEngine+Private.m */,
-			);
-			path = Private;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +141,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 892FA60A1D644212007D1F05 /* Build configuration list for PBXNativeTarget "iOSDemo" */;
 			buildPhases = (
+				C5C11032C03E8EC2A6D3B96A /* [CP] Check Pods Manifest.lock */,
 				892FA5EF1D644212007D1F05 /* Sources */,
 				892FA5F01D644212007D1F05 /* Frameworks */,
 				892FA5F11D644212007D1F05 /* Resources */,
@@ -263,28 +201,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C5C11032C03E8EC2A6D3B96A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOSDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		892FA5EF1D644212007D1F05 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89E8B60B1F50575C009CF325 /* JHDisplayLink.m in Sources */,
-				89E8B6051F50575C009CF325 /* JHFloatDanmaku.m in Sources */,
 				892FA5FE1D644212007D1F05 /* ViewController.m in Sources */,
-				892FA61E1D644256007D1F05 /* JHDanmakuEngine+Tools.m in Sources */,
-				89E8B6041F50575C009CF325 /* JHBaseDanmaku.m in Sources */,
-				89E8B60A1F50575C009CF325 /* JHDanmakuEngine.m in Sources */,
 				892FA5FB1D644212007D1F05 /* AppDelegate.m in Sources */,
-				89E8B6091F50575C009CF325 /* JHDanmakuContainer.m in Sources */,
-				892FA61F1D644256007D1F05 /* UIColor+Tools.m in Sources */,
-				892FA61B1D644256007D1F05 /* DanMuDataFormatter.m in Sources */,
-				89E8B60D1F50575C009CF325 /* JHDanmakuEngine+Private.m in Sources */,
+				899C670E2116F71400EDF507 /* DanMuDataModel.m in Sources */,
+				899C670B2116F71400EDF507 /* DanMuDataFormatter.m in Sources */,
 				892FA5F81D644212007D1F05 /* main.m in Sources */,
-				89E8B6061F50575C009CF325 /* JHScrollDanmaku.m in Sources */,
-				892FA61C1D644256007D1F05 /* DanMuDataModel.m in Sources */,
-				892FA61D1D644256007D1F05 /* GDataXMLNode.m in Sources */,
-				89E8B6071F50575C009CF325 /* JHDanmakuCanvas.m in Sources */,
-				89E8B6081F50575C009CF325 /* JHDanmakuClock.m in Sources */,
+				899C670C2116F71400EDF507 /* JHDanmakuEngine+Tools.m in Sources */,
+				899C670D2116F71400EDF507 /* UIColor+Tools.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,13 +347,12 @@
 		};
 		892FA60B1D644212007D1F05 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 64E28E13207574D2F78C3451 /* Pods-iOSDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = iOSDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jim.iOSDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -412,13 +360,12 @@
 		};
 		892FA60C1D644212007D1F05 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59B78EE2160977E460090C93 /* Pods-iOSDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = iOSDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jim.iOSDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

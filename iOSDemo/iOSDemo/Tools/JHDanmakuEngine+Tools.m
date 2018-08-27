@@ -12,11 +12,14 @@
 #import "UIColor+Tools.h"
 
 @implementation JHDanmakuEngine (Tools)
-+ (JHBaseDanmaku *)DanmakuWithText:(NSString*)text color:(NSInteger)color spiritStyle:(NSInteger)spiritStyle shadowStyle:(JHDanmakuShadowStyle)shadowStyle fontSize:(CGFloat)fontSize font:(UIFont *)font{
++ (JHBaseDanmaku *)DanmakuWithText:(NSString*)text color:(NSInteger)color spiritStyle:(NSInteger)spiritStyle shadowStyle:(JHDanmakuEffectStyle)shadowStyle font:(UIFont *)font {
+    UIColor *_color = [UIColor colorWithRGB:(uint32_t)color];
+    
     if (spiritStyle == 4 || spiritStyle == 5) {
-        return [[JHFloatDanmaku alloc] initWithFontSize:fontSize textColor:[UIColor colorWithRGB:(uint32_t)color] text:text shadowStyle:shadowStyle font:font during:3 direction:spiritStyle == 4 ? JHFloatDanmakuDirectionB2T : JHFloatDanmakuDirectionT2B];
-    }else{
-        return [[JHScrollDanmaku alloc] initWithFontSize:fontSize textColor:[UIColor colorWithRGB:(uint32_t)color] text:text shadowStyle:shadowStyle font:font speed:arc4random()%100 + 50 direction:JHScrollDanmakuDirectionR2L];
+        return [[JHFloatDanmaku alloc] initWithFont:font text:text textColor:_color effectStyle:shadowStyle during:3 position:spiritStyle == 4 ? JHFloatDanmakuPositionAtBottom : JHFloatDanmakuPositionAtTop];
+    }
+    else {
+        return [[JHScrollDanmaku alloc] initWithFont:font text:text textColor:_color effectStyle:shadowStyle speed:arc4random()%100 + 50 direction:JHScrollDanmakuDirectionR2L];
     }
 }
 

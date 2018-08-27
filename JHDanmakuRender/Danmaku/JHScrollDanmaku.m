@@ -27,7 +27,20 @@
                             font:(JHFont *)font
                            speed:(CGFloat)speed
                        direction:(JHScrollDanmakuDirection)direction {
-    if (self = [super initWithFontSize:fontSize textColor:textColor text:text shadowStyle:shadowStyle font:font]) {
+    if (font == nil) {
+        font = [JHFont systemFontOfSize:fontSize];
+    }
+    
+    return [self initWithFont:font text:text textColor:textColor effectStyle:(JHDanmakuEffectStyle)shadowStyle speed:speed direction:(JHScrollDanmakuDirection)direction];
+}
+
+- (instancetype)initWithFont:(JHFont *)font
+                        text:(NSString *)text
+                   textColor:(JHColor *)textColor
+                 effectStyle:(JHDanmakuEffectStyle)effectStyle
+                       speed:(CGFloat)speed
+                   direction:(JHScrollDanmakuDirection)direction {
+    if (self = [super initWithFont:font text:text textColor:textColor effectStyle:effectStyle]) {
         _speed = speed;
         _direction = direction;
     }

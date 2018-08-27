@@ -8,8 +8,11 @@
 
 #import "JHBaseDanmaku.h"
 #import "JHDanmakuCanvas.h"
+#import "JHDanmakuDefinition.h"
 
 @class JHDanmakuEngine;
+
+NS_ASSUME_NONNULL_BEGIN
 @protocol JHDanmakuEngineDelegate <NSObject>
 @optional
 
@@ -42,7 +45,7 @@
 
 @interface JHDanmakuEngine : NSObject
 
-@property (weak, nonatomic) id<JHDanmakuEngineDelegate> delegate;
+@property (weak, nonatomic) id<JHDanmakuEngineDelegate> _Nullable delegate;
 
 /**
  计时器多少秒调用一次代理方法 默认1s
@@ -72,17 +75,20 @@
 /**
  全局文字风格字典 默认不使用 会覆盖个体设置
  */
-@property (strong, nonatomic) NSDictionary *globalAttributedDic;
+@property (strong, nonatomic) NSDictionary * _Nullable globalAttributedDic;
 
 /**
  全局字体 默认不使用 会覆盖个体设置 方便更改字体大小
  */
-@property (strong, nonatomic) JHFont *globalFont;
+@property (strong, nonatomic) JHFont * _Nullable globalFont;
+
+
+@property (assign, nonatomic) JHDanmakuShadowStyle globalShadowStyle JHDeprecated("使用 globalEffectStyle");
 
 /**
  全局字体边缘特效 默认不使用 会覆盖个体设置
  */
-@property (assign, nonatomic) JHDanmakuShadowStyle globalShadowStyle;
+@property (assign, nonatomic) JHDanmakuEffectStyle globalEffectStyle;
 
 
 /**
@@ -114,4 +120,5 @@
  */
 - (void)sendDanmaku:(JHBaseDanmaku *)danmaku;
 @end
+NS_ASSUME_NONNULL_END
 
