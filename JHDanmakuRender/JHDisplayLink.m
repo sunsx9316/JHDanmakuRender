@@ -15,28 +15,15 @@
 #import <CoreVideo/CVDisplayLink.h>
 #endif
 
-typedef NS_ENUM(NSUInteger, JHDisplayLinkAtomicFlags) {
-    kJHDisplayLinkIsRendering = 1u << 0
-};
 
-
-@interface JHDisplayLink () {
+@interface JHDisplayLink ()
 #if JH_IOS
-    CADisplayLink *_IOSDisplayLink;
+@property (strong, nonatomic) CADisplayLink *iOSDisplayLink;
 #else
-    
-    CVDisplayLinkRef _displayLink;
-    CVTimeStamp _timeStamp;
-    
-    JHDisplayLinkAtomicFlags _atomicFlags;
-    bool _isRunning;
-    
-    dispatch_queue_t _internalDispatchQueue;
-    dispatch_queue_t _stateChangeQueue;
-    dispatch_queue_t _clientDispatchQueue;
+@property (assign, nonatomic) CVDisplayLinkRef OSXDisplayLink;
+@property (assign, atomic) CVTimeStamp timeStamp;
+@property (assign, atomic) BOOL isRunning;
 #endif
-    
-}
 
 @end
 
@@ -45,16 +32,31 @@ typedef NS_ENUM(NSUInteger, JHDisplayLinkAtomicFlags) {
 - (instancetype)init{
     if (self = [super init]) {
 #if JH_MACOS
-        CVReturn status =
-        CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
-        assert(status == kCVReturnSuccess);
+        CVReturn status = CVDisplayLinkCreateWithActiveCGDisplays(&_OSXDisplayLink);
+        NSAssert(status == kCVReturnSuccess, @"初始化失败");
         
-        _stateChangeQueue = dispatch_queue_create("JHDisplayLink.stateChange", NULL);
-        _clientDispatchQueue = dispatch_get_main_queue();
-        _internalDispatchQueue = dispatch_queue_create("JHDisplayLink", NULL);
-        dispatch_set_target_queue(_internalDispatchQueue, _clientDispatchQueue);
-        
-        CVDisplayLinkSetOutputCallback(_displayLink, JHDisplayLinkCallback, (__bridge void * _Nullable)(self));
+        __weak typeof(self)weakSelf = self;
+        CVDisplayLinkSetOutputHandler(self.OSXDisplayLink, ^CVReturn(CVDisplayLinkRef  _Nonnull displayLink, const CVTimeStamp * _Nonnull inNow, const CVTimeStamp * _Nonnull inOutputTime, CVOptionFlags flagsIn, CVOptionFlags * _Nonnull flagsOut) {
+            __strong typeof(weakSelf)self = weakSelf;
+            if (!self) {
+                return kCVReturnError;
+            }
+            
+            if (self.isRunning == false) {
+                CVDisplayLinkStop(displayLink);
+            }
+            else {
+                self.timeStamp = *inOutputTime;
+                
+                if (self.isRunning) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.delegate displayLinkDidCallback];
+                    });
+                }
+            }
+            
+            return kCVReturnSuccess;
+        });
 #endif
     }
     
@@ -65,85 +67,31 @@ typedef NS_ENUM(NSUInteger, JHDisplayLinkAtomicFlags) {
 #if JH_IOS
     [self stop];
 #else
-    CVDisplayLinkRelease(_displayLink);
-    _internalDispatchQueue = nil;
-    _stateChangeQueue = nil;
+    CVDisplayLinkRelease(self.OSXDisplayLink);
 #endif
 }
 
 - (void)start {
 #if JH_IOS
     [self stop];
-    SEL selector = @selector(displayLinkDidCallback);
-    if ([self.delegate respondsToSelector:selector]) {
-        _IOSDisplayLink = [CADisplayLink displayLinkWithTarget:self.delegate selector:selector];
-        [_IOSDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-    }
+    self.iOSDisplayLink = [CADisplayLink displayLinkWithTarget:self.delegate selector:@selector(displayLinkDidCallback)];
+    [self.iOSDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 #else
-    dispatch_async(_stateChangeQueue, ^{
-        if (_isRunning)
-            return;
-        
-        _isRunning = true;
-        CFRetain((__bridge CFTypeRef)self);
-        
-        CVDisplayLinkStart(_displayLink);
-    });
+    if (self.isRunning) return;
+    self.isRunning = true;
+    CVDisplayLinkStart(self.OSXDisplayLink);
 #endif
 }
 
 - (void)stop {
 #if JH_IOS
-    if (_IOSDisplayLink) {
-        [_IOSDisplayLink invalidate];
+    if (self.iOSDisplayLink) {
+        [self.iOSDisplayLink invalidate];
     }
 #else
-    dispatch_async(_stateChangeQueue, ^{
-        if (!_isRunning) return;
-        _isRunning = false;
-        dispatch_suspend(_stateChangeQueue);
-    });
+    if (self.isRunning == false) return;
+    self.isRunning = false;
 #endif
 }
-
-#if JH_MACOS
-- (void)setDispatchQueue:(dispatch_queue_t)dispatchQueue {
-    dispatch_set_target_queue(_internalDispatchQueue, dispatchQueue);
-    _clientDispatchQueue = dispatchQueue;
-}
-
-static CVReturn JHDisplayLinkCallback(CVDisplayLinkRef displayLink,
-                      const CVTimeStamp *inNow,
-                      const CVTimeStamp *inOutputTime,
-                      CVOptionFlags flagsIn,
-                      CVOptionFlags *flagsOut,
-                      void *ctx) {
-    JHDisplayLink *self = (__bridge JHDisplayLink*)ctx;
-    
-    if (!self->_isRunning) {
-        CVDisplayLinkStop(displayLink);
-        dispatch_resume(self->_stateChangeQueue);
-        CFRelease(ctx);
-        
-    } else if (!__sync_fetch_and_or(&self->_atomicFlags,
-                                    kJHDisplayLinkIsRendering)) {
-        self->_timeStamp = *inOutputTime;
-        dispatch_async_f(self->_internalDispatchQueue,
-                         (void *)CFBridgingRetain(self),
-                         JHDisplayLinkRender);
-    }
-    
-    return kCVReturnSuccess;
-}
-
-static void JHDisplayLinkRender(void *ctx) {
-    JHDisplayLink *self = CFBridgingRelease(ctx);
-    if (self->_isRunning) {
-        [self->_delegate displayLinkDidCallback];
-    }
-    __sync_fetch_and_and(&self->_atomicFlags, ~kJHDisplayLinkIsRendering);
-}
-
-#endif
 
 @end

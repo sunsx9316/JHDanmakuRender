@@ -95,7 +95,7 @@
 - (void)setSpeed:(CGFloat)speed {
     _extraSpeed = speed > 0 ? speed : 0.1;
     [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.danmaku.extraSpeed = _extraSpeed;
+        obj.danmaku.extraSpeed = self->_extraSpeed;
     }];
 }
 
@@ -165,7 +165,7 @@
     NSArray <JHDanmakuContainer *>*danmakus = self.activeContainer;
     [danmakus enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(JHDanmakuContainer * _Nonnull container, NSUInteger idx, BOOL * _Nonnull stop) {
         //如果弹幕移出屏幕或者到达显示时长 则移出画布 状态改为失活
-        if ([container updatePositionWithTime:_currentTime] == NO) {
+        if ([container updatePositionWithTime:self.currentTime] == NO) {
             JHBaseDanmaku *aDanmaku = container.danmaku;
             
             [self.activeContainer removeObjectAtIndex:idx];
@@ -174,7 +174,7 @@
                 [self.inactiveContainer addObject:container];
             }
             [container removeFromSuperview];
-            aDanmaku.disappearTime = _currentTime;
+            aDanmaku.disappearTime = self.currentTime;
         }
     }];
 }
@@ -202,7 +202,7 @@
 //重设当前弹幕初始位置
 - (void)resetOriginalPosition:(CGRect)bounds {
     [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.originalPosition = [obj.danmaku originalPositonWithEngine:self rect:bounds danmakuSize:obj.bounds.size timeDifference:_currentTime - obj.danmaku.appearTime];
+        obj.originalPosition = [obj.danmaku originalPositonWithEngine:self rect:bounds danmakuSize:obj.bounds.size timeDifference:self.currentTime - obj.danmaku.appearTime];
     }];
 }
 

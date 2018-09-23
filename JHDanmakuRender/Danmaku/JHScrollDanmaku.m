@@ -111,7 +111,7 @@
         if ([obj.danmaku isKindOfClass:[JHScrollDanmaku class]]) {
             JHScrollDanmaku *aDanmaku = (JHScrollDanmaku *)obj.danmaku;
             //同方向
-            if (labs(_direction - aDanmaku.direction) <= 1) {
+            if (labs(self.direction - aDanmaku.direction) <= 1) {
                 //计算弹幕所在轨道
                 //                NSNumber *channel = @([self channelWithFrame:obj.frame channelHeight:channelHeight]);
                 NSNumber *channel = @(aDanmaku.currentChannel);
