@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "JHDanmakuRender"
-  s.version      = "2.1.1"
+  s.version      = "2.1.2"
   s.summary      = "A danmaku rendering engine for iOS and OSX 一个iOS和OSX通用的弹幕渲染引擎"
   s.homepage     = "https://github.com/sunsx9316/JHDanmakuRender"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
