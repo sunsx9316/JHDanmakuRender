@@ -23,6 +23,8 @@
         self.bordered = NO;
 #endif
         self.danmaku = danmaku;
+        self.font = nil;
+        self.textColor = nil;
     }
     return self;
 }
@@ -82,7 +84,13 @@
         self.attributedString = str;
     }
     
+#if JH_MACOS
+    CGRect frame = self.frame;
+    frame.size = self.fittingSize;
+    self.frame = frame;
+#else
     [self sizeToFit];
+#endif
 }
 
 @end
