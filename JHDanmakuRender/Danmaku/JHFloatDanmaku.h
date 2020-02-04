@@ -34,9 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return self
  */
-- (instancetype)initWithFont:(JHFont *)font
-                        text:(NSString *)text
-                   textColor:(JHColor *)textColor
+- (instancetype)initWithFont:(JHFont * _Nullable)font
+                        text:(NSString * _Nullable)text
+                   textColor:(JHColor * _Nullable)textColor
                  effectStyle:(JHDanmakuEffectStyle)effectStyle
                       during:(CGFloat)during
                     position:(JHFloatDanmakuPosition)position;
