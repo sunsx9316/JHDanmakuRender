@@ -9,203 +9,235 @@
 #import "JHScrollDanmaku.h"
 #import "JHDanmakuContainer.h"
 #import "JHDanmakuEngine+Private.h"
+#import "JHDanmakuContext.h"
+//基础速度
+static CGFloat kBasicSpeed = 100.0;
+//默认弹幕长度 数值越大 整体速度越慢
+static CGFloat kDefaultDanmakuWith = 1300;
+
+NSString *JHScrollDanmakuExtraSpeedKey = @"extraSpeed";
 
 @interface JHScrollDanmaku()
 @property (assign, nonatomic) CGFloat speed;
 @property (assign, nonatomic) JHScrollDanmakuDirection direction;
+@property (nonatomic, assign) NSTimeInterval willDisappearTime;
 @end
 
-@implementation JHScrollDanmaku
-{
-    NSInteger _currentChannel;
-}
 
-- (instancetype)initWithFontSize:(CGFloat)fontSize
-                       textColor:(JHColor *)textColor
-                            text:(NSString *)text
-                     shadowStyle:(JHDanmakuShadowStyle)shadowStyle
-                            font:(JHFont *)font
-                           speed:(CGFloat)speed
-                       direction:(JHScrollDanmakuDirection)direction {
-    if (font == nil) {
-        font = [JHFont systemFontOfSize:fontSize];
-    }
-    
-    return [self initWithFont:font text:text textColor:textColor effectStyle:(JHDanmakuEffectStyle)shadowStyle speed:speed direction:(JHScrollDanmakuDirection)direction];
-}
+@implementation JHScrollDanmaku
 
 - (instancetype)initWithFont:(JHFont *)font
                         text:(NSString *)text
                    textColor:(JHColor *)textColor
                  effectStyle:(JHDanmakuEffectStyle)effectStyle
-                       speed:(CGFloat)speed
                    direction:(JHScrollDanmakuDirection)direction {
     if (self = [super initWithFont:font text:text textColor:textColor effectStyle:effectStyle]) {
-        _speed = speed;
         _direction = direction;
     }
     return self;
 }
 
-- (BOOL)updatePositonWithTime:(NSTimeInterval)time container:(JHDanmakuContainer *)container {
-    CGRect windowFrame = container.danmakuEngine.canvas.bounds;
-    CGRect containerFrame = container.frame;
-    CGPoint point = container.originalPosition;
+- (BOOL)isActiveWithTime:(NSTimeInterval)time context:(JHDanmakuContext *)context {
+    
+    JHDanmakuEngine *engine = context.engine;
+    CGRect windowFrame = engine.canvas.bounds;
+    CGSize danmakuSize = context.danmakuSize;
+    CGPoint point = context.originalPosition;
+    CGFloat extraSpeed = [engine.userInfo[JHScrollDanmakuExtraSpeedKey] doubleValue] ?: 1;
+    NSInteger realitySpeed = (_speed * extraSpeed);
+    CGFloat timeDifference = time - self.appearTime;
+    
+    CGRect containerFrame = CGRectZero;
+    containerFrame.size = danmakuSize;
+    containerFrame.origin = point;
     
     switch (_direction) {
         case JHScrollDanmakuDirectionR2L:
         {
-            point.x -= (_speed * self.extraSpeed) * (time - self.appearTime);
+            point.x -= realitySpeed * timeDifference;
             containerFrame.origin = point;
-            container.frame = containerFrame;
+            if (context.updateDanmakuPointCallBack) {
+                context.updateDanmakuPointCallBack(point);
+            }
             return CGRectGetMaxX(containerFrame) >= 0;
         }
         case JHScrollDanmakuDirectionL2R:
         {
-            point.x += (_speed * self.extraSpeed) * (time - self.appearTime);
+            point.x += realitySpeed * timeDifference;
             containerFrame.origin = point;
-            container.frame = containerFrame;
-            return containerFrame.origin.x <= windowFrame.size.width;
+            if (context.updateDanmakuPointCallBack) {
+                context.updateDanmakuPointCallBack(point);
+            }
+            return CGRectGetMinX(containerFrame) <= windowFrame.size.width;
         }
         case JHScrollDanmakuDirectionB2T:
         {
-            point.y -= (_speed * self.extraSpeed) * (time - self.appearTime);
+            point.y -= realitySpeed * timeDifference;
             containerFrame.origin = point;
-            container.frame = containerFrame;
+            if (context.updateDanmakuPointCallBack) {
+                context.updateDanmakuPointCallBack(point);
+            }
             return CGRectGetMaxY(containerFrame) >= 0;
         }
         case JHScrollDanmakuDirectionT2B:
         {
-            point.y += (_speed * self.extraSpeed) * (time - self.appearTime);
+            point.y += realitySpeed * timeDifference;
             containerFrame.origin = point;
-            container.frame = containerFrame;
-            return containerFrame.origin.y <= windowFrame.size.height;
+            if (context.updateDanmakuPointCallBack) {
+                context.updateDanmakuPointCallBack(point);
+            }
+            return CGRectGetMinY(containerFrame) <= windowFrame.size.height;
         }
     }
     return NO;
 }
 
-/**
- *
- 遍历所有同方向的弹幕
- 如果方向是左右或者右左 channelHeight = 窗口高/channelCount
- 如果是上下或者下上 channelHeight = 窗口宽/channelCount
- 左右方向按照y/channelHeight 归类
- 上下方向按照x/channelHeight 归类
- 优先选择没有弹幕的轨道
- 如果都有 计算选择弹幕最少的轨道 如果所有轨道弹幕数相同 则随机选择一条
- */
-- (CGPoint)originalPositonWithEngine:(JHDanmakuEngine *)engine
-                                rect:(CGRect)rect
-                         danmakuSize:(CGSize)danmakuSize
-                      timeDifference:(NSTimeInterval)timeDifference {
-    NSMutableDictionary <NSNumber *, NSMutableArray<JHDanmakuContainer *> *>*dic = [NSMutableDictionary dictionary];
+- (CGPoint)originalPositonWithContext:(JHDanmakuContext *)context {
+    NSMutableDictionary <NSNumber *, JHScrollDanmaku *>*dic = [NSMutableDictionary dictionary];
+    
+    JHDanmakuEngine *engine = context.engine;
+    CGRect rect = engine.canvas.bounds;
+    CGFloat extraSpeed = [engine.userInfo[JHScrollDanmakuExtraSpeedKey] doubleValue] ?: 1;
+    CGSize danmakuSize = context.danmakuSize;
+    CGFloat timeDifference = engine.currentTime - self.appearTime;
+    NSInteger realitySpeed = 0;
+    CGFloat start = 0;
+    
+    switch (_direction) {
+        case JHScrollDanmakuDirectionR2L:
+        case JHScrollDanmakuDirectionL2R: {
+            _speed = ceil(kBasicSpeed + ((danmakuSize.width / kDefaultDanmakuWith) * kBasicSpeed));
+            realitySpeed = (_speed * extraSpeed);
+            if (_direction == JHScrollDanmakuDirectionR2L) {
+                start = CGRectGetWidth(rect) - timeDifference * realitySpeed;
+                self.willDisappearTime = self.appearTime + (start / realitySpeed);
+            } else {
+                CGFloat timeDifferenceOffset = timeDifference * realitySpeed;
+                start = -danmakuSize.width + timeDifferenceOffset;
+                self.willDisappearTime = self.appearTime + ((CGRectGetWidth(rect) - timeDifferenceOffset) / realitySpeed);
+            }
+            
+            self.disappearTime = danmakuSize.width / realitySpeed + self.willDisappearTime;
+        }
+            break;
+        case JHScrollDanmakuDirectionB2T:
+        case JHScrollDanmakuDirectionT2B: {
+            _speed = ceil(kBasicSpeed + ((danmakuSize.height / kDefaultDanmakuWith) * kBasicSpeed));
+            realitySpeed = (_speed * extraSpeed);
+            
+            if (_direction == JHScrollDanmakuDirectionB2T) {
+                start = CGRectGetHeight(rect) - timeDifference * realitySpeed;
+                self.willDisappearTime = self.appearTime + (start / realitySpeed);
+            } else {
+                CGFloat timeDifferenceOffset = timeDifference * realitySpeed;
+                start = -danmakuSize.height + timeDifferenceOffset;
+                self.willDisappearTime = self.appearTime + ((CGRectGetHeight(rect) - timeDifferenceOffset) / realitySpeed);
+            }
+            
+            self.disappearTime = danmakuSize.height / realitySpeed + self.willDisappearTime;
+        }
+            break;
+    }
     
     NSInteger channelCount = (engine.channelCount == 0) ? [self channelCountWithContentRect:rect danmakuSize:danmakuSize] : engine.channelCount;
-    NSMutableArray <JHDanmakuContainer *>*activeContainer = engine.activeContainer;
+    NSArray <JHDanmakuContainer *>*activeContainer = engine.activeContainer;
     
     //轨道高
     NSInteger channelHeight = [self channelHeightWithChannelCount:channelCount contentRect:rect];
     
     [activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj.danmaku isKindOfClass:[JHScrollDanmaku class]]) {
+        if ([obj.danmaku isKindOfClass:[self class]]) {
             JHScrollDanmaku *aDanmaku = (JHScrollDanmaku *)obj.danmaku;
             //同方向
-            if (labs(self.direction - aDanmaku.direction) <= 1) {
+            if (self.direction == aDanmaku.direction) {
                 //计算弹幕所在轨道
-                //                NSNumber *channel = @([self channelWithFrame:obj.frame channelHeight:channelHeight]);
                 NSNumber *channel = @(aDanmaku.currentChannel);
-                
-                if (dic[channel] == nil) {
-                    dic[channel] = [NSMutableArray array];
+                JHScrollDanmaku *oldDanmaku = dic[channel];
+                if (oldDanmaku == nil) {
+                    dic[channel] = aDanmaku;
+                } else {
+                    if (aDanmaku.disappearTime > oldDanmaku.disappearTime) {
+                        dic[channel] = aDanmaku;
+                    }
                 }
-                
-                [dic[channel] addObject:obj];
             }
         }
     }];
     
-    __block NSInteger channel = channelCount - 1;
-    
-    if (dic.count >= channelCount) {
-        __block NSUInteger minCount = dic[@(0)].count;
-        __block BOOL isChange = NO;
-        //选择弹幕最少的轨道
-        [dic enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSArray * _Nonnull obj, BOOL * _Nonnull stop) {
-            if (obj.count <= minCount) {
+    __block NSInteger channel = -1;
+
+    for (NSInteger i = 0; i < channelCount; ++i) {
+        
+        NSNumber *key = @(i);
+        JHScrollDanmaku *obj = dic[key];
+        if (obj) {
+            //弹幕正好完全显示的时间
+            NSTimeInterval danmakuCompleteShowTime = obj.appearTime + (obj.disappearTime - obj.willDisappearTime);
+            if (_willDisappearTime > obj.disappearTime && self.appearTime > danmakuCompleteShowTime) {
                 channel = key.integerValue;
-                minCount = obj.count;
-                isChange = YES;
+                break;
             }
-        }];
-        //没法发生交换 说明轨道弹幕数都一样 随机选取一个轨道
-        if (!isChange) {
-            channel = arc4random_uniform((u_int32_t)channelCount);
+        } else {
+            channel = key.integerValue;
+            break;
         }
     }
-    else {
+    
+    if (channel == -1) {
         for (NSInteger i = 0; i < channelCount; ++i) {
             if (!dic[@(i)]) {
                 channel = i;
                 break;
             }
         }
+        
+        if (channel == -1) {
+            channel = arc4random_uniform((u_int32_t)channelCount);
+        }
     }
     
-    _currentChannel = channel;
+    self.currentChannel = channel;
     
     switch (_direction) {
         case JHScrollDanmakuDirectionR2L:
-            return CGPointMake(rect.size.width - timeDifference * (_speed * self.extraSpeed), channelHeight * channel);
+            return CGPointMake(start, channelHeight * channel);
         case JHScrollDanmakuDirectionL2R:
-            return CGPointMake(-danmakuSize.width + timeDifference * (_speed * self.extraSpeed), channelHeight * channel);
+            return CGPointMake(start, channelHeight * channel);
         case JHScrollDanmakuDirectionB2T:
-            return CGPointMake(channelHeight * channel, rect.size.height - timeDifference * (_speed * self.extraSpeed));
+            return CGPointMake(channelHeight * channel, start);
         case JHScrollDanmakuDirectionT2B:
-            return CGPointMake(channelHeight * channel, -danmakuSize.height + timeDifference * (_speed * self.extraSpeed));
+            return CGPointMake(channelHeight * channel, start);
     }
     
     return CGPointMake(rect.size.width, rect.size.height);
-}
-
-- (CGFloat)speed {
-    return _speed;
-}
-
-- (JHScrollDanmakuDirection)direction {
-    return _direction;
-}
-
-- (NSInteger)currentChannel {
-    return _currentChannel;
 }
 
 #pragma mark - 私有方法
 - (NSInteger)channelCountWithContentRect:(CGRect)contentRect danmakuSize:(CGSize)danmakuSize {
     NSInteger channelCount = 0;
     if (_direction == JHScrollDanmakuDirectionL2R || _direction == JHScrollDanmakuDirectionR2L) {
-        channelCount = contentRect.size.height / danmakuSize.height;
+        channelCount = CGRectGetHeight(contentRect) / danmakuSize.height;
         return channelCount > 4 ? channelCount : 4;
     }
-    channelCount = contentRect.size.width / danmakuSize.width;
+    channelCount = CGRectGetWidth(contentRect) / danmakuSize.width;
     return channelCount > 4 ? channelCount : 4;
 }
 
 - (NSInteger)channelHeightWithChannelCount:(NSInteger)channelCount contentRect:(CGRect)rect {
     if (_direction == JHScrollDanmakuDirectionL2R || _direction == JHScrollDanmakuDirectionR2L) {
-        return rect.size.height / channelCount;
+        return CGRectGetHeight(rect) / channelCount;
     }
     else {
-        return rect.size.width / channelCount;
+        return CGRectGetWidth(rect) / channelCount;
     }
 }
 
 - (NSInteger)channelWithFrame:(CGRect)frame channelHeight:(CGFloat)channelHeight {
     if (_direction == JHScrollDanmakuDirectionL2R || _direction == JHScrollDanmakuDirectionR2L) {
-        return frame.origin.y / channelHeight;
+        return CGRectGetMinY(frame) / channelHeight;
     }
     else {
-        return frame.origin.x / channelHeight;
+        return CGRectGetMinX(frame) / channelHeight;
     }
 }
 

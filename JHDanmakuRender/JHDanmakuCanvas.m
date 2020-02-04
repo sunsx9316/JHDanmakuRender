@@ -8,6 +8,7 @@
 
 #import "JHDanmakuCanvas.h"
 #import "JHDanmakuPrivateHeader.h"
+#import "JHDanmakuContainer.h"
 
 @implementation JHDanmakuCanvas
 - (JHView *)hitTest:(CGPoint)aPoint{
@@ -60,6 +61,9 @@
     }
 }
 
+- (void)addDanmakuContainer:(JHDanmakuContainer *)container {
+    [self addSubview:container];
+}
 
 /**
  翻转mac原点

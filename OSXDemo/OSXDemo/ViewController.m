@@ -49,7 +49,7 @@
 }
 
 - (IBAction)clickSpeedSlider:(NSSlider *)sender {
-    [self.aEngine setSpeed:sender.floatValue];
+    [self.aEngine setUserInfoWithKey:JHScrollDanmakuExtraSpeedKey value:@(sender.doubleValue)];
 }
 
 - (IBAction)clickFontSizeSlider:(NSSlider *)sender {
@@ -75,7 +75,7 @@
             d = JHScrollDanmakuDirectionB2T;
         }
         
-        [self.aEngine sendDanmaku:[self scrollDanmakuWithFontSize:self.fontSizeSlider.floatValue textColor:[NSColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:d speed:arc4random_uniform(100) + 50]];
+        [self.aEngine sendDanmaku:[self scrollDanmakuWithFontSize:self.fontSizeSlider.floatValue textColor:[NSColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:d]];
     }
     else {
         NSString *title = [self.danmakuDirectionPopUpButton titleOfSelectedItem];
@@ -126,8 +126,8 @@
     return [[JHFloatDanmaku alloc] initWithFont:[NSFont systemFontOfSize:fontSize] text:text textColor:textColor effectStyle:JHDanmakuEffectStyleGlow during:3 position:direction];
 }
 //初始化一个滚动弹幕
-- (JHScrollDanmaku *)scrollDanmakuWithFontSize:(CGFloat)fontSize textColor:(NSColor *)textColor text:(NSString *)text direction:(JHScrollDanmakuDirection)direction speed:(CGFloat)speed{
-    return [[JHScrollDanmaku alloc] initWithFont:[NSFont systemFontOfSize:fontSize] text:text textColor:textColor effectStyle:JHDanmakuEffectStyleGlow speed:speed direction:direction];
+- (JHScrollDanmaku *)scrollDanmakuWithFontSize:(CGFloat)fontSize textColor:(NSColor *)textColor text:(NSString *)text direction:(JHScrollDanmakuDirection)direction {
+    return [[JHScrollDanmaku alloc] initWithFont:[NSFont systemFontOfSize:fontSize] text:text textColor:textColor effectStyle:JHDanmakuEffectStyleGlow direction:direction];
 }
 
 #pragma mark - 懒加载

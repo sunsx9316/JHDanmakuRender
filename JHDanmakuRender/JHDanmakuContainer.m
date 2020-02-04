@@ -9,22 +9,26 @@
 #import "JHDanmakuContainer.h"
 #import "JHDanmakuEngine.h"
 #import "JHDanmakuPrivateHeader.h"
+#import "JHDanmakuContext.h"
+
+@interface JHDanmakuContainer ()
+@property (nonatomic, strong) JHDanmakuContext *context;
+@end
 
 @implementation JHDanmakuContainer
-{
-    JHBaseDanmaku *_danmaku;
-}
 
-- (instancetype)initWithDanmaku:(JHBaseDanmaku *)danmaku {
+- (instancetype)initWithDanmaku:(id<JHDanmakuProtocol>)danmaku engine:(JHDanmakuEngine *)engine {
     if (self = [super init]) {
+        _danmakuEngine = engine;
+        self.context.engine = _danmakuEngine;
 #if JH_MACOS
         self.editable = NO;
         self.drawsBackground = NO;
         self.bordered = NO;
 #endif
-        self.danmaku = danmaku;
         self.font = nil;
         self.textColor = nil;
+        self.danmaku = danmaku;
     }
     return self;
 }
@@ -33,33 +37,25 @@
     return nil;
 }
 
-- (void)setDanmaku:(JHBaseDanmaku *)danmaku {
+- (void)setDanmaku:(id<JHDanmakuProtocol>)danmaku {
     _danmaku = danmaku;
     self.attributedString = danmaku.attributedString;
-    [self updateAttributed];
-}
-
-- (JHBaseDanmaku *)danmaku {
-    return _danmaku;
+    [self updateAttributedByGlobalStyle];
+    [self resetPosition];
 }
 
 - (BOOL)updatePositionWithTime:(NSTimeInterval)time {
-    return [_danmaku updatePositonWithTime:time container:self];
+    return [_danmaku isActiveWithTime:time context:self.context];
 }
 
-- (void)setOriginalPosition:(CGPoint)originalPosition {
-    _originalPosition = originalPosition;
-    CGRect rect = self.frame;
-    rect.origin = originalPosition;
-    self.frame = rect;
-}
-
-- (void)updateAttributed {
+- (void)updateAttributedByGlobalStyle {
     NSDictionary *globalAttributed = [self.danmakuEngine globalAttributedDic];
     JHFont *font = [self.danmakuEngine globalFont];
     JHDanmakuEffectStyle shadowStyle = [self.danmakuEngine globalEffectStyle];
     
-    if (self.attributedString.length) {
+    BOOL hasGlobalAttributed = (globalAttributed || font || (shadowStyle > JHDanmakuEffectStyleUndefine));
+    
+    if (self.attributedString.length && hasGlobalAttributed) {
         NSMutableAttributedString *str = [self.attributedString mutableCopy];
         NSRange range = NSMakeRange(0, str.length);
         
@@ -84,13 +80,47 @@
         self.attributedString = str;
     }
     
-#if JH_MACOS
+    
     CGRect frame = self.frame;
+    
+#if JH_MACOS
     frame.size = self.fittingSize;
-    self.frame = frame;
 #else
-    [self sizeToFit];
+    frame.size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
 #endif
+    self.frame = frame;
+    self.context.danmakuSize = frame.size;
+}
+
+- (void)resetPosition {
+    CGPoint point = [_danmaku originalPositonWithContext:self.context];
+    self.context.originalPosition = point;
+    CGRect frame = self.frame;
+    frame.origin = point;
+    self.frame = frame;
+}
+
+- (void)removeFromCanvas {
+    [self removeFromSuperview];
+}
+
+#pragma mark - 懒加载
+- (JHDanmakuContext *)context {
+    if (_context == nil) {
+        _context = [[JHDanmakuContext alloc] init];
+        __weak typeof(self)weakSelf = self;
+        _context.updateDanmakuPointCallBack = ^(CGPoint point) {
+            __strong typeof(weakSelf)self = weakSelf;
+            if (!self) {
+                return;
+            }
+            
+            CGRect frame = self.frame;
+            frame.origin = point;
+            self.frame = frame;
+        };
+    }
+    return _context;
 }
 
 @end

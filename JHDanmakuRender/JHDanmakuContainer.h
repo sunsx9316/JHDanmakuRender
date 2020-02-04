@@ -6,22 +6,20 @@
 //  Copyright © 2016年 JimHuang. All rights reserved.
 //  弹幕的容器 用来绘制弹幕
 
-
-#import "JHFloatDanmaku.h"
-#import "JHScrollDanmaku.h"
+#import "JHDanmakuProtocol.h"
 #import "JHDanmakuDefinition.h"
 
 @class JHDanmakuEngine;
 @interface JHDanmakuContainer : JHLabel
-@property (assign, nonatomic) CGPoint originalPosition;
-@property (weak, nonatomic) JHDanmakuEngine *danmakuEngine;
-@property (strong, nonatomic) JHBaseDanmaku *danmaku;
+@property (weak, nonatomic, readonly) JHDanmakuEngine *danmakuEngine;
+@property (strong, nonatomic) id<JHDanmakuProtocol> danmaku;
 
-- (instancetype)initWithDanmaku:(JHBaseDanmaku *)danmaku;
+- (instancetype)initWithDanmaku:(id<JHDanmakuProtocol>)danmaku engine:(JHDanmakuEngine *)engine;
+
 /**
  刷新当前弹幕属性
  */
-- (void)updateAttributed;
+- (void)updateAttributedByGlobalStyle;
 /**
  *  更新位置
  *
@@ -30,4 +28,10 @@
  *  @return 是否处于激活状态
  */
 - (BOOL)updatePositionWithTime:(NSTimeInterval)time;
+
+/// 重设初始位置
+- (void)resetPosition;
+
+/// 从画布中移除
+- (void)removeFromCanvas;
 @end

@@ -9,7 +9,7 @@
 #import "JHDanmakuEngine.h"
 #import "JHDanmakuClock.h"
 #import "JHDanmakuContainer.h"
-#import "JHFloatDanmaku.h"
+//#import "JHFloatDanmaku.h"
 
 @interface JHDanmakuEngine()<JHDanmakuClockDelegate>
 @property (strong, nonatomic) JHDanmakuClock *clock;
@@ -21,22 +21,19 @@
  *  当前激活的弹幕
  */
 @property (strong, nonatomic) NSMutableArray <JHDanmakuContainer *>*activeContainer;
+
+@property (nonatomic, strong) NSMutableDictionary <NSString *, id>* _Nullable mUserInfo;
 @end
 
-@implementation JHDanmakuEngine
-{
+@implementation JHDanmakuEngine {
     //用于记录当前时间的整数值
     NSInteger _intTime;
-    CGFloat _extraSpeed;
-    dispatch_queue_t _queue;
 }
 
 - (instancetype)init {
     if (self = [super init]) {
         _intTime = -1;
         _timeInterval = 1;
-        _queue = dispatch_queue_create("JHDanmakuEngine.queue", DISPATCH_QUEUE_SERIAL);
-        [self setSpeed: 1.0];
     }
     return self;
 }
@@ -49,7 +46,7 @@
     _intTime = -_timeInterval;
     [self.clock stop];
     [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj removeFromSuperview];
+        [obj removeFromCanvas];
     }];
     [self.activeContainer removeAllObjects];
 }
@@ -63,8 +60,8 @@
     _intTime = -_timeInterval;
 }
 
-- (void)sendDanmaku:(JHBaseDanmaku *)danmaku {
-    [self sendDanmaku:danmaku updateAppearTime:YES];
+- (void)sendDanmaku:(id<JHDanmakuProtocol>)danmaku {
+    [self activeDanmaku:danmaku updateAppearTime:YES];
 }
 
 - (void)setOffsetTime:(NSTimeInterval)offsetTime {
@@ -92,17 +89,6 @@
     }
 }
 
-- (void)setSpeed:(CGFloat)speed {
-    _extraSpeed = speed > 0 ? speed : 0.1;
-    [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.danmaku.extraSpeed = self->_extraSpeed;
-    }];
-}
-
-- (CGFloat)speed {
-    return _extraSpeed;
-}
-
 - (void)setSystemSpeed:(CGFloat)systemSpeed {
     self.clock.speed = systemSpeed;
 }
@@ -125,14 +111,26 @@
     }
 }
 
-- (void)setGlobalShadowStyle:(JHDanmakuShadowStyle)globalShadowStyle {
-    self.globalEffectStyle = (JHDanmakuEffectStyle)globalShadowStyle;
-}
-
 - (void)setGlobalEffectStyle:(JHDanmakuEffectStyle)globalEffectStyle {
     if (_globalEffectStyle != globalEffectStyle) {
         _globalEffectStyle = globalEffectStyle;
         [self reloadCurrentActiveDanmaukus];
+    }
+}
+
+- (NSDictionary<NSString *,id> *)userInfo {
+    return self.mUserInfo;
+}
+
+- (void)setUserInfoWithKey:(NSString *)key value:(id)value {
+    if (key) {
+        self.mUserInfo[key] = value;
+    }
+}
+
+- (void)removeUserInfoWithKey:(NSString *)key {
+    if (key) {
+        self.mUserInfo[key] = nil;
     }
 }
 
@@ -142,10 +140,10 @@
     if ([self.delegate respondsToSelector:@selector(engineTimeSystemFollowWithOuterTimeSystem)]) {
         _currentTime = [self.delegate engineTimeSystemFollowWithOuterTimeSystem];
         _intTime = _currentTime;
-        NSArray <JHBaseDanmaku*>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:_intTime];
+        NSArray <id<JHDanmakuProtocol>>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:_intTime];
         
-        [danmakus enumerateObjectsUsingBlock:^(JHBaseDanmaku * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [self sendDanmaku:obj updateAppearTime:NO];
+        [danmakus enumerateObjectsUsingBlock:^(id<JHDanmakuProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self activeDanmaku:obj updateAppearTime:NO];
         }];
     }
     else {
@@ -153,10 +151,10 @@
         //根据间隔获取一次弹幕
         if ([self.delegate respondsToSelector:@selector(danmakuEngine:didSendDanmakuAtTime:)] && (NSInteger)_currentTime - _intTime >= _timeInterval) {
             _intTime = _currentTime;
-            NSArray <JHBaseDanmaku*>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:_intTime];
+            NSArray <id<JHDanmakuProtocol>>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:_intTime];
             
-            [danmakus enumerateObjectsUsingBlock:^(JHBaseDanmaku * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [self sendDanmaku:obj updateAppearTime:NO];
+            [danmakus enumerateObjectsUsingBlock:^(id<JHDanmakuProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self activeDanmaku:obj updateAppearTime:NO];
             }];
         }
     }
@@ -166,14 +164,14 @@
     [danmakus enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(JHDanmakuContainer * _Nonnull container, NSUInteger idx, BOOL * _Nonnull stop) {
         //如果弹幕移出屏幕或者到达显示时长 则移出画布 状态改为失活
         if ([container updatePositionWithTime:self.currentTime] == NO) {
-            JHBaseDanmaku *aDanmaku = container.danmaku;
+            id<JHDanmakuProtocol>aDanmaku = container.danmaku;
             
             [self.activeContainer removeObjectAtIndex:idx];
             
             if (self.inactiveContainer.count < DANMAKU_MAX_CACHE_COUNT) {
                 [self.inactiveContainer addObject:container];
             }
-            [container removeFromSuperview];
+            [container removeFromCanvas];
             aDanmaku.disappearTime = self.currentTime;
         }
     }];
@@ -185,15 +183,15 @@
     if ([self.delegate respondsToSelector:@selector(danmakuEngine:didSendDanmakuAtTime:)]) {
         //移除当前显示的弹幕
         [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj removeFromSuperview];
+            [obj removeFromCanvas];
         }];
         [self.activeContainer removeAllObjects];
         
         for (NSInteger i = 1; i < 5; ++i) {
             NSInteger time = _currentTime - i;
-            NSArray <JHBaseDanmaku *>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:time];
-            [danmakus enumerateObjectsUsingBlock:^(JHBaseDanmaku * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [self sendDanmaku:obj updateAppearTime:NO];
+            NSArray <id<JHDanmakuProtocol>>*danmakus = [self.delegate danmakuEngine:self didSendDanmakuAtTime:time];
+            [danmakus enumerateObjectsUsingBlock:^(id<JHDanmakuProtocol> _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self activeDanmaku:obj updateAppearTime:NO];
             }];
         }
     }
@@ -202,18 +200,18 @@
 //重设当前弹幕初始位置
 - (void)resetOriginalPosition:(CGRect)bounds {
     [self.activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.originalPosition = [obj.danmaku originalPositonWithEngine:self rect:bounds danmakuSize:obj.bounds.size timeDifference:self.currentTime - obj.danmaku.appearTime];
+        [obj resetPosition];
     }];
 }
 
 
 /**
- 发射弹幕
+ 激活弹幕
  
  @param danmaku 弹幕
  @param updateAppearTime 是否更改当前时间为弹幕的时间
  */
-- (void)sendDanmaku:(JHBaseDanmaku *)danmaku updateAppearTime:(BOOL)updateAppearTime {
+- (void)activeDanmaku:(id<JHDanmakuProtocol>)danmaku updateAppearTime:(BOOL)updateAppearTime {
     
     if ([self.delegate respondsToSelector:@selector(danmakuEngine:shouldSendDanmaku:)] && [self.delegate danmakuEngine:self shouldSendDanmaku:danmaku] == NO) {
         return;
@@ -228,23 +226,18 @@
         danmaku.appearTime = _currentTime;
     }
     
-    //附加速度
-    danmaku.extraSpeed = _extraSpeed;
-    
     //尝试从缓存中获取弹幕容器 没有则创建一个
     JHDanmakuContainer *con = self.inactiveContainer.firstObject;
     if (con == nil) {
-        con = [[JHDanmakuContainer alloc] initWithDanmaku:danmaku];
-        con.danmakuEngine = self;
+        con = [[JHDanmakuContainer alloc] initWithDanmaku:danmaku engine:self];
     }
     else {
         [self.inactiveContainer removeObject:con];
+        con.danmaku = danmaku;
     }
     
-    con.danmaku = danmaku;
-    con.originalPosition = [con.danmaku originalPositonWithEngine:self rect:self.canvas.bounds danmakuSize:con.bounds.size timeDifference:_currentTime - danmaku.appearTime];
     
-    [self.canvas addSubview:con];
+    [self.canvas addDanmakuContainer:con];
     //将弹幕容器激活
     [self.activeContainer addObject:con];
 }
@@ -256,7 +249,7 @@
 - (void)reloadCurrentActiveDanmaukus {
     NSArray <JHDanmakuContainer *>*activeContainer = self.activeContainer;
     [activeContainer enumerateObjectsUsingBlock:^(JHDanmakuContainer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj updateAttributed];
+        [obj updateAttributedByGlobalStyle];
     }];
 }
 
@@ -296,6 +289,13 @@
         }];
     }
     return _canvas;
+}
+
+- (NSMutableDictionary<NSString *,id> *)mUserInfo {
+    if (_mUserInfo == nil) {
+        _mUserInfo = [NSMutableDictionary dictionary];
+    }
+    return _mUserInfo;
 }
 
 @end

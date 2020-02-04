@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "JHDanmakuRender"
-  s.version      = "2.1.2"
+  s.version      = "3.0.0"
   s.summary      = "A danmaku rendering engine for iOS and OSX 一个iOS和OSX通用的弹幕渲染引擎"
   s.homepage     = "https://github.com/sunsx9316/JHDanmakuRender"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "7.0"
   s.osx.deployment_target = "10.8"
-  s.public_header_files = 'JHDanmakuRender/**/*.h'
+  s.private_header_files = 'JHDanmakuRender/Private/*.h'
   s.source_files  = "JHDanmakuRender/**/*.{h,m}"
   s.requires_arc = true
 end

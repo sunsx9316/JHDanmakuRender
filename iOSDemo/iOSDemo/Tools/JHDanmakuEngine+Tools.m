@@ -19,7 +19,7 @@
         return [[JHFloatDanmaku alloc] initWithFont:font text:text textColor:_color effectStyle:shadowStyle during:3 position:spiritStyle == 4 ? JHFloatDanmakuPositionAtBottom : JHFloatDanmakuPositionAtTop];
     }
     else {
-        return [[JHScrollDanmaku alloc] initWithFont:font text:text textColor:_color effectStyle:shadowStyle speed:arc4random()%100 + 50 direction:JHScrollDanmakuDirectionR2L];
+        return [[JHScrollDanmaku alloc] initWithFont:font text:text textColor:_color effectStyle:shadowStyle direction:JHScrollDanmakuDirectionR2L];
     }
 }
 

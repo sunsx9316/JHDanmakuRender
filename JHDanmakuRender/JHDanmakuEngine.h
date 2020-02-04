@@ -6,9 +6,8 @@
 //  Copyright © 2016年 JimHuang. All rights reserved.
 //
 
-#import "JHBaseDanmaku.h"
 #import "JHDanmakuCanvas.h"
-#import "JHDanmakuDefinition.h"
+#import "JHDanmakuProtocol.h"
 
 @class JHDanmakuEngine;
 
@@ -23,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param time 时间
  @return 发射的弹幕
  */
-- (NSArray <__kindof JHBaseDanmaku*>*)danmakuEngine:(JHDanmakuEngine *)danmakuEngine didSendDanmakuAtTime:(NSUInteger)time;
+- (NSArray <id<JHDanmakuProtocol>>*)danmakuEngine:(JHDanmakuEngine *)danmakuEngine didSendDanmakuAtTime:(NSUInteger)time;
 
 /**
  是否发射某个弹幕
@@ -32,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param danmaku 弹幕
  @return 是否发射
  */
-- (BOOL)danmakuEngine:(JHDanmakuEngine *)danmakuEngine shouldSendDanmaku:(__kindof JHBaseDanmaku *)danmaku;
+- (BOOL)danmakuEngine:(JHDanmakuEngine *)danmakuEngine shouldSendDanmaku:(id<JHDanmakuProtocol>)danmaku;
 
 /**
  使用外部时间系统
@@ -82,19 +81,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (strong, nonatomic) JHFont * _Nullable globalFont;
 
-
-@property (assign, nonatomic) JHDanmakuShadowStyle globalShadowStyle JHDeprecated("使用 globalEffectStyle");
-
 /**
  全局字体边缘特效 默认不使用 会覆盖个体设置
  */
 @property (assign, nonatomic) JHDanmakuEffectStyle globalEffectStyle;
-
-
-/**
- 额外速度 默认1.0倍速
- */
-@property (assign, nonatomic) CGFloat speed;
 
 /**
  系统整体速度 默认1.0 会使得整个系统时间加快 用于比如视频加速播放的场景
@@ -105,6 +95,11 @@ NS_ASSUME_NONNULL_BEGIN
  同屏弹幕数 默认0 不限制
  */
 @property (assign, nonatomic) NSUInteger limitCount;
+
+/// 用户信息
+@property (nonatomic, strong, readonly) NSDictionary <NSString *, id>* _Nullable userInfo;
+- (void)setUserInfoWithKey:(NSString *)key value:(id)value;
+- (void)removeUserInfoWithKey:(NSString *)key;
 
 /**
  开始计时器 暂停状态就是恢复运动
@@ -118,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param danmaku 单个弹幕
  */
-- (void)sendDanmaku:(JHBaseDanmaku *)danmaku;
+- (void)sendDanmaku:(id<JHDanmakuProtocol>)danmaku;
 @end
 NS_ASSUME_NONNULL_END
 

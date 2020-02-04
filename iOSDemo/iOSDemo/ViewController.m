@@ -54,7 +54,7 @@
 }
 
 - (IBAction)touchSpeedButton:(UISlider *)sender {
-    [self.aEngine setSpeed:sender.value];
+    [self.aEngine setUserInfoWithKey:@"extraSpeed" value:@(sender.value)];
 }
 
 - (IBAction)touchFontSizeButton:(UISlider *)sender {
@@ -118,7 +118,7 @@
             dir = JHScrollDanmakuDirectionT2B;
         }
         
-        [self.aEngine sendDanmaku:[self scrollDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:dir speed:arc4random_uniform(100) + 50]];
+        [self.aEngine sendDanmaku:[self scrollDanmakuWithFontSize:15 textColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] text:@"滚动弹幕" direction:dir]];
     }
     else {
         NSString *str = self.danmakuDirectionLabel.text;
@@ -137,8 +137,8 @@
 }
 
 //初始化一个滚动弹幕
-- (JHScrollDanmaku *)scrollDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(JHScrollDanmakuDirection)direction speed:(CGFloat)speed{
-    return [[JHScrollDanmaku alloc] initWithFont:[UIFont systemFontOfSize:fontSize] text:text textColor:textColor effectStyle:JHDanmakuEffectStyleShadow speed:speed direction:direction];
+- (JHScrollDanmaku *)scrollDanmakuWithFontSize:(CGFloat)fontSize textColor:(UIColor *)textColor text:(NSString *)text direction:(JHScrollDanmakuDirection)direction {
+    return [[JHScrollDanmaku alloc] initWithFont:[UIFont systemFontOfSize:fontSize] text:text textColor:textColor effectStyle:JHDanmakuEffectStyleShadow direction:direction];
 }
 
 - (void)hideMenu{

@@ -7,6 +7,8 @@
 //
 
 #import "JHDanmakuEngine.h"
+#import "JHBaseDanmaku.h"
+
 @interface JHDanmakuEngine (Tools)
 + (JHBaseDanmaku *)DanmakuWithText:(NSString*)text color:(NSInteger)color spiritStyle:(NSInteger)spiritStyle shadowStyle:(JHDanmakuEffectStyle)shadowStyle font:(NSFont *)font;
 @end

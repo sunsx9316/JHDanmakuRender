@@ -9,6 +9,7 @@
 #import "JHFloatDanmaku.h"
 #import "JHDanmakuContainer.h"
 #import "JHDanmakuEngine+Private.h"
+#import "JHDanmakuContext.h"
 
 @interface JHFloatDanmaku()
 @property (assign, nonatomic) CGFloat during;
@@ -16,18 +17,6 @@
 @end
 
 @implementation JHFloatDanmaku
-{
-    NSInteger _currentChannel;
-}
-
-- (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font during:(CGFloat)during direction:(JHFloatDanmakuDirection)direction {
-    
-    if (font == nil) {
-        font = [JHFont systemFontOfSize:fontSize];
-    }
-    
-    return [self initWithFont:font text:text textColor:textColor effectStyle:(JHDanmakuEffectStyle)shadowStyle during:direction position:(JHFloatDanmakuPosition)direction];
-}
 
 - (instancetype)initWithFont:(JHFont *)font
                         text:(NSString *)text
@@ -37,12 +26,12 @@
                     position:(JHFloatDanmakuPosition)position {
     if (self = [super initWithFont:font text:text textColor:textColor effectStyle:effectStyle]) {
         _position = position;
-        _during = during;
+        _during = during ?: 3;
     }
     return self;
 }
 
-- (BOOL)updatePositonWithTime:(NSTimeInterval)time container:(JHDanmakuContainer *)container {
+- (BOOL)isActiveWithTime:(NSTimeInterval)time context:(JHDanmakuContext *)context {
     return self.appearTime + _during >= time;
 }
 
@@ -52,10 +41,12 @@
  如果都有 选择弹幕最少的轨道
  *
  */
-- (CGPoint)originalPositonWithEngine:(JHDanmakuEngine *)engine
-                                rect:(CGRect)rect
-                         danmakuSize:(CGSize)danmakuSize
-                      timeDifference:(NSTimeInterval)timeDifference {
+- (CGPoint)originalPositonWithContext:(JHDanmakuContext *)context {
+    
+    JHDanmakuEngine *engine = context.engine;
+    CGSize danmakuSize = context.danmakuSize;
+    CGRect rect = engine.canvas.bounds;
+    
     NSMutableDictionary <NSNumber *, NSMutableArray <JHDanmakuContainer *>*>*dic = [NSMutableDictionary dictionary];
     
     NSInteger channelCount = (engine.channelCount == 0) ? [self channelCountWithContentRect:rect danmakuSize:danmakuSize] : engine.channelCount;
@@ -107,21 +98,8 @@
         }
     }
     
-    _currentChannel = channel;
+    self.currentChannel = channel;
     return CGPointMake((rect.size.width - danmakuSize.width) / 2, channelHeight * channel);
-}
-
-
-- (CGFloat)during {
-    return _during;
-}
-
-- (JHFloatDanmakuDirection)direction {
-    return (JHFloatDanmakuDirection)_position;
-}
-
-- (NSInteger)currentChannel {
-    return _currentChannel;
 }
 
 #pragma mark - 私有方法

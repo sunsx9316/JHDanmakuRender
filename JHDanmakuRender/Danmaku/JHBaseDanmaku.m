@@ -12,10 +12,10 @@
 
 @implementation JHBaseDanmaku
 
-- (instancetype)initWithFontSize:(CGFloat)fontSize textColor:(JHColor *)textColor text:(NSString *)text shadowStyle:(JHDanmakuShadowStyle)shadowStyle font:(JHFont *)font{
-    if (!font) font = [JHFont systemFontOfSize: fontSize];
-    return [self initWithFont:font text:text textColor:textColor effectStyle:(JHDanmakuEffectStyle)shadowStyle];
-}
+@synthesize appearTime = _appearTime;
+@synthesize disappearTime = _disappearTime;
+@synthesize attributedString = _attributedString;
+@synthesize currentChannel = _currentChannel;
 
 - (instancetype)initWithFont:(JHFont *)font
                         text:(NSString *)text
@@ -33,35 +33,21 @@
 
         [dic addEntriesFromDictionary:[JHDanmakuMethod edgeEffectDicWithStyle:effectStyle textColor:textColor]];
         
-        _font = font;
         self.attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:dic];
     }
     return self;
 }
 
-- (BOOL)updatePositonWithTime:(NSTimeInterval)time container:(JHDanmakuContainer *)container {
+- (instancetype)init {
+    return [self initWithFont:nil text:nil textColor:nil effectStyle:JHDanmakuEffectStyleNone];
+}
+
+- (BOOL)isActiveWithTime:(NSTimeInterval)time context:(JHDanmakuContext *)context {
     return NO;
 }
 
-- (CGPoint)originalPositonWithEngine:(JHDanmakuEngine *)engine
-                                rect:(CGRect)rect
-                         danmakuSize:(CGSize)danmakuSize
-                      timeDifference:(NSTimeInterval)timeDifference {
+- (CGPoint)originalPositonWithContext:(JHDanmakuContext *)context {
     return CGPointZero;
-}
-
-- (NSString *)text {
-    return _attributedString.string;
-}
-
-- (JHColor *)textColor {
-    if (!_attributedString.length) return nil;
-    
-    return [_attributedString attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
-}
-
-- (NSAttributedString *)attributedString {
-    return _attributedString;
 }
 
 @end

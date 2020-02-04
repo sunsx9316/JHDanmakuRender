@@ -26,8 +26,15 @@ typedef NS_ENUM(NSUInteger, JHDanmakuCanvasLayoutStyle) {
     JHDanmakuCanvasLayoutStyleWhenSizeChanged,
 };
 
+NS_ASSUME_NONNULL_BEGIN
+
+@class JHDanmakuContainer;
+
 @interface JHDanmakuCanvas : JHView
 //画布布局风格 默认 JHDanmakuCanvasLayoutStyleNone 只在 OSX 中有效
 @property (assign, nonatomic) JHDanmakuCanvasLayoutStyle layoutStyle;
-@property (copy, nonatomic) void(^resizeCallBackBlock)(CGRect bounds);
+@property (copy, nonatomic) void(^ _Nullable resizeCallBackBlock)(CGRect bounds);
+
+- (void)addDanmakuContainer:(JHDanmakuContainer *)container;
 @end
+NS_ASSUME_NONNULL_END
