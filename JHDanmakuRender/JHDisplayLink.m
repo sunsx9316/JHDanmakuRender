@@ -32,7 +32,7 @@
 - (instancetype)init{
     if (self = [super init]) {
 #if JH_MACOS
-        CVReturn status = CVDisplayLinkCreateWithActiveCGDisplays(&_OSXDisplayLink);
+        __unused CVReturn status = CVDisplayLinkCreateWithActiveCGDisplays(&_OSXDisplayLink);
         NSAssert(status == kCVReturnSuccess, @"初始化失败");
         
         __weak typeof(self)weakSelf = self;
