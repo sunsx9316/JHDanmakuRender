@@ -17,7 +17,7 @@
 		89470AFD1C8D9A6E00ECBE1B /* JHDanmakuEngine+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470AFB1C8D9A6E00ECBE1B /* JHDanmakuEngine+Tools.m */; };
 		89470B001C8D9B5700ECBE1B /* DanMuDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470AFF1C8D9B5700ECBE1B /* DanMuDataModel.m */; };
 		89470B091C8D9D9C00ECBE1B /* NSColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 89470B081C8D9D9C00ECBE1B /* NSColor+Tools.m */; };
-		89470B0B1C8D9DDE00ECBE1B /* test.xml in Resources */ = {isa = PBXBuildFile; fileRef = 89470B0A1C8D9DDE00ECBE1B /* test.xml */; };
+		897EA556244F3BA500A7CCC2 /* 149070001.json in Resources */ = {isa = PBXBuildFile; fileRef = 897EA555244F3BA500A7CCC2 /* 149070001.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +39,7 @@
 		89470AFF1C8D9B5700ECBE1B /* DanMuDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DanMuDataModel.m; sourceTree = "<group>"; };
 		89470B071C8D9D9C00ECBE1B /* NSColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Tools.h"; sourceTree = "<group>"; };
 		89470B081C8D9D9C00ECBE1B /* NSColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Tools.m"; sourceTree = "<group>"; };
-		89470B0A1C8D9DDE00ECBE1B /* test.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.xml; sourceTree = "<group>"; };
+		897EA555244F3BA500A7CCC2 /* 149070001.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 149070001.json; sourceTree = "<group>"; };
 		A4B74AC9F2DDC8FFC9173A36 /* libPods-OSXDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OSXDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE176B3A78247156CCF4E8ED /* Pods-OSXDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSXDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-OSXDemo/Pods-OSXDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,7 +67,6 @@
 		8904F8661C8D731F0076C284 = {
 			isa = PBXGroup;
 			children = (
-				89470B0A1C8D9DDE00ECBE1B /* test.xml */,
 				8904F8711C8D731F0076C284 /* OSXDemo */,
 				8904F8701C8D731F0076C284 /* Products */,
 				E2525FBACEC55B862FED3D22 /* Pods */,
@@ -86,6 +85,7 @@
 		8904F8711C8D731F0076C284 /* OSXDemo */ = {
 			isa = PBXGroup;
 			children = (
+				897EA555244F3BA500A7CCC2 /* 149070001.json */,
 				89470AF71C8D9A5F00ECBE1B /* Tools */,
 				8904F8721C8D731F0076C284 /* AppDelegate.h */,
 				8904F8731C8D731F0076C284 /* AppDelegate.m */,
@@ -192,7 +192,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89470B0B1C8D9DDE00ECBE1B /* test.xml in Resources */,
+				897EA556244F3BA500A7CCC2 /* 149070001.json in Resources */,
 				8904F87C1C8D731F0076C284 /* Assets.xcassets in Resources */,
 				8904F87F1C8D731F0076C284 /* Main.storyboard in Resources */,
 			);

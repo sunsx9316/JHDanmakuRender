@@ -35,18 +35,19 @@ typedef void(^callBackBlock)(DanMuDataModel *model);
 
 //b站解析方式
 + (void)danMuWithBilibiliData:(NSData*)data block:(callBackBlock)block{
-    GDataXMLDocument *document=[[GDataXMLDocument alloc] initWithData:data error:nil];
-    GDataXMLElement *rootElement = document.rootElement;
-    NSArray *array = [rootElement elementsForName:@"d"];
-    for (GDataXMLElement *ele in array) {
-            NSArray* strArr = [[[ele attributeForName:@"p"] stringValue] componentsSeparatedByString:@","];
-            DanMuDataModel* model = [[DanMuDataModel alloc] init];
-            model.time = [strArr[0] floatValue];
-            model.mode = [strArr[1] intValue];
-            model.color = [strArr[3] intValue];
-            model.message = [ele stringValue];
-            if (block) block(model);
-    }
+    NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSArray <NSDictionary *>*comments = jsonDic[@"danmakuData"][@"comments"];
+    
+    [comments enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSArray <NSString *>*datas = [obj[@"p"] componentsSeparatedByString:@","];
+        DanMuDataModel* model = [[DanMuDataModel alloc] init];
+        model.time = datas[0].doubleValue;
+        model.mode = datas[1].integerValue;
+        model.color = datas[2].integerValue;
+        model.message = obj[@"m"];
+        if (block) block(model);
+    }];
+    
 }
 @end
 

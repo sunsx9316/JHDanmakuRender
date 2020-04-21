@@ -156,7 +156,7 @@
 
 - (NSDictionary *)danmakuDic {
 	if(_danmakuDic == nil) {
-		_danmakuDic = [DanMuDataFormatter dicWithObj:[[NSData alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"xml"]]];
+		_danmakuDic = [DanMuDataFormatter dicWithObj:[[NSData alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"149070001" ofType:@"json"]]];
 	}
 	return _danmakuDic;
 }
